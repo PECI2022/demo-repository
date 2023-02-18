@@ -4,7 +4,7 @@
 Create virtual environment (venv)
 
 ```bash
-python -m venv venv
+python3 -m venv venv
 ```
 
 Activate venv
@@ -25,12 +25,21 @@ Start Backend server
 
 ```bash
 cd Backend
-python server.py
+python3 server.py
 ```
 
 Start Frontend server
 
 ```bash
 cd Frontend
-python server.py
+python3 server.py
 ```
+
+# Open
+
+Start a browser on http://127.0.0.1:8080/
+
+
+# Tested
+
+**python** version 3.10.6
