@@ -51,7 +51,7 @@ save_button.addEventListener('click', async () => {
     data.append('file', recording);
     data.append('description', JSON.stringify({name:prompt("File Name?")}))
 
-    let response = await fetch('http://127.0.0.1:5000/upload', {
+    let response = await fetch('http://127.0.0.1:5001/upload', {
         method: "POST",
         body: data
     });
@@ -68,7 +68,7 @@ stop_button.addEventListener('click', ()=>{
 });
 
 const list_videos_fetch = async () => {
-    const response = await fetch('http://127.0.0.1:5000/list_videos');
+    const response = await fetch('http://127.0.0.1:5001/list_videos');
     let list = await response.json()
     if(!list) return;
 
@@ -83,7 +83,7 @@ const list_videos_fetch = async () => {
 
 const load_video = async (name) => {
     console.log(name)
-    let response = await fetch('http://127.0.0.1:5000/download', {
+    let response = await fetch('http://127.0.0.1:5001/download', {
         headers: {
             'Content-Type': 'application/json'
         },

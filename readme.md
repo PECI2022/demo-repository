@@ -21,16 +21,16 @@ pip install -r requirements.txt
 
 # Run
 
-Start API server
+Start Backend server
 
 ```bash
-cd API
+cd Backend
 python server.py
 ```
 
-Start WEB server
+Start Frontend server
 
 ```bash
-cd WEB
+cd Frontend
 python server.py
 ```
