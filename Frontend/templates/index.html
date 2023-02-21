@@ -1,24 +1,78 @@
 {% extends 'base.html' %}
 
-{% block title %} Index {% endblock %}
+{% block title %} Projects {% endblock %}
+
+{% block aditionalHead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
 
 {% block content %}
-<div class="container my-3 bg-light">
-    <button id="start-camera">Start Camera</button>
-    <video id="video" width="320" height="240" autoplay style="display: block"></video>
-    <button id="start-record" disabled>Start Recording</button>
-    <button id="stop-record" disabled>Stop Recording</button>
-    <button id="save-video" disabled>Save Recording</button>
 
-    <br>
-    <video id="loaded-video" src="" width="320" height="240" autoplay></video>
-    <br>
+<div class="container my-5">
+    <div class="" style="display:flex;">
+        <h1 class="mtext-white">My Projects</h1>
+        <button class="btn btn-light" style="margin-left: auto;" type="button">New Project</button>
+    </div>
+    <hr class="mbg-white border-3 opacity-100" style="border-color: #eee;">
 
-    <h2>Videos List <button onclick="list_videos_fetch()">Reload</button></h2>
-    <ul id="list_videos">
-        EMPTY
-    </ul>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <div class="col">
+            <div class="card h-100" >
+                <div class="card-body">
+                    <h3 class="card-title">Hand Gestures</h5>
+                    <p class="card-text">Five most common hand gestures</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 13 hours ago</small>
+                </div>
+                <a href=editor?project=hand-gestures>
+                    <span class="span-link"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Dancing</h5>
+                    <p class="card-text">Detects if a person is dancing</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 days ago</small>
+                </div>
+                <a href=editor?project=dancing>
+                    <span class="span-link"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Facial Expressions</h5>
+                    <p class="card-text">Most common facial expressions</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 1 month ago</small>
+                </div>
+                <a href=editor?project=facial-expressions>
+                    <span class="span-link"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Sad Voice</h5>
+                    <p class="card-text">Detects sadness throw voice.</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 2 month ago</small>
+                </div>
+                <a href=editor?project=sad-voice>
+                    <span class="span-link"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
 </div>
-
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}

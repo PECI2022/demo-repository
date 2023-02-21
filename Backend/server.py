@@ -8,13 +8,17 @@ import os
 
 client = MongoClient("mongodb://localhost:27017")
 db = client['peci']
-fs = gridfs.GridFS(db)
+collection = db.test_collection
+collection.insert_one({"test":"big string"})
+#fs = gridfs.GridFS(db)
+
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
 def default():
+    
     return "Running..."
 
 @app.route('/upload', methods=['POST'])

@@ -1,0 +1,19 @@
+body {
+    background-color: #282c34;
+}
+
+.mbg-black {
+    background-color: #111;
+}
+
+.mtext-white {
+    color: #eee;
+}
+
+.mbg-black #navbarTitle {
+    color: #eee;
+}
+
+.mbg-black #navbarTitle:hover {
+    color: #ccc;
+}

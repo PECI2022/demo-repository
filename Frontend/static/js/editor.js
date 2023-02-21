@@ -1,6 +1,6 @@
 let camera_button = document.querySelector("#start-camera");
 let video = document.querySelector("#video");
-let loaded_video = document.querySelector("#loaded-video");
+let loaded_video = document.querySelector("#video_loader");
 let start_button = document.querySelector("#start-record");
 let stop_button = document.querySelector("#stop-record");
 let save_button = document.querySelector("#save-video");
@@ -18,6 +18,8 @@ let video_url;
 camera_button.addEventListener('click', async () => {
     camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false});
     video.srcObject = camera_stream;
+    video.style.display = 'block';
+    loaded_video.style.display = 'none';
     start_button.disabled = false;
     camera_button.disabled = true;
 });
@@ -25,6 +27,8 @@ camera_button.addEventListener('click', async () => {
 start_button.addEventListener('click', () => {
     start_button.disabled = true;
     stop_button.disabled = false;
+    video.style.display = 'block';
+    loaded_video.style.display = 'none';
 
     media_recorder = new MediaRecorder(camera_stream, {mimeType: VIDEO_TYPE});
 
@@ -76,7 +80,7 @@ const list_videos_fetch = async () => {
     list.sort();
     for(let i of list) {
         let newElem = document.createElement('li');
-        newElem.innerHTML = `<a onclick="load_video('${i}')">${i}</a>`;
+        newElem.innerHTML = `<a style="cursor:pointer;" onclick="load_video('${i}')">${i}</a>`;
         list_videos.appendChild(newElem);
     }
 };list_videos_fetch()
@@ -92,5 +96,8 @@ const load_video = async (name) => {
     });
     let blob = await response.blob();
     video_url = URL.createObjectURL(blob);
+    video.style.display = 'none';
+    loaded_video.style.display = 'block';
+    start_button.disabled = false;
     loaded_video.src = video_url;
 }
