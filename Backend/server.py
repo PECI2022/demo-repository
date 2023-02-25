@@ -1,34 +1,49 @@
 from flask import Flask, send_from_directory, request, make_response
 from flask_cors import CORS
 from werkzeug.datastructures import FileStorage
-from pymongo import MongoClient
-import gridfs
 import json
 import os
-
-client = MongoClient("mongodb://localhost:27017")
-db = client['peci']
-collection = db.test_collection
-collection.insert_one({"test":"big string"})
-#fs = gridfs.GridFS(db)
-
-
+from Mongo_cli import MongoCli
+from gridfs import GridFS
 app = Flask(__name__)
-CORS(app)
+
+mongo_cli = MongoCli()
+fs = GridFS(mongo_cli.db)
+# client = MongoClient(MONGODB_URI)
+
+class Operations:
+    def __init__(self):
+        pass
+
+    
+    def upload(self):
+        print("Catch")
+        # x = '{ "name":"John", "age":30, "city":"New York"}'
+        # y = json.loads(x)
+        file = request.files['file']
+        description = json.loads(request.form['description'])
+        file.save('./'+ description['name']+'.webm')
+        file_id = fs.put(file)
+        # id = mongo_cli.generate_unique_id()
+        video_id = mongo_cli.insert_data(file,file_id,description)
+        # a = fs.put(file)
+        return video_id
+    
+    def list_videos(self):
+        videos = mongo_cli.find_documents();
+        return videos
+
+operation = Operations()
 
 @app.route('/')
 def default():
-    
     return "Running..."
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files['file']
-    description = json.loads(request.form['description'])
-    file.save('./'+description['name']+'.webm')
-    # a = fs.put(file)
-    return {'status': 200}
-
+    operation.upload()
+    
 @app.route('/download', methods=['POST'])
 def download():
     fileName = request.get_json()['name']
@@ -41,7 +56,7 @@ def download():
 
 @app.route('/list_videos')
 def list_videos():
-    return [i for i in os.listdir('.') if i.endswith('.webm')]
+    return operation.list_videos()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
