@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} Audio {% endblock %}
+
+{% block content %}
+<div class="container-fluid my-3">
+    <div class="row row-cols-3 mx-5">
+        <div class="col-2">
+            <div class="d-grid gap-2">
+
+                <h2 style="color:white;">Audio Recorder</h2>
+                <button onclick="startRecording()">Start Recording</button>
+                <button onclick="stopRecording()">Stop Recording</button>
+                <button onclick="playRecording()">Play Recording</button>
+                <button onclick="downloadRecording()">Download Recording</button>
+            </div>
+        </div>
+        <div class="col-8" style="text-align: center;">
+            <audio controls></audio>
+        </div>
+        <div class="col-2 text-light" style="">
+            <h3 class="" style="display: flex;cursor: pointer;" onclick="list_videos_fetch()"><a class="btn button p-0 text-light" >&#8635;</a> Videos List</h3>
+            
+            <ul id="list_videos">
+                EMPTY
+            </ul>
+        </div>
+    </div>
+
+    <!--<br>
+    <video id="loaded-video" src="" width="320" height="240" autoplay></video>
+    <br>-->
+
+</div>
+
+    <h2>Videos List <button onclick="list_videos_fetch()">Reload</button></h2>
+    <ul id="list_videos">
+        EMPTY
+    </ul>
+</div>
+
+<script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+{% endblock %}
