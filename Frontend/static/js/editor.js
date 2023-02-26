@@ -75,7 +75,7 @@ const list_videos_fetch = async () => {
     const response = await fetch('http://127.0.0.1:5001/list_videos');
     let list = await response.json()
     if(!list) return;
-
+    console.log(list)
     list_videos.innerHTML = "";
     list.sort();
     for(let i of list) {
