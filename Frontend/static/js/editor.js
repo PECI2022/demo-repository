@@ -60,6 +60,7 @@ save_button.addEventListener('click', async () => {
         body: data
     });
 
+
     alert("Video Saved on the Server");
     list_videos_fetch();
 });
