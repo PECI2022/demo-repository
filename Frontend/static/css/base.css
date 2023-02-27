@@ -17,3 +17,44 @@ body {
 .mbg-black #navbarTitle:hover {
     color: #ccc;
 }
+
+#msg {
+    visibility: hidden;
+    color: #3C3EF2;
+    font-weight: bold;
+    font-size: 22px;
+    font-family: Verdana;
+  }
+  button {
+    padding: 5px 10px;
+    border: 1px solid grey;
+    font-size: 18px;
+    background: white;
+  }
+  
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    justify-content: center;
+  
+  }
+  .audio-controls button {
+    margin: 0px 15px;
+  }
+  canvas {
+    margin-top: 10px;
+    background-color: black;
+  }
+  
+  select {
+    height: 25px;
+    margin: 0px 5px;
+  }
+  a {
+    margin-left: 20px;
+  }
+  .app {
+    text-align: center;
+    padding-top: 10px;
+  }
