@@ -3,23 +3,41 @@
 {% block title %} Audio {% endblock %}
 
 {% block content %}
+
+ <style>
+    .big-button {
+    font-size: 18px;
+    padding: 12px;
+    }
+
+    .white-text {
+        color: white;
+    }
+
+</style>
+
 <div class="container-fluid my-3">
     <div class="row row-cols-3 mx-5">
         <div class="col-2">
             <div class="d-grid gap-2">
-
-                <h2 style="color:white;">Audio Recorder</h2>
-                <button onclick="startRecording()">Start Recording</button>
-                <button onclick="stopRecording()">Stop Recording</button>
-                <button onclick="playRecording()">Play Recording</button>
-                <button onclick="downloadRecording()">Download Recording</button>
+                <h1 style="color:white;text-align: center;">Audio Recording</h1>
+                <br>
+                <h2 style="color:white;text-align: center;">Audios List</h2>
+                <h2 style="color:white;text-align: center;" ><button onclick="list_audio_fetch()">Reload</button></h2>
+                <ul style="color:white;text-align: center;" id="list_videos">
+                    EMPTY
+                </ul>
             </div>
         </div>
         <div class="col-8" style="text-align: center;">
-            <audio controls></audio>
+            <div class="container">
+                    <div class="display"></div>
+                    </br>
+                    <div class="controllers"></div>
+                </div>
         </div>
         <div class="col-2 text-light" style="">
-            <h3 class="" style="display: flex;cursor: pointer;" onclick="list_audio_fetch()"><a class="btn button p-0 text-light" >&#8635;</a> Audios List</h3>
+            <h3 class="" style="display: flex;cursor: pointer;" onclick="list_audio_fetch()"><a class="btn button p-0 text-light" >&#8635;</a> Audios List</h3> 
             
             <ul id="list_audio">
                 EMPTY
@@ -29,10 +47,7 @@
 
 </div>
 
-    <h2 style="color:white;">Audios List <button onclick="list_audio_fetch()" >Reload</button></h2>
-    <ul style="color:white;" id="list_videos">
-        EMPTY
-    </ul>
+    
 </div>
 
 <script src="{{ url_for('static', filename='js/audio.js') }}"></script>

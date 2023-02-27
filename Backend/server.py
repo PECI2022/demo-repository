@@ -67,9 +67,13 @@ def download_audio():
 def list_audio():
     return [i for i in os.listdir('.') if i.endswith('.mp3')]
 
-
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+
+    # confirm that server is running
+    # curl http://localhost:5001/
+    
+
 
 
 
