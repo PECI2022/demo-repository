@@ -18,39 +18,41 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg mbg-black">
+    <nav id class="navbar navbar-expand-lg mbg-black">
         <div class="container-fluid">
-            <a id="navbarTitle" class="navbar-brand" href="/">Modular Framework for Data Acquisition and Annotation to Support Interaction Scenarios</a>
-            <!--
+            <!-- <a id="navbarTitle" class="navbar-brand" href="/">Modular Framework for Data Acquisition and Annotation to Support Interaction Scenarios</a> -->
+            <a id="navbarTitle" class="navbar-brand" href="/">Home</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
-                </ul>
+            <ul class="navbar-nav">
+                <!-- empty li to push buttons to the right -->
+                <li class="nav-item ml-auto"></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="voice?project=sad-voice">Voice</a>
+                </li>
+            </ul>
             </div>
-            -->
+            
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="login">Login</a>
+                </li>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </ul>
+            
         </div>
     </nav>
 
     <div class="container-fluid">
         {% block content %} {% endblock %}
     </div>
-
-     
 
     <script href="{{ url_for('static', filename='js/base.js') }}"></script>
 
