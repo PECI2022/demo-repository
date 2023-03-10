@@ -1,99 +1,87 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Complex and Beautiful Page</title>
-	<style>
-		body {
-			background-color: #e0e2d7;
-			font-family: Arial, sans-serif;
-		}
-		
-		.container {
-			max-width: 1200px;
-			margin: 0 auto;
-			padding: 50px;
-		}
-		
-		.header {
-			background-color: #9e7165;
-			color: #fff;
-			padding: 20px;
-			text-align: center;
-			border-radius: 5px 5px 0 0;
-			box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-		}
-		
-		.nav {
-			background-color: #61554d;
-			color: #fff;
-			padding: 20px;
-			text-align: center;
-			border-radius: 0 0 5px 5px;
-			box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
-		}
-		
-		.nav a {
-			color: #fff;
-			text-decoration: none;
-			font-weight: bold;
-			margin: 0 20px;
-		}
-		
-		.main {
-			background-color: #fff;
-			padding: 20px;
-			border-radius: 5px;
-			box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-		}
-		
-		.main h1 {
-			color: #61554d;
-			text-align: center;
-			margin-bottom: 20px;
-		}
-		
-		.card {
-			background-color: #343335;
-			color: #fff;
-			padding: 20px;
-			margin-bottom: 20px;
-			border-radius: 5px;
-			box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-		}
-		
-		.card h2 {
-			color: #e0e2d7;
-			margin-top: 0;
-			margin-bottom: 10px;
-		}
-		
-		.card p {
-			margin: 0;
-			line-height: 1.5;
-		}
-		
-		.footer {
-			background-color: #9e7165;
-			color: #fff;
-			padding: 20px;
-			text-align: center;
-			border-radius: 5px;
-			box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
-		}
-	</style>
-</head>
-<body>
-	<div class="container">
-		<header class="header">
-			<h1>Complex and Beautiful Page</h1>
-		</header>
-		<nav class="nav">
-			<a href="#">Home</a>
-			<a href="#">About Us</a>
-			<a href="#">Contact Us</a>
-		</nav>
-		<main class="main">
-			<h1>Welcome to our website</h1>
-			<div class="card">
-				<h2>Card 1</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere euismod tortor, nec males
+{% extends 'base.html' %}
+
+{% block title %} Profile {% endblock %}
+
+{% block aditionalHead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    
+
+    <div class="container my-1">
+        <br>
+        <h2 style="text-align:center;color: #61554d">Your Profile</h2>
+    
+        <br>
+        
+    
+        <h6 style="text-align:center;color: #343335">Powered by Computer and Telematics Engineering Students at University of Aveiro</h6>
+    
+        <br>
+        <div style="text-align:center;"class="container">
+            <div class="row">
+                <div class="col-sm-">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/veloso.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Rui Veloso</h5>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
+
+<br>
+<br>
+<h2 style="text-align:center;color: #61554d">Oriented by:</h2>
+<br>
+
+
+        
+            <br>
+            <br>
+        <h6 style="text-align:center;color: grey">Project developed for the "Project in Computer Engineering and Informatics" Course</h6>
+    
+        
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+        <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
+
+
+
+        <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("scrollBtn").style.display = "block";
+            } else {
+                document.getElementById("scrollBtn").style.display = "none";
+            }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            }
+        </script>
+
+    
+
+</div>
+{% endblock %}
