@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %} My Projects {% endblock %}
+
+{% block aditionalHead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container my-1">
+       
+        <br>
+    
+        <h6 style="text-align:center;color: grey">Now you can access, freely, to our DataBases and Create your own DataSets</h6>
+    
+        <br>
+        <div class="container my-5">
+            <div href="newProject" id="projectsHere" style="display:flex;">
+                <h1 class="mtext-white">My Projects</h1>
+                <button class="btn btn-light" style="margin-left: auto;" type="button" onclick="window.location.href='newProject'" >New Project</button>
+            </div>
+            <hr class="mbg-white border-3 opacity-100" style="border-color: #eee;">
+        
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                <div class="col">
+                    <div class="card h-100" >
+                        <div class="card-body">
+                            <h3 class="card-title" >Project #1</h5>
+                            <p class="card-text">Five most common hand gestures</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 23 hours ago</small>
+                        </div>
+                        <a onclick="location.href=generateLink(document.querySelector('h3'))">
+                            <span class="span-link"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Gesture_1</h5>
+                            <p class="card-text">Detects if a person is dancing</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 6 days ago</small>
+                        </div>
+                        <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-3])">
+                            <span class="span-link"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">My Note</h3>
+                            <p class="card-text">A note about my day.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 days ago</small>
+                        </div>
+                        <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-2])">
+                            <span class="span-link"></span>
+                        </a>
+                    </div>
+                </div>
+                
+                  
+                <div class="col">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h3 class="card-title">AudioCheck</h3>
+                        <p class="card-text">Detects sadness throw voice.</p>
+                      </div>
+                      <div class="card-footer">
+                        <small class="text-muted">Last updated 2 month ago</small>
+                      </div>
+                      <a onclick="location.href=generateLinkAudio(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-1])">
+                        <span class="span-link"></span>
+                      </a>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                      
+            </div>
+        
+        
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+        <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
+
+
+
+        <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("scrollBtn").style.display = "block";
+            } else {
+                document.getElementById("scrollBtn").style.display = "none";
+            }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            }
+
+            
+            
+            function generateLink(element) {
+    const projectName = 'editor';
+    const formattedTitle = element.textContent.toLowerCase().replace(/\\s+/g, '-');
+    return `${projectName}?project=${formattedTitle}`;
+}
+
+
+            function generateLinkAudio(element) {
+                const projectName = 'voice';
+                const formattedTitle = element.textContent.toLowerCase().replace(/\\s+/g, '-');
+                return `${projectName}?project=${formattedTitle}`;
+            }
+
+            // example usage
+            const title = document.getElementById('title').textContent;
+            const link = document.getElementById('link');
+            link.href = generateLink('editor', title);
+
+
+        </script>
+
+    
+
+    </div>
+
+</div>
+{% endblock %}

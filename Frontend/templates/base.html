@@ -25,7 +25,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: white;
+            background-color: #9e7165;
             color: #6ffb9e;
             cursor: pointer;
             padding: 20px;
@@ -67,13 +67,19 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <!--{% if client_is_logged_in %} -->
+               
                 <!-- empty li to push buttons to the right -->
                 <li class="nav-item ml-auto"></li>
+                
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="#projectsHere" disabled>My Projects</a> <!--  only accessed when logged in-->
+                    <a class="nav-link" href="browse" >Browse</a>
                 </li>
-                <!--{% endif %} -->
+               
+                <li class="nav-item">
+                    <a class="nav-link" href="myProjects" >My Projects</a>
+                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="about" {% if request.path == '/about' %} style="font-weight: bold;" {% endif %}>About</a>
                 </li>
