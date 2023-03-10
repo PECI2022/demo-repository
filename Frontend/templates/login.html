@@ -1,64 +1,18 @@
-<!DOCTYPE html>
-<head>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+{% extends 'base.html' %}
 
-    <link rel="icon" href="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/signIn1.png">
+{% block title %} My Projects {% endblock %}
+
+{% block aditionalHead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+
+
+{% endblock %}
+
+{% block content %}
+
     
-    <title>Login</title>
-
-    <style>
-        .mbg-black {
-            background-color: #0c6efd;
-            color: white;
-        }
-
-        .navbar {
-            height: 50px;
-        }
-    </style>    
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-
-
-
-
-<body>
-
-    <nav id class="navbar navbar-expand-lg mbg-black">
-        <div class="container-fluid">
-            <a id="navbarTitle" class="nav-link active" href="/">Home</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item ml-auto"></li>
-                <li class="nav-item">
-                <a class="nav-link" href="about" style="color: white;">About</a>
-                </li>
-            </ul>
-            </div>
-
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="login" style="color: white;" {% if request.path == '/login' %} style="font-weight: bold;" {% endif %}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                    <path fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                </svg>
-                <span>Login</span>
-                </a>
-            </li>
-            </ul>
-
-        </div>
-    </nav>
+    
 
 
             <!-- Section: Design Block -->
@@ -89,147 +43,143 @@
                 <div class="card-body p-5 shadow-4 text-center">
                     <!-- Pills navs -->
                                 
-                                <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="tab-login" data-bs-toggle="pill" data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login" aria-selected="true">Login</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="tab-register" data-bs-toggle="pill" data-bs-target="#pills-register" type="button" role="tab" aria-controls="pills-register" aria-selected="false">Register</button>
-                                    </li>
-                                    
-                                </ul>
-                                    <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login">
-                                         <form>
-                                        <br>
-                                    
-                                        <!-- Username input -->
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="loginName">Username</label>
-                                            <input id="formSigninUsername" type="text" id="loginName" class="form-control" />
-                                            
-                                        </div>
-
-                                        <!-- Password input -->
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="loginPassword">Password</label>
-                                            <input id="formSigninPassword" type="password" id="loginPassword" class="form-control" />
-                                            
-                                            
-                                        </div>
-
-                                        <!-- 2 column grid layout -->
-                                        <div class="row mb-4">
-                                            <div class="col-md-6 d-flex justify-content-center">
-                                            <!-- Checkbox -->
-                                            <div class="form-check mb-3 mb-md-0">
-                                                <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-                                                <label class="form-check-label" for="loginCheck"> Remember me </label>
-                                            </div>
-                                            </div>
-
-                                            <div class="col-md-6 d-flex justify-content-center">
-                                            <!-- Simple link -->
-                                            <a href="#!">Forgot password?</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Submit button -->
-                                        <button id="formSignin" type="submit" class="btn btn-primary btn-block mb-4" >
-                                            <a style="color:white;" href="index.html" onsubmit="submitSignin">Sign in</a>
-                                        </button>
-
-                                        <!-- Register buttons -->
-                                        <div class="text-center">
-                                            <p>Not a member? <a href="#pills-register   ">Register</a></p>
-                                        </div>
-                                        </form>
-                                    
-                                    
-                                    
-                                    </div>
-
-
-
-
-                                    <div class="tab-pane" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                                        <form>
-
-                                                <!-- Name input -->
-                                                <!-- <div class="form-outline mb-4">
-                                                    <label class="form-label" for="registerName">Name</label>  
-                                                    <input id="formSignupName" type="text" id="registerName" class="form-control" />
-                                                </div> -->
-
-                                                <!-- Username input -->
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label" for="registerUsername">Username</label>
-                                                    <input id="formSignupUsername" type="text" id="registerUsername" class="form-control" />
-                                                </div>
-
-                                                <!-- Email input -->
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label" for="registerEmail">Email</label>
-                                                    <input id="formSignupEmail" type="email" id="registerEmail" class="form-control" />
-                                                    
-                                                </div>
-
-                                                <!-- Password input -->
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label" for="registerPassword">Password</label>
-                                                    <input id="formSignupPassword1" type="password" id="registerPassword" class="form-control" />
-                                                 
-                                                </div>
-
-                                                <!-- Repeat Password input -->
-                                                <div class="form-outline mb-4">
-                                                    <label class="form-label" for="registerRepeatPassword">Repeat password</label>
-                                                    <input id="formSignupPassword2" type="password" id="registerRepeatPassword" class="form-control" />
-                                                
-                                                </div>
-
-                                                <!-- Checkbox -->
-                                                <div class="form-check d-flex justify-content-center mb-4">
-                                                    <input id="formSignupCheck" class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
-                                                    aria-describedby="registerCheckHelpText" />
-                                                    <label class="form-check-label" for="registerCheck">
-                                                    I have read and agree to the terms
-                                                    </label>
-                                                </div>
-
-                                                <!-- Submit button -->
-                                                <button id="formSignup" class="btn btn-primary btn-block mb-3">Sign in</button>
-                                        </form>
-                                    
-                                    
-                                    </div>
-                                    
-                                    </div>
-
+                    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tab-login" data-bs-toggle="pill" data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login" aria-selected="true">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab-register" data-bs-toggle="pill" data-bs-target="#pills-register" type="button" role="tab" aria-controls="pills-register" aria-selected="false">Register</button>
+                        </li>
+                        
+                    </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login">
+                                <form>
+                            <br>
+                        
+                            <!-- Username input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="loginName">Username</label>
+                                <input id="formSigninUsername" type="text" id="loginName" class="form-control" />
                                 
+                            </div>
 
+                            <!-- Password input -->
+                            <div class="form-outline mb-4">
+                        <label class="form-label" for="loginPassword">Password</label>
+                        <input id="formSigninPassword" type="password" id="loginPassword" class="form-control" />
 
-                                
+                        
+                    </div>
+
+                    <!-- 2 column grid layout -->
+                    <div class="row mb-4">
+                        <div class="col-md-6 d-flex justify-content-center">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-3 mb-md-0">
+                            <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
+                            <label class="form-check-label" for="loginCheck"> Remember me </label>
+                        </div>
+                        </div>
+
+                        <div class="col-md-6 d-flex justify-content-center">
+                        <!-- Simple link -->
+                        <a href="#!">Forgot password?</a>
+                        </div>
+                    </div>
+
                     <!-- Submit button -->
-                    
-                    
+                    <div id="formSignin" onsubmit="submitSignin() " >
+                    <button type="submit" class="btn btn-primary btn-block mb-4" onclick="window.location.href='/'">
+                        Sign in
+                        </button>
+                    </div>
 
-                    
+                    <!-- Register buttons -->
+                    <div class="text-center">
+                        <p>Not a member? <a href="#pills-register" data-bs-target="#pills-register" id="registerBtn">Register</a>
+                        </p>
+                    </div>
                     </form>
-                    
+                
+                
+                
                 </div>
-                </div>
-            </div>
 
-            <div class="col-lg-4 mb-3 mb-lg-0">
-                <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/blueCyb2.png"  class="w-40 rounded-4 shadow-4"
-                alt="" height=600px/>
-            </div>
-            </div>
-        </div>
-        <!-- Jumbotron -->
-        </section>
-        <!-- Section: Design Block -->
+
+
+
+                <div class="tab-pane" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+                    <form>
+
+                            <!-- Name input -->
+                            <!-- <div class="form-outline mb-4">
+                                <label class="form-label" for="registerName">Name</label>  
+                                <input id="formSignupName" type="text" id="registerName" class="form-control" />
+                            </div> -->
+
+                            <!-- Username input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="registerUsername">Username</label>
+                                <input id="formSignupUsername" type="text" id="registerUsername" class="form-control" />
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="registerEmail">Email</label>
+                                <input id="formSignupEmail" type="email" id="registerEmail" class="form-control" />
+                                
+                            </div>
+
+                            <!-- Password input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="registerPassword">Password</label>
+                                <input id="formSignupPassword1" type="password" id="registerPassword" class="form-control" />
+                                
+                            </div>
+
+                            <!-- Repeat Password input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="registerRepeatPassword">Repeat password</label>
+                                <input id="formSignupPassword2" type="password" id="registerRepeatPassword" class="form-control" />
+                            
+                            </div>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-center mb-4">
+                                <input id="formSignupCheck" class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
+                                aria-describedby="registerCheckHelpText" />
+                                <label class="form-check-label" for="registerCheck">
+                                I have read and agree to the terms
+                                </label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button id="formSignup" class="btn btn-primary btn-block mb-3">Sign in</button>
+                    </form>
+                
+                
+                </div>
+                
+                </div>
+            
+<!-- Submit button -->
+
+</form>
+
+</div>
+</div>
+</div>
+
+<div class="col-lg-4 mb-3 mb-lg-0">
+<img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/blueCyb2.png"  class="w-40 rounded-4 shadow-4"
+alt="" height=600px/>
+</div>
+</div>
+</div>
+<!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->
 
 
 
@@ -307,11 +257,15 @@ const makeLogin = async (username, password) => {
     } else {
         alert(resData.message)
     }
-
-
 }
+
+document.getElementById("registerBtn").addEventListener("click", function(){
+    document.getElementById("tab-register").click();
+});
+
 
 </script>
 
-</body>
 
+</div>
+{% endblock %}
