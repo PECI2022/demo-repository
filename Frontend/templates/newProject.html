@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <link rel="icon" href="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/signIn1.png">
+    
+    <title>New Project</title>
+
+    <style>
+        .mbg-black {
+            background-color: #6ffb9e;
+            color: #111111; 
+        }
+
+        .navbar {
+            height: 50px;
+        }
+
+        #scrollBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #111111;
+            color: #6ffb9e;
+            cursor: pointer;
+            padding: 20px;
+            border-radius: 10px;
+            background-image: url('https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/arrowup.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #scrollBtn:hover {
+            background-color: #0b0808;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .content {
+            max-width: 500px;
+            margin: auto;
+        }
+
+
+        body {
+            background-color: #111111;
+        }
+
+        .mbg-black {
+            background-color: #6ffb9e;
+            color: #111111; 
+        }
+
+
+
+    </style>    
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+
+    <nav id class="navbar navbar-expand-lg mbg-black">
+        <div class="container-fluid">
+            <!-- <a id="navbarTitle" class="navbar-brand" href="/">Modular Framework for Data Acquisition and Annotation to Support Interaction Scenarios</a> -->
+            <a id="navbarTitle" class="nav-link active"   href="/" >Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- empty li to push buttons to the right -->
+                <li class="nav-item ml-auto"></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about" {% if request.path == '/about' %} style="font-weight: bold;" {% endif %}>About</a>
+                </li>
+            </ul>
+            </div>
+
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="login">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                    <span>Login</span>
+                </a>
+
+                
+            </li>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container my-1">
+        <h2 style="text-align:center;color: white">New Project</h2>
+    
+        <br>
+    
+        <h6 style="text-align:center;color: grey">Now you can access, freely, to our DataBases and Create your own DataSets</h6>
+    
+        <br>
+        <div class="container my-5">
+            <div href="newProject" id="projectsHere" style="display:flex;">
+                <h1 class="mtext-white">My Projects</h1>
+                <button class="btn btn-light" style="margin-left: auto;" type="button" onclick="window.location.href='newProject'" >New Project</button>
+            </div>
+            <hr class="mbg-white border-3 opacity-100" style="border-color: #eee;">
+        
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                <div class="col">
+                    <div class="card h-100" >
+                        <div class="card-body">
+                            <h3 class="card-title">Hand Gestures</h5>
+                            <p class="card-text">Five most common hand gestures</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 13 hours ago</small>
+                        </div>
+                        <a href=editor?project=hand-gestures>
+                            <span class="span-link"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Dancing</h5>
+                            <p class="card-text">Detects if a person is dancing</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 days ago</small>
+                        </div>
+                        <a href=editor?project=dancing>
+                            <span class="span-link"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Facial Expressions</h5>
+                            <p class="card-text">Most common facial expressions</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 1 month ago</small>
+                        </div>
+                        <a href=editor?project=facial-expressions>
+                            <span class="span-link"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Sad Voice</h5>
+                            <p class="card-text">Detects sadness throw voice.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 2 month ago</small>
+                        </div>
+                        <a href=voice?project=sad-voice>
+                            <span class="span-link"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+        <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
+
+
+
+        <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("scrollBtn").style.display = "block";
+            } else {
+                document.getElementById("scrollBtn").style.display = "none";
+            }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            }
+        </script>
+
+    
+
+    </div>
+</body>

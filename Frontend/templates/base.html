@@ -25,7 +25,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: #111111;
+            background-color: white;
             color: #6ffb9e;
             cursor: pointer;
             padding: 20px;
@@ -67,13 +67,15 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                <!--{% if client_is_logged_in %} -->
                 <!-- empty li to push buttons to the right -->
                 <li class="nav-item ml-auto"></li>
                 <li class="nav-item">
-                <a class="nav-link" href="#projectsHere" {% if request.path == '/voice' %} style="font-weight: bold;" {% endif %}>Projects</a>
+                    <a class="nav-link" href="#projectsHere" disabled>My Projects</a> <!--  only accessed when logged in-->
                 </li>
+                <!--{% endif %} -->
                 <li class="nav-item">
-                <a class="nav-link" href="about" {% if request.path == '/about' %} style="font-weight: bold;" {% endif %}>About</a>
+                    <a class="nav-link" href="about" {% if request.path == '/about' %} style="font-weight: bold;" {% endif %}>About</a>
                 </li>
             </ul>
             </div>
@@ -90,11 +92,12 @@
 
                 
             </li>
-            <form class="d-flex">
+            <!--<form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            </form> -->
             </ul>
+            
 
         </div>
     </nav>
