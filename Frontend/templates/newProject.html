@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{% block title %} My Projects {% endblock %}
+
+{% block aditionalHead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<style>
+
+
+img{
+  filter: brightness(110%) sepia(67%) hue-rotate(0deg) saturate(180%) contrast(100%);
+}
+
+</style>
+
+
+{% endblock %}
+
+{% block content %}
+
+    
+    
+
+
+            <!-- Section: Design Block -->
+        <section class="text-center text-lg-start">
+        <style>
+            .cascading-right {
+            margin-right: -50px;
+            }
+
+            @media (max-width: 991.98px) {
+            .cascading-right {
+                margin-right: 0;
+            }
+            }
+        </style>
+
+        <!-- Jumbotron -->
+        <!-- CENTERS ITEMS -->
+        <div class="container py-4">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="row g-0 align-items-center">
+            
+            <!-- ALIGNS CONTENT TO THE LEFT -->
+            
+                <!-- CREATES WHITE BOX WITH CONTENT-->
+                <div class="card cascading-right" style="
+                    background: hsla(0, 0%, 100%, 0.55);
+                    backdrop-filter: blur(30px);
+                    ">
+                <div class="card-body p-5 shadow-4 text-center">
+                    <br>
+                    <br>
+                    <div class="form-outline mb-5">
+                        <div class="row row-cols-1 row-cols-sm-2 mb-5">
+                            <div class="col">
+                                <div class="form-outline mb-5">
+                            <label class="form-label" for="loginPassword">Backbone Model</label>
+                            <input id="formSigninPassword" type="password" id="loginPassword" class="form-control" />
+                        </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="form-outline mb-5">
+                                <label class="form-label" for="loginPassword">Output Location</label>
+                                <input id="formSigninPassword" type="password" id="loginPassword" class="form-control" />
+        
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2">
+                            <div class="col">
+                                <div class="form-outline mb-4">
+                            <label class="form-label" for="loginPassword">Nº Epocs</label>
+                            <input id="formSigninPassword" type="password" id="loginPassword" class="form-control" />
+                        </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Data Augmentation Techniques
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <select class="form-select" aria-label="Filter options">
+                                    <option selected>Choose an option</option>
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                  </select>
+                                </div>
+                              </div>
+                        </div>                              
+                              </div>
+                              
+                            </div>
+                            <div id="formSignin" onsubmit="submitSignin() " >
+                                <button type="submit" class="btn btn-primary btn-block mb-4" onclick="window.location.href='/'">
+                                    Train Model
+                                    </button>
+                                </div>
+                        </div>
+                    </div> 
+                </div>
+<!-- Submit button -->
+
+</form>
+
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+<!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->
+
+
+
+        <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<script>
+
+document.getElementById("formSignin").addEventListener("click", async function(event){
+    event.preventDefault();
+
+    // password check
+
+    data = {
+        username: document.querySelector("#formSigninUsername").value,
+        password: document.querySelector("#formSigninPassword").value,
+    }
+
+    console.log(data)
+    // make checks
+
+    makeLogin(data.username, data.password)
+});
+
+document.getElementById("formSignup").addEventListener("click", async function(event){
+    event.preventDefault()
+
+    // password check
+    password1 = document.querySelector("#formSignupPassword1").value
+    password2 = document.querySelector("#formSignupPassword2").value
+    console.log(password1, password2)
+    if (password1!=password2) {
+        alert("Passwords dont match");
+        return;
+    }
+
+    data = {
+        username: document.querySelector("#formSignupUsername").value,
+        email: document.querySelector("#formSignupEmail").value,
+        password: password1,
+        roles: ["user"]
+    }
+
+    console.log(data)
+
+    // TODO... Create tests to check values
+    apiURL = window.location.origin.split(":")
+    apiURL = apiURL[0] + ":" + apiURL[1] + ":8081/api/auth/signup"
+    const response = await fetch(apiURL,{
+        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+    })
+    resData = await response.json()
+    if (resData.message != 'User was registered successfully!') {
+        alert(resData.message);
+        return;
+    }
+
+    // login to get token
+    makeLogin(data.username, data.password)
+});
+
+const makeLogin = async (username, password) => {
+    data = {username, password}
+
+    apiURL = window.location.origin.split(":")
+    apiURL = apiURL[0] + ":" + apiURL[1] + ":8081/api/auth/signin"
+    const response = await fetch(apiURL,{
+        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+    })
+    resData = await response.json();
+    console.log(resData)
+    if (resData.accessToken) {
+        localStorage.setItem('x-access-token', resData.accessToken);
+        window.location.href = "/html" // TODO change when implementing the static server
+    } else {
+        alert(resData.message)
+    }
+}
+
+document.getElementById("registerBtn").addEventListener("click", function(){
+    document.getElementById("tab-register").click();
+});
+
+
+</script>
+
+
+</div>
+{% endblock %}
