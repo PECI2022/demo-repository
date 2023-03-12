@@ -43,5 +43,38 @@ def download():
 def list_videos():
     return [i for i in os.listdir('.') if i.endswith('.webm')]
 
+# audio 
+@app.route('/upload_audio', methods=['POST'])
+def upload_audio():
+    file = request.files['file']
+    description = json.loads(request.form['description'])
+    file.save('./'+description['name']+'.mp3')
+    # a = fs.put(file)
+    return {'status': 200}
+
+@app.route('/download_audio', methods=['POST'])
+def download_audio():
+    # download audio to Backend folder
+    fileName = request.get_json()['name']
+    response = make_response()
+    response.headers.add_header('Access-Control-Allow-Origin', '*')
+    response.content_type = 'audio/mp3'
+    with open("./"+fileName, "rb") as f:
+        response.data = f.read()
+    return response
+
+@app.route('/list_audio')
+def list_audio():
+    return [i for i in os.listdir('.') if i.endswith('.mp3')]
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+
+    # confirm that server is running
+    # curl http://localhost:5001/
+    
+
+
+
+
+

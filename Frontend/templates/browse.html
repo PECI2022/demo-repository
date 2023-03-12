@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block title %} Browse {% endblock %}
+
+{% block aditionalHead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<style>
+ .form-control {
+  width: 300px; /* Change the width to your desired size */
+  height: 40px; /* Change the height to your desired size */
+}
+
+.btn-outline-success {
+  height: 40px; /* Change the height to your desired size */
+  font-size: 16px; /* Change the font size to your desired size */
+  color: #343335; /* Change the font color to your desired color */
+  background-color: transparent; /* Remove the background color */
+  border-color: #343335; /* Change the border color to your desired color */
+}
+.btn-outline-success:focus {
+  color: #fff !important;
+  background-color: #343335 !important;
+  border-color: #343335 !important;
+}
+
+.btn-outline-success:hover {
+  color: #ffffff !important;
+  background-color: #343335 !important;
+  border-color: #343335 !important;
+}
+
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.filter-container select,
+.filter-container input {
+  margin-left: 10px;
+}
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container my-4">
+        <h2 style="text-align:left;color: #61554d">Browse</h2>
+    
+        <br>
+        
+        <div class="d-flex justify-content-between">
+            <form class="d-flex">
+                <label for="search-input" class="visually-hidden">Search</label>
+                <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+              
+          
+            <div class="filter-container">
+            
+              <label for="category" >Category:</label>
+              <select style="margin-right: 20px;" id="category" name="category"ria-label="Browse">
+                <option value="">Video</option>
+                <option value="electronics">Audio</option>
+                <option value="clothing">Radar</option>
+              </select>
+              
+              <button class="btn btn-outline-success" type="submit">Filter</button>
+            </div>
+          </div>
+        <br>
+          
+        <div id="ProjectsSearch" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card h-100" >
+                    <div class="card-body">
+                        <h3 class="card-title" >Project #1</h3>
+                        <p class="card-text">Five most common hand gestures</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 23 hours ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelector('h3'))">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Gesture_1</h3>
+                        <p class="card-text">Detects if a person is dancing</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 6 days ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-3])">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">My Note</h3>
+                        <p class="card-text">A note about my day.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 days ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-2])">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            
+              
+            <div class="col">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h3 class="card-title">AudioCheck</h3>
+                    <p class="card-text">Detects sadness throw voice.</p>
+                  </div>
+                  <div class="card-footer">
+                    <small class="text-muted">Last updated 2 month ago</small>
+                  </div>
+                  <a onclick="location.href=generateLinkAudio(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-1])">
+                    <span class="span-link"></span>
+                  </a>
+                </div>
+              </div>    
+        </div>
+
+        <br>
+
+
+        <br>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card h-100" >
+                    <div class="card-body">
+                        <h3 class="card-title" >Project #1</h3>
+                        <p class="card-text">Five most common hand gestures</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 23 hours ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelector('h3'))">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Gesture_1</h3>
+                        <p class="card-text">Detects if a person is dancing</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 6 days ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-3])">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">My Note</h3>
+                        <p class="card-text">A note about my day.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 days ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-2])">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            
+              
+            <div class="col">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h3 class="card-title">AudioCheck</h3>
+                    <p class="card-text">Detects sadness throw voice.</p>
+                  </div>
+                  <div class="card-footer">
+                    <small class="text-muted">Last updated 2 month ago</small>
+                  </div>
+                  <a onclick="location.href=generateLinkAudio(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-1])">
+                    <span class="span-link"></span>
+                  </a>
+                </div>
+              </div>
+
+        </div>
+
+        <br>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card h-100" >
+                    <div class="card-body">
+                        <h3 class="card-title" >Project #1</h3>
+                        <p class="card-text">Five most common hand gestures</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 23 hours ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelector('h3'))">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">Gesture_1</h3>
+                        <p class="card-text">Detects if a person is dancing</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 6 days ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-3])">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="card-title">My Note</h3>
+                        <p class="card-text">A note about my day.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 days ago</small>
+                    </div>
+                    <a onclick="location.href=generateLink(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-2])">
+                        <span class="span-link"></span>
+                    </a>
+                </div>
+            </div>
+            
+              
+            <div class="col">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h3 class="card-title">AudioCheck</h3>
+                    <p class="card-text">Detects sadness throw voice.</p>
+                  </div>
+                  <div class="card-footer">
+                    <small class="text-muted">Last updated 2 month ago</small>
+                  </div>
+                  <a onclick="location.href=generateLinkAudio(document.querySelectorAll('h3')[document.querySelectorAll('h3').length-1])">
+                    <span class="span-link"></span>
+                  </a>
+                </div>
+              </div>
+
+        </div>
+
+        <br>
+        <h6 style="text-align:center;color: #343335">Powered by Computer and Telematics Engineering Students at University of Aveiro</h6>
+    
+        <br>
+       
+        
+
+       
+
+        <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
+
+
+
+        <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("scrollBtn").style.display = "block";
+            } else {
+                document.getElementById("scrollBtn").style.display = "none";
+            }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            }
+
+            function generateLink(element) {
+                const projectName = 'editor';
+                const formattedTitle = element.textContent.toLowerCase().replace(/\\s+/g, '-');
+                return `${projectName}?project=${formattedTitle}`;
+            }
+
+
+            function generateLinkAudio(element) {
+                const projectName = 'voice';
+                const formattedTitle = element.textContent.toLowerCase().replace(/\\s+/g, '-');
+                return `${projectName}?project=${formattedTitle}`;
+            }
+
+
+            const searchInput = document.querySelector('#ProjectsSearch input[type="search"]');
+
+            searchInput.addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase();
+
+            const projectCards = document.querySelectorAll('#ProjectsSearch .card');
+
+            projectCards.forEach(function(projectCard) {
+                const projectName = projectCard.querySelector('.card-title').textContent.toLowerCase();
+                const projectText = projectCard.querySelector('.card-text').textContent.toLowerCase();
+
+                if (projectName.includes(searchQuery) || projectText.includes(searchQuery)) {
+                projectCard.style.display = 'block';
+                } else {
+                projectCard.style.display = 'none';
+                }
+            });
+            });
+
+        </script>
+
+    
+
+    </div>
+     <footer>
+    <p>&copy; 2023 MFDA. All Rights Reserved.</p>
+  </footer>
+
+</div>
+{% endblock %}

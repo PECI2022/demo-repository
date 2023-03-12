@@ -10,10 +10,11 @@ def send_static(path):
 def default():
     return render_template('index.html')
 
-@app.route('/<path>')
+@app.route('/<path:path>')
 def static_route(path):
+    print(path)
     return render_template(path+'.html')
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(debug=True, port=8081)
