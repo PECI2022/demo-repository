@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %} My Projects {% endblock %}
+
+{% block aditionalHead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<style>
+
+
+img{
+  filter: brightness(110%) sepia(67%) hue-rotate(0deg) saturate(180%) contrast(100%);
+}
+
+</style>
+
+
+{% endblock %}
+
+{% block content %}
+
+    
+    
+
+
+            <!-- Section: Design Block -->
+        <section class="text-center text-lg-start">
+        <style>
+            .cascading-right {
+            margin-right: -50px;
+            }
+
+            @media (max-width: 991.98px) {
+            .cascading-right {
+                margin-right: 0;
+            }
+            }
+        </style>
+
+        <!-- Jumbotron -->
+        <!-- CENTERS ITEMS -->
+        <div class="container py-4">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="row g-0 align-items-center">
+            
+            <!-- ALIGNS CONTENT TO THE LEFT -->
+            
+                <!-- CREATES WHITE BOX WITH CONTENT-->
+                <div class="card cascading-right" style="
+                    background: hsla(0, 0%, 100%, 0.55);
+                    backdrop-filter: blur(30px);
+                    ">
+                <div class="card-body p-5 shadow-4 text-center">
+                    <br>
+                    <br>
+                    <div class="form-outline mb-5">
+                        <div class="row row-cols-1 row-cols-sm-2 mb-5">
+                            <div class="col">
+                                <div class="form-outline mb-5">
+                            <label class="form-label" for="loginPassword">Backbone Model</label>
+                            <input id="formSigninPassword" type="password" id="loginPassword" class="form-control" />
+                        </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="form-outline mb-5">
+                                <label class="form-label" for="loginPassword">Output Location</label>
+                                
+                                <input type="file" id="file-input" class="form-control" >
+                                <ul id="file-list"></ul>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 align-items-center" > 
+                            <div class="col">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="loginPassword">Nº Epocs</label>
+                                    <input id="formSigninPassword" type="number" id="loginPassword" class="form-control" min="0" max="100" step="1" />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="filter-container d-flex align-items-center">
+                                    <label for="category" class="me-3">Data Augmentation Techniques:</label>
+                                    <select style="margin-right: 20px;" id="category" name="category"ria-label="Browse">
+                                        <option value="">Flip</option>
+                                        <option value="electronics">Rotate</option>
+                                        <option value="clothing">Crop</option>
+                                    </select>
+                                </div>
+                            </div>
+                        
+                             
+                              </div>
+                              
+                            </div>
+                            <div id="formSignin" onsubmit="submitSignin() " >
+                                <button type="submit" class="btn btn-primary btn-block mb-4" onclick="window.location.href='/'">
+                                    Train Model
+                                    </button>
+                                </div>
+                        </div>
+                    </div> 
+                </div>
+<!-- Submit button -->
+
+</form>
+
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+<!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->
+
+
+
+        <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+
+<script>
+  const input = document.getElementById('file-input');
+  const list = document.getElementById('file-list');
+
+  input.addEventListener('change', () => {
+    while (list.firstChild) {
+      list.removeChild(list.firstChild);
+    }
+
+    const files = input.files;
+    const fileName = files[0].name.replace(/\.[^/.]+$/, (match) => {
+      return match.split('.').slice(0, -1).join('.');
+    });
+    const li = document.createElement('li');
+    li.textContent = fileName;
+    list.appendChild(li);
+  });
+</script>
+
+
+
+
+</div>
+{% endblock %}
