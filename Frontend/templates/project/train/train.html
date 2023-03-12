@@ -1,0 +1,92 @@
+{% extends 'project/projectBase.html' %}
+
+{% block title %} Train {% endblock %}
+
+{% block projectContent %}
+<div class="container">
+  <h1 class="my-5" style="text-align: center;">Train your model</h1>
+  <div class="w-50" style="margin:auto;">
+    
+    <div class="input-group">
+      <label class="input-group-text" for="inputGroupSelect01">Backbone Model</label>
+      <select class="form-select h-100" id="inputGroupSelect01">
+        <option selected>Choose...</option>
+        <option value="1">Model 1</option>
+        <option value="2">Model 2</option>
+        <option value="3">Model 3</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label class="input-group-text" for="inputGroupSelect01">Number of Epochs</label>
+      <input type="number" aria-label="First name" class="form-control" value="40">
+    </div>
+    <div class="input-group">
+      <label class="input-group-text" for="inputGroupSelect01">Output Name</label>
+      <input type="text" aria-label="First name" class="form-control">
+    </div>
+  </div>
+  <div class="mt-5" style="width:70%;margin:auto">
+    <h3 style="text-align: center;">Select Classes to Train</h3>
+    <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
+
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">
+              <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" checked>
+              Thumbsup
+            </h5>
+            <p class="card-text">
+              Raw Data: 13 <br>
+              After Augmentation: 26 <br>
+              Augmentation: <span class="material-icons" style="cursor: pointer;">edit</span><br>
+              &emsp; - Flip <br>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">
+              <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" checked>
+              Thumbsdown
+            </h5>
+            <p class="card-text">
+              Raw Data: 9 <br>
+              After Augmentation: 18 <br>
+              Augmentation: <span class="material-icons" style="cursor: pointer;">edit</span><br>
+              &emsp; - Flip <br>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">
+              <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" checked>
+              Peace
+            </h5>
+            <p class="card-text">
+              Raw Data: 7 <br>
+              After Augmentation: 140 <br>
+              Augmentation: <span class="material-icons" style="cursor: pointer;">edit</span><br>
+              &emsp; - Flip <br>
+              &emsp; - Random Rotation <br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-secondary mt-5" style="position:absolute;font-size: 300%;left:50%;transform: translateX(-50%); width: 70%;">TRAIN</button>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/project/train/trainBase.js') }}"></script>
+{% block acquisitionScript %} {% endblock %}
+
+{% endblock %}

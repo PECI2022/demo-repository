@@ -1,0 +1,39 @@
+{% extends 'project/acquisition/acquisitionBase.html' %}
+
+{% block acquisitionOptions %}
+<div class="btn-group">
+    <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+        Thumbsup
+    </button>
+    <ul class="dropdown-menu w-100">
+        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbup'">Thumbsup</button></li>
+        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbsdown'">Thumbsdown</button></li>
+        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Peace'">Peace</button></li>
+    </ul>
+    <button onclick="prompt('New Class Name?')">+</button>
+</div>
+<div class="input-group">
+    <span class="input-group-text" style="width:70%;">Countdown</span>
+    <input type="number" aria-label="First name" class="form-control" value="3">
+</div> 
+<div class="input-group">
+    <span class="input-group-text" style="width:70%;">Duration</span>
+    <input type="number" aria-label="First name" class="form-control" value="3">
+</div> 
+  
+<button class="btn button btn-light block" id="save-video" disabled>Record</button>
+{% endblock %}
+
+{% block acquisitionDisplay %}
+<div id="startDisplayButtonBack" style="width: 640px;height:480px;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
+    <button class="btn button btn-light" id="start-camera" style="">Start Camera</button>
+</div>
+
+<video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+<video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+{% endblock %}
+
+
+{% block acquisitionScript %}
+<script src="{{ url_for('static', filename='js/project/acquisition/video.js') }}"></script>
+{% endblock %}
