@@ -2,29 +2,109 @@
 
 {% block title %} Editor {% endblock %}
 
-{% block content %}
-<div class="container-fluid my-3">
-    <div class="row row-cols-3 mx-5">
-        <div class="col-2">
-            <div class="d-grid gap-2">
-                <button class="btn button btn-light block" id="start-camera">Start Camera</button>
-                <button class="btn button btn-light block" id="start-record" disabled>Start Recording</button>
-                <button class="btn button btn-light block" id="stop-record" disabled>Stop Recording</button>
-                <button class="btn button btn-light block" id="save-video" disabled>Save Recording</button>
+{% block content %} 
+
+<style>
+    /* The navigation menu */
+.navbar {
+  overflow: hidden;
+  background-color: #70393c;
+}
+
+/* Navigation links */
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The subnavigation menu */
+.subnav {
+  float: left;
+  overflow: hidden;
+}
+
+/* Subnav button */
+.subnav .subnavbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* Add a red background color to navigation links on hover */
+.navbar a:hover, .subnav:hover .subnavbtn {
+  background-color: rgb(104, 33, 49);
+}
+
+/* Style the subnav content - positioned absolute */
+.subnav-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: red;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Style the subnav links */
+.subnav-content a {
+  float: left;
+  color: white;
+  text-decoration: none;
+}
+
+/* Add a grey background color on hover */
+.subnav-content a:hover {
+  background-color: #eee;
+  color: black;
+}
+
+/* When you move the mouse over the subnav container, open the subnav content */
+.subnav:hover .subnav-content {
+  display: block;
+}
+</style>
+<div class="navbar">
+    <div class="subnav">
+    <button class="subnavbtn">Acquire <i class="fa fa-caret-down"></i></button>
+    </div>
+    <div class="subnav">
+        <button class="subnavbtn">Visuilize<i class="fa fa-caret-down"></i></button>
+      </div>
+    <div class="subnav">
+      <button class="subnavbtn">Train <i class="fa fa-caret-down"></i></button>
+    </div>
+  </div>
+    <div class="container-fluid my-3">
+        <div class="row row-cols-3 mx-5">
+            <div class="col-2">
+                <div class="d-grid gap-2">
+                    <button class="btn button btn-light block" id="start-camera">Start Camera</button>
+                    <button class="btn button btn-light block" id="start-record" disabled>Start Recording</button>
+                    <button class="btn button btn-light block" id="stop-record" disabled>Stop Recording</button>
+                    <button class="btn button btn-light block" id="save-video" disabled>Save Recording</button>
+                </div>
+            </div>
+            <div class="col-8" style="text-align: center;">
+                <video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+                <video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+            </div>
+            <div class="col-2 text-light" style="">
+                <h3 class="" style="display: flex;cursor: pointer;" onclick="list_videos_fetch()"><a class="btn button p-0 text-light" >&#8635;</a> Videos List</h3>
+                
+                <ul id="list_videos">
+                    EMPTY
+                </ul>
             </div>
         </div>
-        <div class="col-8" style="text-align: center;">
-            <video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
-            <video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
-        </div>
-        <div class="col-2 text-light" style="">
-            <h3 class="" style="display: flex;cursor: pointer;" onclick="list_videos_fetch()"><a class="btn button p-0 text-light" >&#8635;</a> Videos List</h3>
-            
-            <ul id="list_videos">
-                EMPTY
-            </ul>
-        </div>
-    </div>
 
     <!--<br>
     <video id="loaded-video" src="" width="320" height="240" autoplay></video>
