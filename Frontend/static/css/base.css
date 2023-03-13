@@ -1,64 +1,82 @@
+/* base */
+
 body {
-    background-color: #e0e2d7;
+  background-color: #e0e2d7;
 }
 
 .mbg-black {
-    background-color: #9e7165; /* #76b5c5 */
+  background-color: #9e7165; /* #76b5c5 */
 }
 
 .mtext-white {
-    color: #61554d;
+  color: #61554d;
 }
 
 .mbg-black #navbarTitle {
-    color:#343335;
-}
 
-.mbg-black #navbarTitle.active {
-    color: #ccc;
 }
 
 
 #msg {
-    visibility: hidden;
-    color: #3C3EF2;
-    font-weight: bold;
-    font-size: 22px;
-    font-family: Verdana;
-  }
-  button {
-    padding: 5px 10px;
-    border: 1px solid grey;
-    font-size: 18px;
-    background: white;
-  }
-  
-  .audio-controls {
-    display: flex;
-    align-items: center;
-    padding-top: 20px;
-    justify-content: center;
-  
-  }
-  .audio-controls button {
-    margin: 0px 15px;
-  }
-  canvas {
-    margin-top: 10px;
-    background-color: black;
-  }
-  
-  select {
-    height: 20px;
-    margin: 0px 5px;
-  }
-  a {
-    margin-left: 20px;
-  }
-  .app {
-    text-align: center;
-    padding-top: 10px;
-  }
+  visibility: hidden;
+  color: #3C3EF2;
+  font-weight: bold;
+  font-size: 22px;
+  font-family: Verdana;
+}
+button {
+  padding: 5px 10px;
+  border: 1px solid grey;
+  font-size: 18px;
+  background: white;
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+  justify-content: center;
+
+}
+.audio-controls button {
+  margin: 0px 15px;
+}
+canvas {
+  margin-top: 10px;
+  background-color: black;
+}
+
+select {
+  height: 20px;
+  margin: 0px 5px;
+}
+a {
+  margin-left: 20px;
+}
+.app {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.navbar {
+  height: 50px;
+}
+
+
+
+#scrollBtn:hover {
+  background-color: #9e7165;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content {
+  max-width: 500px;
+  margin: auto;
+}
 
   .navbar {
     height: 50px;
@@ -103,166 +121,4 @@ body {
 
 /* Get Started Button*/
 
-   .cssbuttons-io-button {
-    background: #9e7165;
-    color: white;
-    font-family: inherit;
-    padding: 0.35em;
-    padding-left: 1.2em;
-    font-size: 17px;
-    font-weight: 500;
-    border-radius: 0.9em;
-    border: none;
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    box-shadow: inset 0 0 1.6em -0.6em #61554d;
-    overflow: hidden;
-    position: relative;
-    height: 2.8em;
-    padding-right: 3.3em;
-  }
-  
-  .cssbuttons-io-button .icon {
-    background: white;
-    margin-left: 1em;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2.2em;
-    width: 2.2em;
-    border-radius: 0.7em;
-    box-shadow: 0.1em 0.1em 0.6em 0.2em #61554d;
-    right: 0.3em;
-    transition: all 0.3s;
-  }
-  
-  .cssbuttons-io-button:hover .icon {
-    width: calc(100% - 0.6em);
-  }
-  
-  .cssbuttons-io-button .icon svg {
-    width: 1.1em;
-    transition: transform 0.3s;
-    transform: rotate(90deg);
-    color: #9e7165;
-  }
 
-/* profile page: */
-.card-client {
-  background: #9e7165;
-  width: 22rem;
-  height: 33rem;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border: 4px solid #61554d;
-  box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
-  border-radius: 10px;
-  text-align: center;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-  transition: all 0.3s ease;
-}
-
-.card-client:hover {
-  transform: translateY(-10px);
-}
-
-.user-picture {
-  overflow: hidden;
-  object-fit: cover;
-  width: 12rem;
-  height: 12rem;
-  border: 4px solid #61554d;
-  border-radius: 999px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-}
-
-.user-picture svg {
-  width: 2.5rem;
-  fill: currentColor;
-}
-
-.name-client {
-  margin: 0;
-  margin-top: 20px;
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.name-client span {
-  display: block;
-  font-weight: 200;
-  font-size: 16px;
-}
-
-.social-media:before {
-  content: " ";
-  display: block;
-  width: 100%;
-  height: 2px;
-  margin: 20px 0;
-  background: #61554d;
-}
-
-.social-media a {
-  position: relative;
-  margin-right: 15px;
-  text-decoration: none;
-  color: inherit;
-}
-
-.social-media a:last-child {
-  margin-right: 0;
-}
-
-.social-media a svg {
-  width: 1.1rem;
-  fill: currentColor;
-}
-
-/*-- Tooltip Social Media --*/
-.tooltip-social {
-  background: #262626;
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  padding: 0.5rem 0.4rem;
-  border-radius: 5px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -90%);
-  transition: all 0.2s ease;
-  z-index: 1;
-}
-
-.tooltip-social:after {
-  content: " ";
-  position: absolute;
-  bottom: 1px;
-  left: 50%;
-  border: solid;
-  border-width: 10px 10px 0 10px;
-  border-color: transparent;
-  transform: translate(-50%, 100%);
-}
-
-.social-media a .tooltip-social:after {
-  border-top-color: #262626;
-}
-
-.social-media a:hover .tooltip-social {
-  opacity: 1;
-  transform: translate(-50%, -130%);
-}
-  
- 

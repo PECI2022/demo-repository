@@ -4,159 +4,6 @@
 
 {% block aditionalHead %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-<style>
-
-
-    .flip-card {
-  background-color: transparent;
-  width: 240px;
-  height: 154px;
-  perspective: 1000px;
-}
-
-.heading {
-  position: absolute;
-  letter-spacing: .2em;
-  font-size: 0.5em;
-  top: 2em;
-  left: 20.6em;
-  color: #e0e2d7;
-}
-
-.logo {
-  position: absolute;
-  top: 6.8em;
-  left: 11.7em;
-}
-
-.chip {
-  position: absolute;
-  top: 2.3em;
-  left: 1.5em;
-}
-
-.contactless {
-  position: absolute;
-  top: 3.5em;
-  left: 12.4em;
-}
-
-.number {
-  position: absolute;
-  font-weight: bold;
-  font-size: .6em;
-  top: 8.3em;
-  left: 2.8em;
-  color: #e0e2d7;
-}
-
-.valid_thru {
-  position: absolute;
-  font-weight: bold;
-  top: 635.8em;
-  font-size: .01em;
-  left: 140.3em;
-  color: #e0e2d7;
-}
-
-.date {
-  position: absolute;
-  font-weight: bold;
-  font-size: 0.5em;
-  top: 13.6em;
-  left: 3.2em;
-  color: #e0e2d7;
-}
-
-.name {
-  position: absolute;
-  font-weight: bold;
-  font-size: 0.5em;
-  top: 16.1em;
-  left: 2em;
-  color: #e0e2d7;
-}
-
-.strip {
-  position: absolute;
-  background-color: white;
-  width: 15em;
-  height: 1.5em;
-  top: 2.4em;
-  background: repeating-linear-gradient(
-    45deg,
-    #303030,
-    #303030 10px,
-    #202020 10px,
-    #202020 20px
-  );
-}
-
-.mstrip {
-  position: absolute;
-  background-color: rgb(255, 255, 255);
-  width: 8em;
-  height: 0.8em;
-  top: 5em;
-  left: .8em;
-  border-radius: 2.5px;
-}
-
-.sstrip {
-  position: absolute;
-  background-color: rgb(255, 255, 255);
-  width: 4.1em;
-  height: 0.8em;
-  top: 5em;
-  left: 10em;
-  border-radius: 2.5px;
-}
-
-.code {
-  font-weight: bold;
-  text-align: center;
-  margin: 0.1em;
-  color: #343335;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front, .flip-card-back {
-  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border-radius: 1rem;
-}
-
-.flip-card-front {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: #343335;
-}
-
-.flip-card-back {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: #343335;
-  transform: rotateY(180deg);
-}
-
-</style>
 {% endblock %}
 
 {% block content %}
@@ -173,12 +20,13 @@
     <h1 style="text-align:center;color: #61554d">Modular Framework for Data Acquisition and Annotation  <br>to Support Interaction Scenarios</h1>
 
     <br>
-    
+
 
     <h6 style="text-align:center;color: #343335">This modular data acquisition framework is designed to facilitate the making of data acquisition systems for interaction scenarios. This system involves the <br> 
     acquisition of data from various sources, as well as the real-time processing and analysis of that data to enable interactive behavior. Our modular data  <br> acquisition framework can be used in a wide range of applications such as research and development and consumer-facing systems. In research  <br> and development, it can be used to study and evaluate different interaction scenarios and algorithms. And in consumer-facing systems,  <br>it can be used to enable interactive and personalized experiences for users.</h6>
     
     <br>
+ 
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -250,7 +98,7 @@
     </div>  
 
     <br>
-
+    
     <button class="cssbuttons-io-button" onclick="window.location.href='#MFDA'"> Get started
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
@@ -326,7 +174,7 @@
                 <div class="card-footer">
                     <small class="text-muted">Last updated 13 hours ago</small>
                 </div>
-                <a href=editor?project=hand-gestures>
+                <a href='browse'>
                     <span class="span-link"></span>
                 </a>
             </div>
@@ -340,7 +188,7 @@
                 <div class="card-footer">
                     <small class="text-muted">Last updated 3 days ago</small>
                 </div>
-                <a href=editor?project=dancing>
+                <a href='project/train/trainBase'>
                     <span class="span-link"></span>
                 </a>
             </div>
@@ -376,27 +224,13 @@
     </div>
 
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+   
 
     <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
 
+<footer>
+  <p>&copy; 2023 MFDA. All Rights Reserved.</p>
+</footer>   
 
 
     <script>
@@ -418,7 +252,7 @@
         }
     </script>
 
-   
+
 
 </div>
 {% endblock %}
