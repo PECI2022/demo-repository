@@ -15,7 +15,7 @@ CORS(app)
 
 class Operations:
     def __init__(self): 
-        self.id = []
+        pass
 
     def upload(self):
         file = request.files['file']    
@@ -23,29 +23,22 @@ class Operations:
         location = './' + description['name'] + '.webm'
         file.save(location)
         _id = mongo_cli.generate_unique_id()
-        self.id.append([location,_id])
         mongo_cli.insert_data(location,_id,"location")
         mongo_cli.insert_media_file(_id,location)
-        # mongo_cli.insert_data(location,_id,"description")
+        os.remove(location)
         return "location"
     
     def list_videos(self):
-        # print(mongo_cli.list_s())
-        return [i[0] for i in self.id if i[0].endswith('.webm')]
-        # videos = mongo_cli.find_documents()
-        print(mongo_cli.find_document_by_id(self.id[0]))
-        return mongo_cli.find_document_by_id(self.id[0])
+        ret = []
+        files = mongo_cli.collection.find()
+        for f in files:
+            ret.append(f['location'])
+        return ret
     
     def download(self):
         fileName = request.get_json()['name']
-        name = mongo_cli.download_media_file(mongo_cli.collection.find_one({"location": fileName})['_id'])
-        # return name + ".webm"
-        # response = make_response()
-        # response.headers.add_header('Access-Control-Allow-Origin', '*')
-        # response.content_type = 'video/webm'
-        with open("./"+name, "rb") as f:
-            response = f.read()
-        return response
+        name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"location": fileName})['_id'])
+        return name
     
 operation = Operations()
 
