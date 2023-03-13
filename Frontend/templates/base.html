@@ -19,46 +19,30 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     
     <style>
-        .navbar {
-            height: 50px;
-        }
 
-        #scrollBtn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 30px;
-            z-index: 99;
-            border: none;
-            outline: none;
-            background-color: #9e7165;
-            color: #343335;
-            cursor: pointer;
-            padding: 20px;
-            border-radius: 10px;
-            background-image: url('https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/arrowup.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        #scrollBtn:hover {
-            background-color: #0b0808;
-        }
-
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .content {
-            max-width: 500px;
-            margin: auto;
-        }
+    #scrollBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #e0e2d7;
+    color: #343335;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 10px;
+    background-image: url("{{ url_for('static', filename='imgs/arrowup.png') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+    }
 
     </style>
     {% block aditionalHead %}
     {% endblock %}
 </head>
+
 
 <body>
 

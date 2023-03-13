@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="card" style="width: 13rem;">
-                        <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/joao.jpg" class="card-img-top" alt="...">
+                        <img src="{{ url_for('static', filename='imgs/joao.jpg') }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">João Afonso Ferreira</h5>
                             <p class="card-text">MIECT</p>                      
@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 13rem;height: 362px;">
-                        <img src="{{ url_for('static', filename='imgs/veloso.jpg') }}"   height=205 class="card-img-top" alt="...">
+                        <img src="{{ url_for('static', filename='imgs/durvz.jpeg') }}"   height=205 class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Pedro Durval Cruzeiro</h5>
                             <p class="card-text">LECI</p>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 13rem;">
-                        <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/radio.png" class="card-img-top" alt="...">
+                        <img src="{{ url_for('static', filename='imgs/radio.png') }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Eduardo Lopes Fernandes</h5>
                             <p class="card-text">LECI</p>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 13rem;height: 362px;" > 
-                        <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/claroo.jpg"  height=205 class="card-img-top" alt="...">
+                        <img src="{{ url_for('static', filename='imgs/claroo.jpg') }}"  height=205 class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Guilherme Claro</h5>
                             <p class="card-text">MECT</p>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-sm">
                     <div class="card" style="width: 13rem;height: 362px;">
-                        <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/tiago.jpg" class="card-img-top" alt="...">
+                        <img src="{{ url_for('static', filename='imgs/tiago.jpg') }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Tiago Mostardinha</h5>
                             <p class="card-text">LECI</p>
@@ -110,7 +110,7 @@
   <div class="row justify-content-center">
     <div class="col-sm-6 col-md-4">
       <div class="card" style="width: 13rem;">
-        <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/samuel.jpg" class="card-img-top" alt="...">
+        <img src="{{ url_for('static', filename='imgs/samuel.jpg') }}" class="card-img-top" alt="...">
         <div class="card-body">
          <h5 class="card-title">Samuel Silva</h5>
             
@@ -119,7 +119,7 @@
     </div>
      <div class="col-sm-6 col-md-4">
       <div class="card" style="width: 13rem;">
-        <img src="https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/fabio.jpg" class="card-img-top" alt="...">
+        <img src="{{ url_for('static', filename='imgs/fabio.jpg') }}" class="card-img-top" alt="...">
         <div class="card-body">
          <h5 class="card-title">Fábio Barros</h5>
             
@@ -129,22 +129,15 @@
   </div>
 </div>
 
-        
-            <br>
-            <br>
-        <h6 style="text-align:center;color: grey">Project developed for the "Project in Computer Engineering and Informatics" Course</h6>
-    
-        
-        
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+      
+    <br>
+    <br>
+    <br>
+    <br>
 
+    <footer>
+        <p>&copy; 2023 MFDA. All Rights Reserved.</p>
+    </footer>
 
         <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
 
