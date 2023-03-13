@@ -1,0 +1,14 @@
+{% extends 'project/projectBase.html' %}
+
+{% block title %} Visualize {% endblock %}
+
+{% block projectContent %}
+<div class="container my-3">
+    
+
+</div>
+
+<script src="{{ url_for('static', filename='js/project/visualize/visualizeBase.js') }}"></script>
+{% block acquisitionScript %} {% endblock %}
+
+{% endblock %}

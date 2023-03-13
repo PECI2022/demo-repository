@@ -2,28 +2,71 @@
 
 {% block title %} Acquisition {% endblock %}
 
-{% block content %}
-<div class="container-fluid my-3">
+{% block projectContent %}
+<div class="container my-3">
     <div class="row row-cols-3 mx-5">
-        <div class="col-2">
+        <div class="col-3">
             <div class="d-grid gap-2">
-                <button class="btn button btn-light block" id="start-camera">Start Camera</button>
-                <button class="btn button btn-light block" id="start-record" disabled>Start Recording</button>
-                <button class="btn button btn-light block" id="stop-record" disabled>Stop Recording</button>
-                <button class="btn button btn-light block" id="save-video" disabled>Save Recording</button>
+                {% block acquisitionOptions %} {% endblock %}
             </div>
         </div>
-        <div class="col-8" style="text-align: center;">
-            <video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
-            <video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+        <div class="col-9" style="text-align: center;">
+            {% block acquisitionDisplay %} {% endblock %}
         </div>
-        <div class="col-2 text-light" style="">
-            <h3 class="" style="display: flex;cursor: pointer;" onclick="list_videos_fetch()"><a class="btn button p-0 text-light" >&#8635;</a> Videos List</h3>
+        <!-- <div class="col-2 text-light" style="">
+            <h3 class="" style="display: flex;cursor: pointer;" onclick="list_videos_fetch()"><a class="btn button p-0 text-light" >&#8635;</a>Samples List</h3>
             
             <ul id="list_videos">
                 EMPTY
             </ul>
-        </div>
+        </div> -->
+    </div>
+    <hr>
+    <h3>Records</h3>
+    <div >
+        <table class="table table-striped table-secondary">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Class</th>
+                <th scope="col">Duration</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Low Light</td>
+                <td>Thumbsup</td>
+                <td>1</td>
+                <td>
+                    <span class="material-icons" style="cursor: pointer;">edit</span>
+                    <span class="material-icons text-danger" style="cursor: pointer;">delete_forever</span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>To bright</td>
+                <td>Thumbsdown</td>
+                <td>1</td>
+                <td>
+                    <span class="material-icons" style="cursor: pointer;">edit</span>
+                    <span class="material-icons text-danger" style="cursor: pointer;">delete_forever</span>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Normal</td>
+                <td>Peace</td>
+                <td>1</td>
+                <td>
+                    <span class="material-icons" style="cursor: pointer;">edit</span>
+                    <span class="material-icons text-danger" style="cursor: pointer;">delete_forever</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <!--<br>
@@ -33,4 +76,6 @@
 </div>
 
 <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+{% block acquisitionScript %} {% endblock %}
+
 {% endblock %}
