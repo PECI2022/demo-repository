@@ -4,11 +4,32 @@
 
 {% block projectContent %}
 <div class="container my-3">
+    <div class="row row-cols-3 mx-5">
+        <div class="col-3">
+            <div class="d-grid gap-2">
+                {% block acquisitionOptions %} {% endblock %}
+            </div>
+        </div>
+        <div class="col-9" style="text-align: center;">
+            {% block acquisitionDisplay %} {% endblock %}
+        </div>
+        <!-- <div class="col-2 text-light" style="">
+            <h3 class="" style="display: flex;cursor: pointer;" onclick="list_videos_fetch()"><a class="btn button p-0 text-light" >&#8635;</a>Samples List</h3>
+            
+            <ul id="list_videos">
+                EMPTY
+            </ul>
+        </div> -->
+    </div>
     
+
+    <!--<br>
+    <video id="loaded-video" src="" width="320" height="240" autoplay></video>
+    <br>-->
 
 </div>
 
-<script src="{{ url_for('static', filename='js/project/visualize/visualizeBase.js') }}"></script>
+<script src="{{ url_for('static', filename='js/editor.js') }}"></script>
 {% block acquisitionScript %} {% endblock %}
 
 {% endblock %}
