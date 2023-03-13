@@ -13,9 +13,67 @@ body {
 }
 
 .mbg-black #navbarTitle {
-  color: #e0e2d7;
+  color:#343335;
 }
 
+.mbg-black #navbarTitle.active {
+  color: #ccc;
+}
+
+
+#scrollBtn:hover {
+  background-color: #9e7165;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content {
+  max-width: 500px;
+  margin: auto;
+}
+
+  .navbar {
+    height: 50px;
+}
+
+#scrollBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #9e7165;
+    color: #343335;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 10px;
+    background-image: url("{{ url_for('static', filename='images/arrow.png') }}");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#scrollBtn:hover {
+    background-color: #0b0808;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.content {
+    max-width: 500px;
+    margin: auto;
+}
+
+.navbar-nav .nav-link.active {
+    color: #e0e2d7;
+}
 
 #msg {
   visibility: hidden;
@@ -78,68 +136,57 @@ a {
   margin: auto;
 }
 
-  .navbar {
-    height: 50px;
-}
-
-#scrollBtn {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 30px;
-    z-index: 99;
-    border: none;
-    outline: none;
-    background-color: #9e7165;
-    color: #343335;
-    cursor: pointer;
-    padding: 20px;
-    border-radius: 10px;
-    background-image: url('https://raw.githubusercontent.com/PECI2022/demo-repository/joao2/Frontend/templates/imgs/arrowup.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-#scrollBtn:hover {
-    background-color: #0b0808;
-}
-
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.content {
-    max-width: 500px;
-    margin: auto;
-}
-
-.navbar-nav .nav-link.active {
-    color: #e0e2d7;
-}
-
-
 /* Get Started Button*/
-.get-started-btn {
-    display: inline-block;
-    padding: 10px 30px;
-    border-radius: 50px;
-    transition: 0.5s;
-    color: #fff;
-    font-weight: 600;
-    font-size: 18px;
-    text-decoration: none;
-    background: #9e7165;
-    border: 2px solid #9e7165;
+
+ .cssbuttons-io-button {
+  background: #9e7165;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #61554d;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
 }
 
-.get-started-btn:hover {
-    background: #e0e2d7;
-    border: 2px solid #e0e2d7;
-    color: #9e7165;
+.cssbuttons-io-button .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #61554d;
+  right: 0.3em;
+  transition: all 0.3s;
 }
 
-/* card */
+.cssbuttons-io-button:hover .icon {
+  width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  transform: rotate(90deg);
+  color: #9e7165;
+}
+
+/* index page: */
+
+
 .flip-card {
   background-color: transparent;
   width: 240px;
@@ -152,7 +199,8 @@ a {
   letter-spacing: .2em;
   font-size: 0.5em;
   top: 2em;
-  left: 18.6em;
+  left: 20.6em;
+  color: #e0e2d7;
 }
 
 .logo {
@@ -178,8 +226,8 @@ a {
   font-weight: bold;
   font-size: .6em;
   top: 8.3em;
-  left: 2.6em;
-  color: #e0e2d7
+  left: 2.8em;
+  color: #e0e2d7;
 }
 
 .valid_thru {
@@ -188,7 +236,7 @@ a {
   top: 635.8em;
   font-size: .01em;
   left: 140.3em;
-  color: #e0e2d7
+  color: #e0e2d7;
 }
 
 .date {
@@ -197,6 +245,7 @@ a {
   font-size: 0.5em;
   top: 13.6em;
   left: 3.2em;
+  color: #e0e2d7;
 }
 
 .name {
@@ -205,11 +254,12 @@ a {
   font-size: 0.5em;
   top: 16.1em;
   left: 2em;
+  color: #e0e2d7;
 }
 
 .strip {
   position: absolute;
-  background-color: black;
+  background-color: white;
   width: 15em;
   height: 1.5em;
   top: 2.4em;
@@ -245,8 +295,8 @@ a {
 .code {
   font-weight: bold;
   text-align: center;
-  margin: .2em;
-  color: black;
+  margin: 0.1em;
+  color: #343335;
 }
 
 .flip-card-inner {
@@ -277,13 +327,127 @@ a {
 
 .flip-card-front {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: #171717;
+  background-color: #343335;
 }
 
 .flip-card-back {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: #171717;
+  background-color: #343335;
   transform: rotateY(180deg);
 }
 
+/* profile page: */
+.card-client {
+background: #9e7165;
+width: 22rem;
+height: 33rem;
+padding-top: 25px;
+padding-bottom: 25px;
+padding-left: 20px;
+padding-right: 20px;
+border: 4px solid #61554d;
+box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
+border-radius: 10px;
+text-align: center;
+color: #fff;
+font-family: "Poppins", sans-serif;
+transition: all 0.3s ease;
+}
 
+.card-client:hover {
+transform: translateY(-10px);
+}
+
+.user-picture {
+overflow: hidden;
+object-fit: cover;
+width: 12rem;
+height: 12rem;
+border: 4px solid #61554d;
+border-radius: 999px;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: auto;
+}
+
+.user-picture svg {
+width: 2.5rem;
+fill: currentColor;
+}
+
+.name-client {
+margin: 0;
+margin-top: 20px;
+font-weight: 600;
+font-size: 18px;
+}
+
+.name-client span {
+display: block;
+font-weight: 200;
+font-size: 16px;
+}
+
+.social-media:before {
+content: " ";
+display: block;
+width: 100%;
+height: 2px;
+margin: 20px 0;
+background: #61554d;
+}
+
+.social-media a {
+position: relative;
+margin-right: 15px;
+text-decoration: none;
+color: inherit;
+}
+
+.social-media a:last-child {
+margin-right: 0;
+}
+
+.social-media a svg {
+width: 1.1rem;
+fill: currentColor;
+}
+
+/*-- Tooltip Social Media --*/
+.tooltip-social {
+background: #262626;
+display: block;
+position: absolute;
+bottom: 0;
+left: 50%;
+padding: 0.5rem 0.4rem;
+border-radius: 5px;
+font-size: 0.8rem;
+font-weight: 600;
+opacity: 0;
+pointer-events: none;
+transform: translate(-50%, -90%);
+transition: all 0.2s ease;
+z-index: 1;
+}
+
+.tooltip-social:after {
+content: " ";
+position: absolute;
+bottom: 1px;
+left: 50%;
+border: solid;
+border-width: 10px 10px 0 10px;
+border-color: transparent;
+transform: translate(-50%, 100%);
+}
+
+.social-media a .tooltip-social:after {
+border-top-color: #262626;
+}
+
+.social-media a:hover .tooltip-social {
+opacity: 1;
+transform: translate(-50%, -130%);
+}
