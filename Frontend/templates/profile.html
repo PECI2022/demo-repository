@@ -4,6 +4,7 @@
 
 {% block aditionalHead %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
 {% endblock %}
 
 {% block content %}
@@ -16,7 +17,7 @@
             <div class="row justify-content-center">
                     <div class="card-client">
                         <div class="user-picture">
-                            <img src="{{ url_for('static', filename='imgs/veloso.jpeg') }}" class="card-img-top" alt="...">
+
                         
                         </div>
                         <p class="name-client"> Rui Veloso
@@ -72,25 +73,6 @@
 
 <div style="text-align: center;">
     <button class="btn btn-danger" style="color: #e0e2d7;background-color: #61554d; border-color: #343335; margin-right: 20px; width: 150px;"  onclick="window.location.href='myProjects'">My Projects</button>
-    <button class="btn btn-danger" style="background-color: #ff3333; border-color: #cc0000;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</button>
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete your account permanently?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 </div>
 
@@ -116,13 +98,23 @@
             function topFunction() {
                 document.body.scrollTop = 0; // For Safari
                 document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+
             }
 
-            function deleteAccount() {
-                // TODO, make an API request to delete the account from the backend
-                window.location.href = "/";
-                alert("Your account has been deleted.");
+            function confirmDelete() {
+                var result = confirm("Are you sure you want to delete your profile permanently?");
+                if (result) {
+                    alert("Your Account has been deleted!");
+                    // go to home page
+                    window.location.href = '/'
+                } else {
+                    alert("Your Account has not been deleted!");
+                }
             }
+
+
+
+
         </script>
   <footer>
     <p>&copy; 2023 MFDA. All Rights Reserved.</p>
