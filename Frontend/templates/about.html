@@ -107,7 +107,7 @@
 <br>
 
 <div class="container">
-  <div class="row justify-content-center">
+  <div class="row justify-content-center"  style="margin-left: 270px;">
     <div class="col-sm-6 col-md-4">
       <div class="card" style="width: 13rem;">
         <img src="{{ url_for('static', filename='imgs/samuel.jpg') }}" class="card-img-top" alt="...">
@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-     <div class="col-sm-6 col-md-4">
+     <div class="col-sm-6 col-md-4"  style="margin-right: 210px;">
       <div class="card" style="width: 13rem;">
         <img src="{{ url_for('static', filename='imgs/fabio.jpg') }}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -139,9 +139,7 @@
         <p>&copy; 2023 MFDA. All Rights Reserved.</p>
     </footer>
 
-        <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
-
-
+        <button onclick="topFunction()" id="scrollBtn" title="Go to top" ></button>
 
         <script>
             // When the user scrolls down 20px from the top of the document, show the button
@@ -157,8 +155,8 @@
 
             // When the user clicks on the button, scroll to the top of the document
             function topFunction() {
-            document.body.scrollTop = 0; // For Safari
-            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             }
         </script>
 

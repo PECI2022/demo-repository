@@ -52,7 +52,7 @@ body {
     cursor: pointer;
     padding: 20px;
     border-radius: 10px;
-    background-image: url("{{ url_for('static', filename='images/arrow.png') }}");
+    background-image: url("{{ url_for('static', filename='imgs/up-arrow.png') }}");
     background-size: contain;
     background-repeat: no-repeat;
 }
