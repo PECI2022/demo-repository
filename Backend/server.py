@@ -30,7 +30,7 @@ class Operations:
         return video_id
     
     def list_videos(self):
-        videos = mongo_cli.find_documents();
+        videos = mongo_cli.find_documents()
         return videos
 
 operation = Operations()
