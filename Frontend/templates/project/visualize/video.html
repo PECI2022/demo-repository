@@ -12,28 +12,30 @@
 </div>
 <div class="input-group mb-3">
     <div class="input-group-text">
-        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+        <input id="mediapipeCheck" class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
     </div>
     <span class="input-group-text" style="flex-grow: 1;">MediaPipe - Hand</span>
 </div>
 {% endblock %}
 
 {% block acquisitionDisplay %}
-<div id="startDisplayButtonBack" style="width: 640px;height:480px;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
-    <button class="btn button btn-light" id="start-camera" style="">Start Camera</button>
+
+<div style="position:relative">
+    <div id="startDisplayButtonBack" style="position:absolute;left:0;top: 0px;width: 640px;height:480px;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
+        <button class="btn button btn-light" id="start-camera" style="">Start Camera</button>
+    </div>
+    <video id="video" width="640" height="480" autoplay style="position:absolute;left:0;top: 0;background-color: #111;margin:5px auto; display: none;"></video>
+    <canvas id="video_snapshot" width="640" height="480" style="position:absolute;left:0;top: 0; display:none"></canvas>
+    <canvas id="draw_hand" width="640" height="480" style="position:absolute;left:0;top: 0;display: none;background: transparent;"></canvas>
+    <p style="position: absolute;top:500px;left:200px;">
+        Guessed Class: <span id="gessedClass"></span><br>
+        Accuracy: <span id="gessedAccuracy"></span>
+    </p>
 </div>
-
-<video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
-<video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
-
-<p>
-    Guessed Class: Thumbsup <br>
-    Accuracy: 0.89
-</p>
 
 {% endblock %}
 
 
 {% block acquisitionScript %}
-<script src="{{ url_for('static', filename='js/project/acquisition/video.js') }}"></script>
+<script src="{{ url_for('static', filename='js/project/visualize/video.js') }}"></script>
 {% endblock %}
