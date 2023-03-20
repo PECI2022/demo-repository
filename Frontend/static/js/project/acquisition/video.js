@@ -34,7 +34,7 @@ start_button.addEventListener('click', () => {
     stop_button.disabled = false;
     video.style.display = 'block';
     loaded_video.style.display = 'none';
-
+9
     media_recorder = new MediaRecorder(camera_stream, {mimeType: VIDEO_TYPE});
     media_recorder.addEventListener('dataavailable', (e) => {
         blobs_recorded.push(e.data);
@@ -106,3 +106,64 @@ const load_video = async (name) => {
     start_button.disabled = false;
     loaded_video.src = video_url;
 }
+
+
+/* <script>
+    const startCameraButton = document.querySelector('#start-camera');
+    const saveVideoButton = document.querySelector('#save-video');
+
+    let isCameraOn = false;
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    startCameraButton.addEventListener('click', async () => {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        const videoElement = document.querySelector('#video');
+        videoElement.srcObject = stream;
+        videoElement.play();
+        isCameraOn = true;
+        saveVideoButton.removeAttribute('disabled'); // enable the "Record" button
+        startCameraButton.style.display = 'none'; // hide the "Start Camera" button
+
+        create a MediaRecorder object to record video
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.addEventListener('dataavailable', event => {
+        recordedChunks.push(event.data);
+        });
+        mediaRecorder.addEventListener('stop', () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        recordedChunks = [];
+        const videoName = prompt('Enter video name:', 'myvideo');
+        if (videoName !== null) {
+            const videoUrl = URL.createObjectURL(blob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = videoUrl;
+            downloadLink.download = `${videoName}.webm`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+        });
+    } catch (error) {
+        console.error('Error starting camera:', error);
+    }
+    });
+
+    saveVideoButton.setAttribute('disabled', 'true'); // disable the "Record" button by default
+
+    saveVideoButton.addEventListener('click', () => {
+    if (isCameraOn) {
+        if (mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        saveVideoButton.innerHTML = 'Record';
+        } else {
+        recordedChunks = [];
+        mediaRecorder.start();
+        saveVideoButton.innerHTML = 'Stop';
+        }
+    }
+    });
+
+
+</script> */
