@@ -14,14 +14,14 @@
 </div>
 <div class="input-group">
     <span class="input-group-text" style="width:70%;">Countdown</span>
-    <input type="number" aria-label="First name" class="form-control" value="3">
+    <input id="video-countdown" type="number" aria-label="First name" class="form-control" value="3">
 </div> 
 <div class="input-group">
     <span class="input-group-text" style="width:70%;">Duration</span>
-    <input type="number" aria-label="First name" class="form-control" value="3">
+    <input id="video-duration" type="number" aria-label="First name" class="form-control" value="3">
 </div> 
   
-<button class="btn button btn-light block" id="save-video" disabled>Record</button>
+<button class="btn button btn-light block" id="record-video" disabled>Record</button>
 {% endblock %}
 
 {% block acquisitionDisplay %}
@@ -36,6 +36,9 @@
 
 {% block acquisitionScript %}
 <script src="{{ url_for('static', filename='js/project/acquisition/video.js') }}"></script>
+<<<<<<< HEAD
 
 <!-- <script src="{{ url_for('static', filename='js/project/acquisition/video.js') }}"></script> -->
+=======
+>>>>>>> b1b23c090a615e76443b395251e0b4b18ff0e4f9
 {% endblock %}
