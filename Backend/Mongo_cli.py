@@ -4,7 +4,7 @@ from pymongo import MongoClient, ReturnDocument
 
 class MongoCli(object):
     def __init__(self):
-        self.client = MongoClient("mongodb://localhost:27017/")
+        self.client = MongoClient("mongodb://localhost:27018/")
         self.db = self.client['context_user']
         self.collection = self.db['context_user']
     

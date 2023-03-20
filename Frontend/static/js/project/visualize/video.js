@@ -38,7 +38,7 @@ camera_button.addEventListener('click', async () => {
                         if(document.querySelector('#mediapipeCheck').checked) {
                             for(let i=0; i<points.length; i++) {
                                 ctx.fillStyle = "blue";
-                                console.log(points[i][0], points[i][1])
+                                //console.log(points[i][0], points[i][1])
                                 ctx_handpoints.fillRect(640-points[i][0]/480*640, points[i][1]/640*480, 10, 10);
                             }
                         }
@@ -46,12 +46,12 @@ camera_button.addEventListener('click', async () => {
                         document.querySelector("#gessedClass").innerHTML = ''
                         document.querySelector("#gessedAccuracy").innerHTML = ''
                     }
-                    console.log(data)
+                    //console.log(data)
 
                 })
         })
 
-    }, 1000/12);
+    }, 1000/2);
 
     // let media_recorder = new MediaRecorder(camera_stream, {mimeType: 'video/webm'});
     // let blobs = [];
