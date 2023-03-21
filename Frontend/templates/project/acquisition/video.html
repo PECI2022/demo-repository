@@ -5,8 +5,8 @@
     <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
         Thumbsup
     </button>
-    <ul class="dropdown-menu w-100">
-        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbup'">Thumbsup</button></li>
+    <ul id="dropdown_content" class="dropdown-menu w-100">
+        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbsup'">Thumbsup</button></li>
         <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbsdown'">Thumbsdown</button></li>
         <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Peace'">Peace</button></li>
     </ul>
@@ -21,7 +21,7 @@
     <input id="video-duration" type="number" aria-label="First name" class="form-control" value="3">
 </div> 
   
-<button class="btn button btn-light block" id="record-video" disabled>Record</button>
+        <button class="btn button btn-light block" id="record-video" disabled>Record</button>
 {% endblock %}
 
 {% block acquisitionDisplay %}
@@ -36,9 +36,4 @@
 
 {% block acquisitionScript %}
 <script src="{{ url_for('static', filename='js/project/acquisition/video.js') }}"></script>
-<<<<<<< HEAD
-
-<!-- <script src="{{ url_for('static', filename='js/project/acquisition/video.js') }}"></script> -->
-=======
->>>>>>> b1b23c090a615e76443b395251e0b4b18ff0e4f9
 {% endblock %}

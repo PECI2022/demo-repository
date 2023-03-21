@@ -3,10 +3,17 @@ const camera_button = document.querySelector("#start-camera");
 const record_button = document.querySelector("#record-video"); 
 const countdown_input = document.querySelector("#video-countdown");
 const duration_input = document.querySelector("#video-duration");
+const dropdown_content = document.querySelector("#dropdown_content")
+const video_class = document.querySelector("#classDropdown")
 
 let camera_stream;
 let media_recorder;
 let blobs_recorded;
+let class_of_video = "Thumbsup"
+
+dropdown_content.addEventListener('click', async () => {
+    class_of_video = video_class.innerHTML
+})
 
 camera_button.addEventListener('click', async () => {
     camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false});
@@ -16,24 +23,9 @@ camera_button.addEventListener('click', async () => {
     
     video.srcObject = camera_stream;
     video.style.display = 'block';
-<<<<<<< HEAD
-    loaded_video.style.display = 'none';
-    start_button.disabled = false;
-    camera_button.disabled = true;
-});
-
-start_button.addEventListener('click', () => {
-    start_button.disabled = true;
-    stop_button.disabled = false;
-    video.style.display = 'block';
-    loaded_video.style.display = 'none';
-9
-    media_recorder = new MediaRecorder(camera_stream, {mimeType: VIDEO_TYPE});
-=======
     record_button.disabled = false;
     
     media_recorder = new MediaRecorder(camera_stream, {mimeType: 'video/webm'});
->>>>>>> b1b23c090a615e76443b395251e0b4b18ff0e4f9
     media_recorder.addEventListener('dataavailable', (e) => {
         blobs_recorded.push(e.data);
     });
@@ -41,7 +33,7 @@ start_button.addEventListener('click', () => {
         let recording = new File(blobs_recorded, 'recording.webm', {type:'video/webm'});
         let data = new FormData();
         data.append('file', recording);
-        data.append('description', JSON.stringify({name:prompt("File Name?")}))
+        data.append('description', JSON.stringify({name:prompt("File Name?"), class: class_of_video}))
         let response = await fetch('http://127.0.0.1:5001/upload', {
             method: "POST",
             body: data
@@ -61,6 +53,7 @@ record_button.addEventListener('click', async () => {
     // let interval = setInterval(()=>{ // display countdown
 
     // })
+    console.log("EEEEEEEEEEEE")
 
     setTimeout(()=>{ // countdown delay
         media_recorder.start(1000);
@@ -194,13 +187,7 @@ const load_video = async (name) => {
     loaded_video.src = video_url;
 }
 
-<<<<<<< HEAD
-
-/* <script>
-    const startCameraButton = document.querySelector('#start-camera');
-=======
 const startCameraButton = document.querySelector('#start-camera');
->>>>>>> b1b23c090a615e76443b395251e0b4b18ff0e4f9
     const saveVideoButton = document.querySelector('#save-video');
 
     let isCameraOn = false;
@@ -217,11 +204,7 @@ const startCameraButton = document.querySelector('#start-camera');
         saveVideoButton.removeAttribute('disabled'); // enable the "Record" button
         startCameraButton.style.display = 'none'; // hide the "Start Camera" button
 
-<<<<<<< HEAD
-        create a MediaRecorder object to record video
-=======
         // create a MediaRecorder object to record video
->>>>>>> b1b23c090a615e76443b395251e0b4b18ff0e4f9
         mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.addEventListener('dataavailable', event => {
         recordedChunks.push(event.data);
@@ -259,10 +242,4 @@ const startCameraButton = document.querySelector('#start-camera');
         }
     }
     });
-<<<<<<< HEAD
-
-
-</script> */
-=======
     */
->>>>>>> b1b23c090a615e76443b395251e0b4b18ff0e4f9

@@ -20,24 +20,31 @@ class Operations:
     def upload(self):
         file = request.files['file']    
         description = json.loads(request.form['description'])
-        location = './' + description['name'] + '.webm'
-        file.save(location)
+        storage = './' + description['name'] + '.webm'
+        print("description")
+        print(description)
+        file.save(storage)
+        # data = {"location": storage, "class": description['class']}
+        data = {"name": description['name'], "class": description['class']}
         _id = mongo_cli.generate_unique_id()
-        mongo_cli.insert_data(location,_id,"location")
-        mongo_cli.insert_media_file(_id,location)
-        os.remove(location)
+        mongo_cli.insert_data(data,_id,"info")
+        mongo_cli.insert_media_file(_id,storage)
+        # c = mongo_cli.collection.find_one(_id)
+        # print(c['info']['class'])
+        os.remove(storage)
         return "location"
+    
     
     def list_videos(self):
         ret = []
         files = mongo_cli.collection.find()
         for f in files:
-            ret.append(f['location'])
+            ret.append(f['info']['name'])
         return ret
     
     def download(self):
         fileName = request.get_json()['name']
-        name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"location": fileName})['_id'])
+        name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"name": fileName})['_id'])
         return name
     
 operation = Operations()
