@@ -113,3 +113,36 @@ const lauchDataPreview = videoBlob => {
     document.querySelector('#acquisitionVideoPreviewModalVideo').src = URL.createObjectURL(videoBlob)
     document.querySelector('#acquisitionVideoPreviewModalStore').addEventListener('click', () => storeCurrentBlob(videoBlob))
 }
+
+
+ // upload video
+ let fileInput = document.getElementById("file-upload");
+ let fileNameSpan = document.getElementById("file-name");
+
+ fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
+
+ fileInput.addEventListener("change", function() {
+ let file = fileInput.files[0];
+ let fileName = file.name;
+ let lastWord = fileName.split("_").pop().split(".")[0];
+ let videoName = "video_" + lastWord;
+
+ if (confirm("Do you want to upload " + fileName + "?")) {
+     // show message
+     fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+
+     let formData = new FormData();
+     formData.append("file", file);
+     formData.append("description", JSON.stringify({name: videoName}));
+
+     fetch("http://127.0.0.1:5001/upload", {
+         method: "POST",
+         body: formData
+     })
+     .then(response => response.json())
+     .then(data => console.log(data))
+     .catch(error => console.error(error));
+ } else {
+     // do nothing
+ }
+ });
