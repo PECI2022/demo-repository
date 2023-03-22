@@ -135,37 +135,47 @@ const lauchDataPreview = videoBlob => {
 }
 
 
- // upload video
- let fileInput = document.getElementById("file-upload");
- let fileNameSpan = document.getElementById("file-name");
+// upload video
+let fileInput = document.getElementById("file-upload");
+let fileNameSpan = document.getElementById("file-name"); 
+const filePreviewModal = document.querySelector("#filePreviewModal"); // modal
+const filePreview = document.querySelector("#file-preview");
 
- fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
+fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 
- fileInput.addEventListener("change", function() {
- let file = fileInput.files[0];
- let fileName = file.name;
- let lastWord = fileName.split("_").pop().split(".")[0];
- let videoName = "video_" + lastWord;
+fileInput.addEventListener("change", function() {
+let file = fileInput.files[0];
+let fileName = file.name;
+let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+let videoName = "video_" + lastWord;
 
- if (confirm("Do you want to upload " + fileName + "?")) {
-     // show message
-     fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+if (confirm("Do you want to upload " + fileName + "?")) {
+    // show message
+    fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
 
-     let formData = new FormData();
-     formData.append("file", file);
-     formData.append("description", JSON.stringify({name: videoName}));
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("description", JSON.stringify({name: videoName}));
 
-     fetch("http://127.0.0.1:5001/upload", {
-         method: "POST",
-         body: formData
-     })
-     .then(response => response.json())
-     .then(data => console.log(data))
-     .catch(error => console.error(error));
- } else {
-     // do nothing
- }
- });
+    fetch("http://127.0.0.1:5001/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+} else {
+    // do nothing
+}
+});
+
+fileInput.addEventListener("change", function (event) {
+    document.getElementById("preview-button").disabled = false;
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    filePreview.src = url;
+    filePreviewModal.show();
+});
 
 
  
