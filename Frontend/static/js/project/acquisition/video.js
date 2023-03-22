@@ -45,6 +45,13 @@ camera_button.addEventListener('click', async () => {
         list_videos_fetch();
         */
     });
+    //different type of recording
+    //start recording automatically
+    // blobs_recorded = [];
+    // media_recorder.start(5);
+    // setTimeout(()=>{ // duration delay
+    //     media_recorder.stop();
+    // }, duration_input.value*1000);
 });
 
 record_button.addEventListener('click', async () => {
