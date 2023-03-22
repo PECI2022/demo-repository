@@ -3,6 +3,8 @@ const camera_button = document.querySelector("#start-camera");
 const record_button = document.querySelector("#record-video"); 
 const countdown_input = document.querySelector("#video-countdown");
 const duration_input = document.querySelector("#video-duration");
+const recording_message = document.querySelector("#recording-message");
+const countdown = document.querySelector('#countdown');
 
 let camera_stream;
 let media_recorder;
@@ -65,10 +67,28 @@ record_button.addEventListener('click', async () => {
 
     // })
 
+    let timeLeft = countdown_input.value;
+    // Update the countdown display every second
+    let countdownInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft >= 0) {
+            countdown.innerHTML = timeLeft;
+        } else {
+            clearInterval(countdownInterval);
+        }
+        
+    }, 1000);
+
+
     setTimeout(()=>{ // countdown delay
-        media_recorder.start(100);
+        countdown.innerHTML = "";
+        recording_message.style.display = "block";
+
+        recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
+        media_recorder.start(100); //
         setTimeout(()=>{ // duration delay
-            media_recorder.stop();
+            recording_message.innerHTML = "";
+            media_recorder.stop(); //
         }, duration_input.value*1000);
     }, countdown_input.value*1000);
 })
@@ -146,3 +166,6 @@ const lauchDataPreview = videoBlob => {
      // do nothing
  }
  });
+
+
+ 

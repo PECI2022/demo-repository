@@ -21,11 +21,12 @@
     <input id="video-duration" type="number" aria-label="First name" class="form-control" value="3">
 </div> 
 <div class="input-group">
-  <span class="input-group-text" style="width:70%;">Number of records</span>
+  <span class="input-group-text" style="width:70%;">Number of recordings</span>
   <input id="video-duration" type="number" aria-label="First name" class="form-control" value="1">
 </div> 
   
 <button class="btn button btn-light block" id="record-video" disabled>Record</button>
+
 
 
 <form>
@@ -62,12 +63,20 @@
 {% endblock %}
 
 {% block acquisitionDisplay %}
+
+<div id="countdown" ></div>
+<div id="recording-message" style="display:none">Recording...</div>
+
+
 <div id="startDisplayButtonBack" style="width: 640px;height:480px;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
     <button class="btn button btn-light" id="start-camera" >Start Camera</button>
 </div>
 
+
 <video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
 <video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+
+
 {% endblock %}
 
 
