@@ -22,6 +22,30 @@
 </div> 
   
 <button class="btn button btn-light block" id="record-video" disabled>Record</button>
+
+<div id="acquisitionVideoPreviewModal" class="modal" tabindex="10" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Preview Acquisition</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+            <video id="acquisitionVideoPreviewModalVideo" class="bg-black" style="" width="640" height="480" autoplay loop controls></video>
+            <div class="input-group w-75" style="margin: auto;">
+                <span class="input-group-text">Recording Name</span>
+                <input id="acquisitionVideoPreviewModalDescriptionName" type="text" aria-label="First name" class="form-control" value="Acquisition 17#">
+            </div> 
+        </div>
+        <div class="modal-footer">
+          <button id="acquisitionVideoPreviewModalStore" type="button" class="btn btn-primary" onclick="storeCurrentBlob()">Save Recording</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block acquisitionDisplay %}
