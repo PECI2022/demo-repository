@@ -3,6 +3,8 @@ const camera_button = document.querySelector("#start-camera");
 const record_button = document.querySelector("#record-video"); 
 const countdown_input = document.querySelector("#video-countdown");
 const duration_input = document.querySelector("#video-duration");
+const recording_message = document.querySelector("#recording-message");
+const countdown = document.querySelector('#countdown');
 
 let camera_stream;
 let media_recorder;
@@ -65,10 +67,28 @@ record_button.addEventListener('click', async () => {
 
     // })
 
+    let timeLeft = countdown_input.value;
+    // Update the countdown display every second
+    let countdownInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft >= 0) {
+            countdown.innerHTML = timeLeft;
+        } else {
+            clearInterval(countdownInterval);
+        }
+        
+    }, 1000);
+
+
     setTimeout(()=>{ // countdown delay
-        media_recorder.start(100);
+        countdown.innerHTML = "";
+        recording_message.style.display = "block";
+
+        recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
+        media_recorder.start(100); //
         setTimeout(()=>{ // duration delay
-            media_recorder.stop();
+            recording_message.innerHTML = "";
+            media_recorder.stop(); //
         }, duration_input.value*1000);
     }, countdown_input.value*1000);
 })
@@ -115,34 +135,47 @@ const lauchDataPreview = videoBlob => {
 }
 
 
- // upload video
- let fileInput = document.getElementById("file-upload");
- let fileNameSpan = document.getElementById("file-name");
+// upload video
+let fileInput = document.getElementById("file-upload");
+let fileNameSpan = document.getElementById("file-name"); 
+const filePreviewModal = document.querySelector("#filePreviewModal"); // modal
+const filePreview = document.querySelector("#file-preview");
 
- fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
+fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 
- fileInput.addEventListener("change", function() {
- let file = fileInput.files[0];
- let fileName = file.name;
- let lastWord = fileName.split("_").pop().split(".")[0];
- let videoName = "video_" + lastWord;
+fileInput.addEventListener("change", function() {
+let file = fileInput.files[0];
+let fileName = file.name;
+let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+let videoName = "video_" + lastWord;
 
- if (confirm("Do you want to upload " + fileName + "?")) {
-     // show message
-     fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+if (confirm("Do you want to upload " + fileName + "?")) {
+    // show message
+    fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
 
-     let formData = new FormData();
-     formData.append("file", file);
-     formData.append("description", JSON.stringify({name: videoName}));
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("description", JSON.stringify({name: videoName}));
 
-     fetch("http://127.0.0.1:5001/upload", {
-         method: "POST",
-         body: formData
-     })
-     .then(response => response.json())
-     .then(data => console.log(data))
-     .catch(error => console.error(error));
- } else {
-     // do nothing
- }
- });
+    fetch("http://127.0.0.1:5001/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+} else {
+    // do nothing
+}
+});
+
+fileInput.addEventListener("change", function (event) {
+    document.getElementById("preview-button").disabled = false;
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    filePreview.src = url;
+    filePreviewModal.show();
+});
+
+
+ 
