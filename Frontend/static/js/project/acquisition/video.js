@@ -3,6 +3,9 @@ const camera_button = document.querySelector("#start-camera");
 const record_button = document.querySelector("#record-video"); 
 const countdown_input = document.querySelector("#video-countdown");
 const duration_input = document.querySelector("#video-duration");
+//
+const number_of_recordings_input = document.querySelector("#number-of-recordings");
+//
 const dropdown_content = document.querySelector("#dropdown_content")
 const video_class = document.querySelector("#classDropdown")
 
