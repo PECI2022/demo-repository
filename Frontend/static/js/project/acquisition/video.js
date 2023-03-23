@@ -3,8 +3,8 @@ const camera_button = document.querySelector("#start-camera");
 const record_button = document.querySelector("#record-video"); 
 const countdown_input = document.querySelector("#video-countdown");
 const duration_input = document.querySelector("#video-duration");
-const dropdown_content = document.querySelector("#dropdown_content")
-const video_class = document.querySelector("#classDropdown")
+const recording_message = document.querySelector("#recording-message");
+const countdown = document.querySelector('#countdown');
 
 let camera_stream;
 let media_recorder;
@@ -14,6 +14,9 @@ let class_of_video = "Thumbsup"
 dropdown_content.addEventListener('click', async () => {
     class_of_video = video_class.innerHTML
 })
+
+let classes = ['Thumbsup','Thumbsdown','Peace']; // TODO: delete and replace this variable with a fetch to the db
+ 
 
 camera_button.addEventListener('click', async () => {
     camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false});
@@ -30,35 +33,71 @@ camera_button.addEventListener('click', async () => {
         blobs_recorded.push(e.data);
     });
     media_recorder.addEventListener('stop', async () => {
-        let recording = new File(blobs_recorded, 'recording.webm', {type:'video/webm'});
+        let recording = new Blob(blobs_recorded, {type:'video/webm'});
+        lauchDataPreview(recording);
+        /*
+        let recording = new Blob(blobs_recorded, {type:'video/webm'});
         let data = new FormData();
         data.append('file', recording);
-        data.append('description', JSON.stringify({name:prompt("File Name?"), class: class_of_video}))
+        
+        // data.append('description', JSON.stringify({name:prompt("File Name?")}))
+        let description = lauchDataPreview(recording)
+        
+        if(!description) return;
+
+        data.append('description', JSON.stringify(description))
+
         let response = await fetch('http://127.0.0.1:5001/upload', {
             method: "POST",
             body: data
         });
-        alert("Video Saved on the Server");
-        // list_videos_fetch();
+        alert("Video Saved on the Server"); // TODO: create a stylized popup
+        list_videos_fetch();
+        */
     });
+    //different type of recording
+    //start recording automatically
+    // blobs_recorded = [];
+    // media_recorder.start(5);
+    // setTimeout(()=>{ // duration delay
+    //     media_recorder.stop();
+    // }, duration_input.value*1000);
 });
 
+record_button.disabled=true;
 record_button.addEventListener('click', async () => {
     record_button.disabled = true;
-
+    
     blobs_recorded = [];
-
+    
     // TODO: make a way to visualize the tempos
     // let time = 0;
     // let interval = setInterval(()=>{ // display countdown
-
+    
     // })
-    console.log("EEEEEEEEEEEE")
+    
+    let timeLeft = countdown_input.value;
+    // Update the countdown display every second
+    let countdownInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft >= 0) {
+            countdown.innerHTML = timeLeft;
+        } else {
+            clearInterval(countdownInterval);
+        }
+        
+    }, 1000);
+
 
     setTimeout(()=>{ // countdown delay
-        media_recorder.start(1000);
+        countdown.innerHTML = "";
+        recording_message.style.display = "block";
+
+        recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
+        media_recorder.start(100); //
         setTimeout(()=>{ // duration delay
-            media_recorder.stop();
+            recording_message.innerHTML = "";
+            media_recorder.stop(); //
         }, duration_input.value*1000);
     }, countdown_input.value*1000);
 })
@@ -77,169 +116,94 @@ const list_videos_fetch = async () => {
     // }
 };list_videos_fetch()
 
-// let camera_button_back = document.querySelector("#startDisplayButtonBack")
-// let camera_button = document.querySelector("#start-camera");
-// let video = document.querySelector("#video");
-// let loaded_video = document.querySelector("#video_loader");
-// let start_button = document.querySelector("#start-record");
-// let stop_button = document.querySelector("#stop-record");
-// let save_button = document.querySelector("#save-video");
-// // let list_videos = document.querySelector("#list_videos");
+const list_classes_fetch = async () => {
+    // TODO: get classes from a fetch to server
+    // const response = await fetch('http://127.0.0.1:5001/list_classes');
+    // let classes = await response.json()
+    // if(!classes) return;
 
-// let camera_stream = null;
-// let media_recorder = null;
-// let blobs_recorded = [];
+    document.querySelector("#acquisitionClassesDropdown").innerHTML = ""
+    classes.forEach( c => {
+        let s = `<li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='${c}'">${c}</button></li>`;
+        let obj = document.createElement('li');
+        obj.innerHTML = s;
+        document.querySelector("#acquisitionClassesDropdown").appendChild(obj);
+    })
+};list_classes_fetch()
 
-// const VIDEO_TYPE = 'video/webm'
+const storeCurrentBlob = async (blob) => {
+    let data = new FormData();
+    data.append('file', blob);
 
-// let video_blob;
-// let video_url;
+    let descriptionName = document.querySelector("#acquisitionVideoPreviewModalDescriptionName").value;
+    console.log(descriptionName)
+    data.append('description', JSON.stringify({name:descriptionName}))
 
-// camera_button.addEventListener('click', async () => {
-//     camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false});
-
-//     camera_button.style.display = "none";
-//     camera_button_back.style.display = "none";
-
-//     video.srcObject = camera_stream;
-//     video.style.display = 'block';
-//     loaded_video.style.display = 'none';
-//     start_button.disabled = false;
-//     camera_button.disabled = true;
-// });
-
-// start_button.addEventListener('click', () => {
-//     start_button.disabled = true;
-//     stop_button.disabled = false;
-//     video.style.display = 'block';
-//     loaded_video.style.display = 'none';
-
-//     media_recorder = new MediaRecorder(camera_stream, {mimeType: VIDEO_TYPE});
-//     media_recorder.addEventListener('dataavailable', (e) => {
-//         blobs_recorded.push(e.data);
-//     });
-
-//     media_recorder.addEventListener('stop', () => {
-//         start_button.disabled = true;
-//         save_button.disabled = false;
-//     });
-
-//     media_recorder.start(1000);
-//     blobs_recorded = [];
-// });
-
-// save_button.addEventListener('click', async () => {
-//     save_button.disabled = true;
-//     start_button.disabled = false;
-
-//     let recording = new File(blobs_recorded, 'recording.webm', {type:'video/webm'});
-
-//     let data = new FormData();
-//     data.append('file', recording);
-//     data.append('description', JSON.stringify({name:prompt("File Name?")}))
-
-//     let response = await fetch('http://127.0.0.1:5001/upload', {
-//         method: "POST",
-//         body: data
-//     });
-
-
-//     alert("Video Saved on the Server");
-//     list_videos_fetch();
-// });
-
-// stop_button.addEventListener('click', ()=>{
-//     start_button.disabled = false;
-//     stop_button.disabled = true;
-
-//     media_recorder.stop();
-// });
-
-// const list_videos_fetch = async () => {
-//     const response = await fetch('http://127.0.0.1:5001/list_videos');
-//     let list = await response.json()
-//     if(!list) return;
-
-//     list_videos.innerHTML = "";
-//     list.sort();
-//     for(let i of list) {
-//         let newElem = document.createElement('li');
-//         newElem.innerHTML = `<a style="cursor:pointer;" onclick="load_video('${i}')">${i}</a>`;
-//         list_videos.appendChild(newElem);
-//     }
-// };list_videos_fetch()
-
-/*
-const load_video = async (name) => {
-    console.log(name)
-    let response = await fetch('http://127.0.0.1:5001/download', {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({name}) 
+    $('#acquisitionVideoPreviewModal').modal('hide')
+    
+    let response = await fetch('http://127.0.0.1:5001/upload', {
+        method: "POST",
+        body: data
     });
-    let blob = await response.blob();
-    video_url = URL.createObjectURL(blob);
-    video.style.display = 'none';
-    loaded_video.style.display = 'block';
-    start_button.disabled = false;
-    loaded_video.src = video_url;
+    
+    alert("Video Saved on the Server"); // TODO: create a stylized popup
+    record_button.disabled = false;
+    list_videos_fetch();
 }
 
-const startCameraButton = document.querySelector('#start-camera');
-    const saveVideoButton = document.querySelector('#save-video');
+const lauchDataPreview = videoBlob => {
+    $('#acquisitionVideoPreviewModal').modal('show')
+    console.log(URL.createObjectURL(videoBlob))
+    document.querySelector('#acquisitionVideoPreviewModalVideo').src = URL.createObjectURL(videoBlob)
+    document.querySelector('#acquisitionVideoPreviewModalStore').addEventListener('click', () => storeCurrentBlob(videoBlob))
+}
 
-    let isCameraOn = false;
-    let mediaRecorder;
-    let recordedChunks = [];
 
-    startCameraButton.addEventListener('click', async () => {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-        const videoElement = document.querySelector('#video');
-        videoElement.srcObject = stream;
-        videoElement.play();
-        isCameraOn = true;
-        saveVideoButton.removeAttribute('disabled'); // enable the "Record" button
-        startCameraButton.style.display = 'none'; // hide the "Start Camera" button
+// upload video
+let fileInput = document.getElementById("file-upload");
+let fileNameSpan = document.getElementById("file-name"); 
+const filePreviewModal = document.querySelector("#filePreviewModal"); // modal
+const filePreview = document.querySelector("#file-preview");
 
-        // create a MediaRecorder object to record video
-        mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.addEventListener('dataavailable', event => {
-        recordedChunks.push(event.data);
-        });
-        mediaRecorder.addEventListener('stop', () => {
-        const blob = new Blob(recordedChunks, { type: 'video/webm' });
-        recordedChunks = [];
-        const videoName = prompt('Enter video name:', 'myvideo');
-        if (videoName !== null) {
-            const videoUrl = URL.createObjectURL(blob);
-            const downloadLink = document.createElement('a');
-            downloadLink.href = videoUrl;
-            downloadLink.download = `${videoName}.webm`;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-        }
-        });
-    } catch (error) {
-        console.error('Error starting camera:', error);
-    }
-    });
+fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 
-    saveVideoButton.setAttribute('disabled', 'true'); // disable the "Record" button by default
+fileInput.addEventListener("change", function() {
+let file = fileInput.files[0];
+let fileName = file.name;
+let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+let videoName = "video_" + lastWord;
 
-    saveVideoButton.addEventListener('click', () => {
-    if (isCameraOn) {
-        if (mediaRecorder.state === 'recording') {
-        mediaRecorder.stop();
-        saveVideoButton.innerHTML = 'Record';
-        } else {
-        recordedChunks = [];
-        mediaRecorder.start();
-        saveVideoButton.innerHTML = 'Stop';
-        }
-    }
-    });
-    */
+if (confirm("Do you want to upload " + fileName + "?")) {
+    // show message
+    fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("description", JSON.stringify({name: videoName}));
+
+    fetch("http://127.0.0.1:5001/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+} else {
+    // do nothing
+}
+});
+
+fileInput.addEventListener("change", function (event) {
+    document.getElementById("preview-button").disabled = false;
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    filePreview.src = url;
+    filePreviewModal.show();
+});
+
+
+const addProjectClass = () => {
+    let name = prompt("New class name?");
+    classes.push(name);
+    list_classes_fetch();
+}
