@@ -10,6 +10,9 @@ let camera_stream;
 let media_recorder;
 let blobs_recorded;
 
+let classes = ['Thumbsup','Thumbsdown','Peace']; // TODO: delete and replace this variable with a fetch to the db
+ 
+
 camera_button.addEventListener('click', async () => {
     camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false});
     
@@ -31,10 +34,10 @@ camera_button.addEventListener('click', async () => {
         let recording = new Blob(blobs_recorded, {type:'video/webm'});
         let data = new FormData();
         data.append('file', recording);
-
+        
         // data.append('description', JSON.stringify({name:prompt("File Name?")}))
         let description = lauchDataPreview(recording)
-
+        
         if(!description) return;
 
         data.append('description', JSON.stringify(description))
@@ -56,17 +59,18 @@ camera_button.addEventListener('click', async () => {
     // }, duration_input.value*1000);
 });
 
+record_button.disabled=true;
 record_button.addEventListener('click', async () => {
     record_button.disabled = true;
-
+    
     blobs_recorded = [];
-
+    
     // TODO: make a way to visualize the tempos
     // let time = 0;
     // let interval = setInterval(()=>{ // display countdown
-
+    
     // })
-
+    
     let timeLeft = countdown_input.value;
     // Update the countdown display every second
     let countdownInterval = setInterval(() => {
@@ -106,6 +110,21 @@ const list_videos_fetch = async () => {
     //     list_videos.appendChild(newElem);
     // }
 };list_videos_fetch()
+
+const list_classes_fetch = async () => {
+    // TODO: get classes from a fetch to server
+    // const response = await fetch('http://127.0.0.1:5001/list_classes');
+    // let classes = await response.json()
+    // if(!classes) return;
+
+    document.querySelector("#acquisitionClassesDropdown").innerHTML = ""
+    classes.forEach( c => {
+        let s = `<li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='${c}'">${c}</button></li>`;
+        let obj = document.createElement('li');
+        obj.innerHTML = s;
+        document.querySelector("#acquisitionClassesDropdown").appendChild(obj);
+    })
+};list_classes_fetch()
 
 const storeCurrentBlob = async (blob) => {
     let data = new FormData();
@@ -178,4 +197,8 @@ fileInput.addEventListener("change", function (event) {
 });
 
 
- 
+const addProjectClass = () => {
+    let name = prompt("New class name?");
+    classes.push(name);
+    list_classes_fetch();
+}

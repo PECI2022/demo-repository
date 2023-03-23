@@ -5,12 +5,12 @@
     <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
         Thumbsup
     </button>
-    <ul class="dropdown-menu w-100">
-        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbup'">Thumbsup</button></li>
+    <ul id="acquisitionClassesDropdown" class="dropdown-menu w-100">
+        <!-- <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbup'">Thumbsup</button></li>
         <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbsdown'">Thumbsdown</button></li>
-        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Peace'">Peace</button></li>
+        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Peace'">Peace</button></li> -->
     </ul>
-    <button onclick="prompt('New Class Name?')">+</button>
+    <button onclick="addProjectClass()">+</button>
 </div>
 <div class="input-group w-100">
     <span class="input-group-text" style="width:70%;">Countdown</span>
