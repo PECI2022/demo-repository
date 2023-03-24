@@ -5,7 +5,6 @@ const countdown_input = document.querySelector("#video-countdown");
 const duration_input = document.querySelector("#video-duration");
 const recording_message = document.querySelector("#recording-message");
 const countdown = document.querySelector('#countdown');
-const video_table = document.querySelector('#video_table')
 const class_adition = document.querySelector('#addClass')
 
 let camera_stream;
@@ -111,13 +110,35 @@ const list_videos_fetch = async () => {
     // list_videos.innerHTML = "";
     // list.sort();
     for(let i of list) {
-        console.log(i)
-        let s = `<tr><th scope="row">1</th><td>${i.name}</td><td>${i.video_class}</td><td>${i.length}</td><td><span class="material-icons" style="cursor: pointer;">edit</span><span class="material-icons text-danger" style="cursor: pointer;">delete_forever</span></td> </tr>` 
+        console.log(i._id)
+        let s = `<tr onclick=>
+                <th scope="row">1</th>
+                <td>${i.name}</td>
+                <td>${i.video_class}</td>
+                <td>${i.length}</td>
+                <td><span class="material-icons" style="cursor: pointer;">edit</span>
+                <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span></td>
+                </tr>` 
         let newElem = document.createElement('tr');
         newElem.innerHTML=s
         video_table.appendChild(newElem);
     }
 };list_videos_fetch()
+
+const delete_video = async (_id) => {
+    console.log("WWWWWWWWWWWWWWWWWWWW")
+    let data = new FormData()
+    data.append('_id', JSON.stringify({_id:_id}))
+    // console.log(data)
+    let response = await fetch('http://127.0.0.1:5001/delete_video', {
+        method: "POST",
+        body: data
+    })
+    // let a = await response.json()
+    // console.log("WWW")
+    // console.log(a['result'])
+    list_videos_fetch()
+}
 
 const list_classes_fetch = async () => {
     // TODO: get classes from a fetch to server
