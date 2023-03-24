@@ -18,27 +18,39 @@ class Operations:
         pass
 
     def upload(self):
+        print(request.files)
         file = request.files['file']    
         description = json.loads(request.form['description'])
-        location = './' + description['name'] + '.webm'
-        file.save(location)
+        if(self.check_existing_name(description['name'])):  
+                return {"result": "Error"}
+        info = './' + description['name'] + '.webm'
+        data = {"name":description['name'], "video_class":description['class'], "length":description['length']}
+        file.save(info)
         _id = mongo_cli.generate_unique_id()
-        mongo_cli.insert_data(location,_id,"location")
-        mongo_cli.insert_media_file(_id,location)
-        os.remove(location)
-        return "location"
+        mongo_cli.insert_data(data,_id,"info")
+        mongo_cli.insert_media_file(_id,info)
+        os.remove(info)
+        return {"result": "Correct"}
     
     def list_videos(self):
         ret = []
         files = mongo_cli.collection.find()
         for f in files:
-            ret.append(f['location'])
+            ret.append(f['info'])
+        print(ret)
         return ret
     
     def download(self):
         fileName = request.get_json()['name']
-        name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"location": fileName})['_id'])
+        name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"info": fileName})['_id'])
         return name
+    
+    def check_existing_name(self,name):
+        for i in mongo_cli.collection.find():
+            if(name == i['info']['name']):
+                return True
+        return False
+    
     
 operation = Operations()
 
