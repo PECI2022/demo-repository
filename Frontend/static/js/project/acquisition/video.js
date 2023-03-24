@@ -175,11 +175,11 @@ const storeCurrentBlob = async (blob) => {
     console.log(a['result'])
     if(a['result'] == "Correct"){
         alert("Video Saved on the Server"); // TODO: create a stylized popup
-        record_button.disabled = false;
         list_videos_fetch();
     }else{
         alert("Name already in use in this project")
     }
+    record_button.disabled = false;
 }
 
 // VIDEO PREVIEWER + SEND TO DB
@@ -187,7 +187,7 @@ const lauchDataPreview = videoBlob => {
     $('#acquisitionVideoPreviewModal').modal('show')
     console.log(URL.createObjectURL(videoBlob))
     document.querySelector('#acquisitionVideoPreviewModalVideo').src = URL.createObjectURL(videoBlob)
-    document.querySelector('#acquisitionVideoPreviewModalStore').addEventListener('click', () => storeCurrentBlob(videoBlob))
+    document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => storeCurrentBlob(videoBlob)
 }
 
 
