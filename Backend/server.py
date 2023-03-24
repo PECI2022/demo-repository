@@ -24,9 +24,11 @@ class Operations:
         if(self.check_existing_name(description['name'])):  
                 return {"result": "Error"}
         info = './' + description['name'] + '.webm'
-        data = {"name":description['name'], "video_class":description['class'], "length":description['length']}
         file.save(info)
         _id = mongo_cli.generate_unique_id()
+        # print("HERE")
+        # print(str(_id))
+        data = {"name":description['name'], "video_class":description['class'], "length":description['length'], "_id":str(_id)}
         mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)
@@ -45,6 +47,11 @@ class Operations:
         name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"info": fileName})['_id'])
         return name
     
+    def delete_video(self):
+        description = json.loads(request.form['_id'])
+        mongo_cli.delete_from_db(description['_id'])
+        return "done"
+
     def check_existing_name(self,name):
         for i in mongo_cli.collection.find():
             if(name == i['info']['name']):
@@ -72,6 +79,11 @@ def download():
 def list_videos():
     print("LIST")
     return operation.list_videos()
+
+@app.route('/delete_video', methods=['POST'])
+def delete_video():
+    print("DELETE")
+    return operation.delete_video()
 
 # audio 
 @app.route('/upload_audio', methods=['POST'])

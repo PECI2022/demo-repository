@@ -49,6 +49,12 @@ class MongoCli(object):
         out.close()
         return name
     
+    def delete_from_db(self,_id):
+        self.collection.delete_one({'_id': ObjectId(_id)})
+        fs = gridfs.GridFS(self.db)
+        fs.delete(ObjectId(_id))
+  
+    
     def generate_from_db(self,_id):
         fs = gridfs.GridFS(self.db)
         f = fs.find_one({'_id': _id})
