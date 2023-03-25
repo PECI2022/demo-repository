@@ -1,4 +1,8 @@
 from bson import ObjectId
+<<<<<<< HEAD
+=======
+import gridfs
+>>>>>>> main
 from pymongo import MongoClient, ReturnDocument
 
 class MongoCli(object):
@@ -8,6 +12,10 @@ class MongoCli(object):
         self.collection = self.db['context_user']
     
     def insert_data(self, data, _id, topic):
+<<<<<<< HEAD
+=======
+        print(id)
+>>>>>>> main
         if not self.find_document_by_id(_id):
             try:
                 doc = self.collection.insert_one({'_id': ObjectId(_id), topic: data})
@@ -27,13 +35,67 @@ class MongoCli(object):
                 print(f'\n[x] ERROR - ADD NEW VALUES [x]: {e}')
             else:
                 print('\n[!] ADD NEW VALUES [!]')
+<<<<<<< HEAD
+=======
+
+    def insert_media_file(self, _id, file_location):
+        name = file_location
+        file_data = open(name, "rb")
+        data = file_data.read()
+        print("catch")
+        print(file_data)
+        fs = gridfs.GridFS(self.db)
+        fs.put(data, filename=name, _id=_id)
+        print("Inserted Media File: ", _id)
+
+    def download_media_file(self, _id):
+        fs = gridfs.GridFS(self.db)
+        name = str(_id) + ".webm"
+        out_data = fs.get(ObjectId(_id)).read()
+        out = open(name, "wb")
+        out.write(out_data)
+        out.close()
+        return name
+    
+    def delete_from_db(self,_id):
+        self.collection.delete_one({'_id': ObjectId(_id)})
+        fs = gridfs.GridFS(self.db)
+        fs.delete(ObjectId(_id))
+  
+    
+    def generate_from_db(self,_id):
+        fs = gridfs.GridFS(self.db)
+        f = fs.find_one({'_id': _id})
+        # print(f.filename)
+        return f.read()
+        
+
+    def check_if_media_exists(self, _id):
+        fs = gridfs.GridFS(self.db)
+        out_data = fs.find_one(ObjectId(_id))
+        if out_data:
+            return True
+        return False
+>>>>>>> main
                 
     def find_documents(self, limit=5):
         return self.collection.find().limit(limit)
 
     
+<<<<<<< HEAD
     def generate_unique_id():
         return ObjectId()
+=======
+    def generate_unique_id(self):
+        return ObjectId()
+    
+    def find_document_by_id(self,_id):
+            if self.collection.find_one(_id) == None:
+                return False
+            return True
+
+    
+>>>>>>> main
 
     # mongoc = MongoCli()
     """_id = generate_unique_id()
@@ -41,4 +103,7 @@ class MongoCli(object):
             'FOCUS_SPEECH': False, "AGENT": ""}​​​​​​​​
     mongoc.insert_data(data=data, _id=_id, topic="USER_CONTEXT_FOCUS")"""
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main

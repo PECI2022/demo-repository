@@ -1,0 +1,39 @@
+{% extends 'project/visualize/visualizeBase.html' %}
+
+{% block acquisitionOptions %}
+<div class="input-group">
+    <label class="input-group-text" for="inputGroupSelect01">Model</label>
+    <select class="form-select h-100" id="inputGroupSelect01">
+      <option selected>Choose...</option>
+      <option value="1">Model 1</option>
+      <option value="2">Model 2</option>
+      <option value="3">Model 3</option>
+    </select>
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-text">
+        <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+    </div>
+    <span class="input-group-text" style="flex-grow: 1;">MediaPipe - Hand</span>
+</div>
+{% endblock %}
+
+{% block acquisitionDisplay %}
+<div id="startDisplayButtonBack" style="width: 640px;height:480px;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
+    <button class="btn button btn-light" id="start-camera" style="">Start Camera</button>
+</div>
+
+<video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+<video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+
+<p>
+    Guessed Class: Thumbsup <br>
+    Accuracy: 0.89
+</p>
+
+{% endblock %}
+
+
+{% block acquisitionScript %}
+<script src="{{ url_for('static', filename='js/project/acquisition/video.js') }}"></script>
+{% endblock %}

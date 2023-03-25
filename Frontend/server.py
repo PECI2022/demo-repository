@@ -10,8 +10,9 @@ def send_static(path):
 def default():
     return render_template('index.html')
 
-@app.route('/<path>')
+@app.route('/<path:path>')
 def static_route(path):
+    print(path)
     return render_template(path+'.html')
 
 

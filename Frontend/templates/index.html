@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Projects {% endblock %}
+{% block title %} Home {% endblock %}
 
 {% block aditionalHead %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
@@ -8,24 +8,77 @@
 
 {% block content %}
 
-<div class="container my-5">
-    <div class="" style="display:flex;">
-        <h1 class="mtext-white">My Projects</h1>
-        <button class="btn btn-light" style="margin-left: auto;" type="button">New Project</button>
-    </div>
-    <hr class="mbg-white border-3 opacity-100" style="border-color: #eee;">
+<div class="container my-6" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    
 
+    
+
+
+    <h1 style="text-align:center;color: #61554d;margin-top: 60px;">Modular Framework for Data Acquisition and Annotation  <br>to Support Interaction Scenarios</h1>
+
+    <br>
+
+    <h5 style="text-align:center;color: #343335;margin-top: 60px;">
+      A place where you can explore Non Verbal DataSets<span class="dots"  data-bs-toggle="modal" data-bs-target="#deleteModal">...</span>
+    </h5>
+  
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">MFDAA - More Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body;margin-top: 10px;text-align:left;">
+                <br>
+                <h6 style="text-align:center;">This modular data acquisition framework is designed to facilitate the making of data acquisition systems for interaction scenarios. This system involves the 
+                    acquisition of data from various sources, as well as the real-time processing and analysis of that data to enable interactive behavior. Our modular data acquisition framework can be used in a wide range of applications such as research and development and consumer-facing systems. In research and development, it can be used to study and evaluate different interaction scenarios and algorithms. And in consumer-facing systems, it can be used to enable interactive and personalized experiences for users.
+                </h6>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+    <button class="cssbuttons-io-button" style="margin-top: 60px;" onclick="window.location.href='#MFDA'"> Get started
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+        </div>
+      </button>
+
+    
+    
+</div>
+
+
+
+
+<div class="container my-5" id="MFDA">
+    <hr class="mbg-white border-3 opacity-100" style="border-color: #61554d;margin-top: 100px;">
+    <br>
+
+    <div href="newProject" id="projectsHere" style="display:flex;">
+        <h2 class="mtext-white">What MFDA can offer?</h2>
+        
+        <!--<button class="btn btn-light" style="margin-left: auto;" type="button" onclick="window.location.href='myProjects'" >New Project</button> -->
+    </div>
+    <br>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div class="col">
             <div class="card h-100" >
                 <div class="card-body">
-                    <h3 class="card-title">Hand Gestures</h5>
-                    <p class="card-text">Five most common hand gestures</p>
+                    <h3 class="card-title">Consult our DataBase</h5>
+                    <p class="card-text">Here you can find and see all datasets created until now.</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">Last updated 13 hours ago</small>
                 </div>
-                <a href=editor?project=hand-gestures>
+                <a href='browse'>
                     <span class="span-link"></span>
                 </a>
             </div>
@@ -33,13 +86,13 @@
         <div class="col">
             <div class="card h-100">
                 <div class="card-body">
-                    <h3 class="card-title">Dancing</h5>
-                    <p class="card-text">Detects if a person is dancing</p>
+                    <h3 class="card-title">Train and test ML Models</h5>
+                    <p class="card-text">Video recordings, Demo only. <br> To Train and Test you must be Logged in!</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">Last updated 3 days ago</small>
                 </div>
-                <a href=editor?project=dancing>
+                <a href='project/train/trainBase'>
                     <span class="span-link"></span>
                 </a>
             </div>
@@ -47,8 +100,8 @@
         <div class="col">
             <div class="card h-100">
                 <div class="card-body">
-                    <h3 class="card-title">Facial Expressions</h5>
-                    <p class="card-text">Most common facial expressions</p>
+                    <h3 class="card-title">Expand and Use our Database by training your own models</h5>
+                    <p class="card-text">You must be Logged in!</p>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">Last updated 1 month ago</small>
@@ -60,19 +113,50 @@
         </div>
         <div class="col">
             <div class="card h-100">
-                <div class="card-body">
-                    <h3 class="card-title">Sad Voice</h5>
-                    <p class="card-text">Detects sadness throw voice.</p>
+                <div class="card-body"  >
+                    <h3 class="card-title">Create your own Project</h5>
+                        <p class="card-text">Data acquisition, Annotation, Train & Visualize </p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Last updated 2 month ago</small>
+                    <small class="text-muted">Click here</small>
                 </div>
-                <a href=editor?project=sad-voice>
+                <a href='myProjects'>
                     <span class="span-link"></span>
                 </a>
             </div>
         </div>
     </div>
+
+    <br>
+   
+
+    <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
+
+<footer style="margin-top: 60px;">
+  <p>&copy; 2023 MFDA. All Rights Reserved.</p>
+</footer>   
+
+
+    <script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("scrollBtn").style.display = "block";
+        } else {
+            document.getElementById("scrollBtn").style.display = "none";
+        }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+
+
 
 </div>
 {% endblock %}

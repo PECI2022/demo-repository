@@ -1,2 +1,5 @@
 venv/
 API/*.webm
+*.pyc
+Backend/__pycache__
+Frontend/__pycache__
