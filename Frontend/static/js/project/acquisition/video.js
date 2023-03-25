@@ -6,6 +6,7 @@ const duration_input = document.querySelector("#video-duration");
 const recording_message = document.querySelector("#recording-message");
 const countdown = document.querySelector('#countdown');
 const class_adition = document.querySelector('#addClass')
+const preview_button = document.querySelector('#preview-button')
 
 let camera_stream;
 let media_recorder;
@@ -19,6 +20,9 @@ camera_button.addEventListener('click', async () => {
     
     camera_button.style.display = "none";
     camera_button_back.style.display = "none";
+
+   // make preview button invisible
+    preview_button.style.display = "none";
     
     video.srcObject = camera_stream;
     video.style.display = 'block';
@@ -109,19 +113,24 @@ const list_videos_fetch = async () => {
     // console.log(list)
     // list_videos.innerHTML = "";
     // list.sort();
+    let rowNumber = 1;
     for(let i of list) {
         console.log(i._id)
         let s = `<tr onclick=>
-                <th scope="row">1</th>
+                <th scope="row">${rowNumber}</th>
                 <td>${i.name}</td>
                 <td>${i.video_class}</td>
                 <td>${i.length}</td>
+                
                 <td><span class="material-icons" style="cursor: pointer;">edit</span>
+                <span class="material-icons" style="cursor: pointer;" onclick="preview_video('${i._id}')">preview</span>
+                <span class="material-icons text-warning" style="cursor: pointer;" onclick="change_class('${i._id}')">shuffle</span>
                 <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span></td>
                 </tr>` 
         let newElem = document.createElement('tr');
         newElem.innerHTML=s
         video_table.appendChild(newElem);
+        rowNumber++;
     }
 };list_videos_fetch()
 
@@ -231,11 +240,10 @@ const addProjectClass = async () => {
 }
 
 fileInput.addEventListener("change", function (event) {
-    document.getElementById("preview-button").disabled = false;
+    preview_button.style.display = "block"; // show preview button
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
     filePreview.src = url;
-    filePreviewModal.show();
 });
 
 
