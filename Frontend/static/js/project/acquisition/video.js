@@ -7,6 +7,9 @@ const recording_message = document.querySelector("#recording-message");
 const countdown = document.querySelector('#countdown');
 const class_adition = document.querySelector('#addClass')
 const preview_button = document.querySelector('#preview-button')
+const number_of_videos = document.querySelector('#numberOfVideos');
+const number_of_recordings = document.querySelector('#numberOfRecordings');
+const number_of_recordings_input = document.querySelector('#numberOfRecordingsInput');
 
 let camera_stream;
 let media_recorder;
@@ -69,39 +72,48 @@ record_button.addEventListener('click', async () => {
     record_button.disabled = true;
     
     blobs_recorded = [];
-    
+
+    let number_of_recordings = number_of_recordings_input.value;
     // TODO: make a way to visualize the tempos
     // let time = 0;
     // let interval = setInterval(()=>{ // display countdown
     
     // })
-    
-    let timeLeft = countdown_input.value;
-    // Update the countdown display every second
-    let countdownInterval = setInterval(() => {
-        timeLeft--;
-        if (timeLeft >= 0) {
-            countdown.innerHTML = timeLeft;
-        } else {
-            clearInterval(countdownInterval);
-        }
-        
-    }, 1000);
+
+    function recordVideo(){
+        let timeLeft = countdown_input.value;
+        let countdownInterval = setInterval(() => {
+            timeLeft--;
+            if (timeLeft >= 0) {
+                countdown.innerHTML = timeLeft;
+            } else {
+                clearInterval(countdownInterval);
+            }
+            
+        }, 1000);
 
 
-    setTimeout(()=>{ // countdown delay
-        countdown.innerHTML = "";
-        recording_message.style.display = "block";
+        setTimeout(()=>{ // countdown delay
+            countdown.innerHTML = "";
+            recording_message.style.display = "block";
 
-        recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
-        media_recorder.start(100); //
-        setTimeout(()=>{ // duration delay
-            recording_message.innerHTML = "";
-            media_recorder.stop(); //
-        }, duration_input.value*1000);
-    }, countdown_input.value*1000);
-})
+            recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
+            media_recorder.start(100); //
+            setTimeout(()=>{ // duration delay
+                recording_message.innerHTML = "";
+                media_recorder.stop(); //
+                number_of_recordings--;
+                if(number_of_recordings > 0){
+                    recordVideo();
+                }else{
+                    return;
+                }
+            }, duration_input.value*1000);
+        }, countdown_input.value*1000);
+    }
+    recordVideo();
 
+});
 const list_videos_fetch = async () => {
     console.log(class_adition.innerHTML)
     // console.log(video_table)
