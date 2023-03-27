@@ -37,16 +37,15 @@ camera_button.addEventListener('click', async () => {
     });
     let recording_number = 0;
     media_recorder.addEventListener('stop', async () => {
-        let recording = new Blob(blobs_recorded, {type:'video/webm'});
+        let recording = new Blob(blobs_recorded, {type:'video/webm'}); 
         let filename = "recording" + recording_number + ".webm";
         recording_number++;
         let url = URL.createObjectURL(recording);
         let a = document.createElement('a');
         a.href = url;
-        a.download = filename;
-        a.click();
+        a.download = filename;  
         blobs_recorded = [];
-        lauchDataPreview(recording);
+        lauchDataPreview(recording); 
         /*
         let recording = new Blob(blobs_recorded, {type:'video/webm'});
         let data = new FormData();
