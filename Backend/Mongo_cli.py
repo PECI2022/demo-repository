@@ -1,8 +1,5 @@
 from bson import ObjectId
-<<<<<<< HEAD
-=======
 import gridfs
->>>>>>> main
 from pymongo import MongoClient, ReturnDocument
 
 class MongoCli(object):
@@ -12,10 +9,7 @@ class MongoCli(object):
         self.collection = self.db['context_user']
     
     def insert_data(self, data, _id, topic):
-<<<<<<< HEAD
-=======
         print(id)
->>>>>>> main
         if not self.find_document_by_id(_id):
             try:
                 doc = self.collection.insert_one({'_id': ObjectId(_id), topic: data})
@@ -35,8 +29,6 @@ class MongoCli(object):
                 print(f'\n[x] ERROR - ADD NEW VALUES [x]: {e}')
             else:
                 print('\n[!] ADD NEW VALUES [!]')
-<<<<<<< HEAD
-=======
 
     def insert_media_file(self, _id, file_location):
         name = file_location
@@ -76,16 +68,11 @@ class MongoCli(object):
         if out_data:
             return True
         return False
->>>>>>> main
                 
     def find_documents(self, limit=5):
         return self.collection.find().limit(limit)
 
     
-<<<<<<< HEAD
-    def generate_unique_id():
-        return ObjectId()
-=======
     def generate_unique_id(self):
         return ObjectId()
     
@@ -95,7 +82,6 @@ class MongoCli(object):
             return True
 
     
->>>>>>> main
 
     # mongoc = MongoCli()
     """_id = generate_unique_id()
@@ -103,7 +89,3 @@ class MongoCli(object):
             'FOCUS_SPEECH': False, "AGENT": ""}​​​​​​​​
     mongoc.insert_data(data=data, _id=_id, topic="USER_CONTEXT_FOCUS")"""
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
