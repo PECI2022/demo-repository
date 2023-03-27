@@ -1,41 +1,6 @@
 from flask import Flask, send_from_directory, request, make_response
 from flask_cors import CORS
 from werkzeug.datastructures import FileStorage
-<<<<<<< HEAD
-import json
-import os
-from Mongo_cli import MongoCli
-from gridfs import GridFS
-app = Flask(__name__)
-
-mongo_cli = MongoCli()
-fs = GridFS(mongo_cli.db)
-# client = MongoClient(MONGODB_URI)
-
-class Operations:
-    def __init__(self):
-        pass
-
-    
-    def upload(self):
-        print("Catch")
-        # x = '{ "name":"John", "age":30, "city":"New York"}'
-        # y = json.loads(x)
-        file = request.files['file']
-        description = json.loads(request.form['description'])
-        file.save('./'+ description['name']+'.webm')
-        file_id = fs.put(file)
-        # id = mongo_cli.generate_unique_id()
-        video_id = mongo_cli.insert_data(file,file_id,description)
-        # a = fs.put(file)
-        return video_id
-    
-    def list_videos(self):
-        videos = mongo_cli.find_documents()
-        return videos
-
-operation = Operations()
-=======
 from pymongo import MongoClient
 from gridfs import GridFS
 import json
@@ -47,7 +12,6 @@ app = Flask(__name__)
 mongo_cli = MongoCli()
 fs = GridFS(mongo_cli.db)
 CORS(app)
->>>>>>> main
 
 
 class Operations:
@@ -103,14 +67,9 @@ def default():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-<<<<<<< HEAD
-    operation.upload()
-    
-=======
     print("UPLOAD")
     return operation.upload()
 
->>>>>>> main
 @app.route('/download', methods=['POST'])
 def download():
     print("DOWNLOAD")
@@ -148,16 +107,10 @@ def download_audio():
         response.data = f.read()
     return response
 
-<<<<<<< HEAD
-@app.route('/list_videos')
-def list_videos():
-    return operation.list_videos()
-=======
 @app.route('/list_audio')
 def list_audio():
     print("LIST AUDIO")
     return [i for i in os.listdir('.') if i.endswith('.mp3')]
->>>>>>> main
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
