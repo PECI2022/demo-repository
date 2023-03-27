@@ -143,9 +143,9 @@ const list_videos_fetch = async () => {
                     <td>${i.length}</td>
                     <td>
                         <span class="material-icons" style="cursor: pointer;">edit</span>
-                        <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
-                        <span class="material-icons text-warning" style="cursor: pointer;" onclick="delete_video('${i._id}')">shuffle</span>
+                        <span class="material-icons" style="cursor: pointer;">shuffle</span>
                         <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
+                        <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
                     </td>
                 </tr>` 
         let newElem = document.createElement('tr');
