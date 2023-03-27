@@ -1,5 +1,10 @@
 {% extends 'project/acquisition/acquisitionBase.html' %}
 
+{% block additionalHeadProjectBaseAcquisition %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/project/acquisition/video.css') }}">
+{% endblock %}
+
+
 {% block acquisitionOptions %}
 <div class="btn-group w-100">
     <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">Thumbsup</button>

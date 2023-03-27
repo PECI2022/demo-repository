@@ -94,6 +94,7 @@ record_button.addEventListener('click', async () => {
         setTimeout(()=>{ // duration delay
             recording_message.innerHTML = "";
             media_recorder.stop(); //
+
         }, duration_input.value*1000);
     }, countdown_input.value*1000);
 })
@@ -110,18 +111,27 @@ const list_videos_fetch = async () => {
     // list_videos.innerHTML = "";
     // list.sort();
     for(let i of list) {
-        console.log(i._id)
-        let s = `<tr onclick=>
-                <th scope="row">1</th>
-                <td>${i.name}</td>
-                <td>${i.video_class}</td>
-                <td>${i.length}</td>
-                <td><span class="material-icons" style="cursor: pointer;">edit</span>
-                <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span></td>
+        // console.log(i._id)
+        let s = `<tr>
+                    <td>${i.name}</td>
+                    <td>${i.video_class}</td>
+                    <td>${i.length}</td>
+                    <td>
+                        <span class="material-icons" style="cursor: pointer;">edit</span>
+                        <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
+                        <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
+                    </td>
                 </tr>` 
         let newElem = document.createElement('tr');
-        newElem.innerHTML=s
+        newElem.innerHTML=s  
+        let newElem2 = document.createElement('tr');
+        newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="640" height="480" autoplay controls/></td>`
+        newElem2.classList.add("collapse")
+        newElem2.id = `collapse${i._id}`
+        newElem2.colSpan = "4"
+        // newElem.onclick = () => fetchRecordingAndPlay(i._id)
         video_table.appendChild(newElem);
+        video_table.appendChild(newElem2)
     }
 };list_videos_fetch()
 
@@ -244,3 +254,30 @@ fileInput.addEventListener("change", function (event) {
 //     classes.push(name);
 //     list_classes_fetch();
 // }
+
+// const fetchRecordingAndPlay = async (id) => {
+//     let data = new FormData();
+//     data.append('_id', id);
+//     const response = await fetch('http://127.0.0.1:5001/download', {method:'POST',body:data})
+//     let blob = await response.blob();
+//     // video_url = URL.createObjectURL(blob);
+//     video.src = URL.createObjectURL(blob)
+//     video.style.display = 'block'
+// }
+
+const tableLoadvideo = async (id) => {
+    let v = document.querySelector("#video"+id);
+    console.log(v.src)
+    if( v.src=="" ) {
+        console.log(id)
+        let data = new FormData();
+        data.append('_id', id);
+        const response = await fetch('http://127.0.0.1:5001/download', {method:'POST',body:data})
+        console.log("responded")
+        let blob = await response.blob();
+        // video_url = URL.createObjectURL(blob);
+        v.src = URL.createObjectURL(blob)
+    } else {
+        v.removeAttribute('src')
+    }
+}

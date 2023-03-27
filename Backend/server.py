@@ -6,6 +6,7 @@ from gridfs import GridFS
 import json
 import os
 from Mongo_cli import MongoCli
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 mongo_cli = MongoCli()
@@ -43,9 +44,7 @@ class Operations:
         return ret
     
     def download(self):
-        fileName = request.get_json()['name']
-        name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"info": fileName})['_id'])
-        return name
+        return mongo_cli.generate_from_db(ObjectId(request.form['_id']))
     
     def delete_video(self):
         description = json.loads(request.form['_id'])
