@@ -1,5 +1,10 @@
 {% extends 'project/acquisition/acquisitionBase.html' %}
 
+{% block additionalHeadProjectBaseAcquisition %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/project/acquisition/video.css') }}">
+{% endblock %}
+
+
 {% block acquisitionOptions %}
 <div class="btn-group w-100">
     <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">Thumbsup</button>
@@ -20,7 +25,7 @@
 </div> 
 <div class="input-group w-100">
   <span class="input-group-text" style="width:70%;">Number of recordings</span>
-  <input id="video-duration" type="number" aria-label="First name" class="form-control" value="1">
+  <input id="numberOfRecordingsInput" type="number" aria-label="First name" class="form-control" value="1">
 </div> 
   
 <button class="btn button btn-light w-100" id="record-video" disabled>Record</button>
@@ -33,11 +38,11 @@
     <span id="file-name"></span>
 </form>
 
-<button id="preview-button" type="button" class="btn button btn-light" data-toggle="modal" data-target="#filePreviewModal" disabled>Preview</button>
 
-<!-- File preview modal -->
-<div id="filePreviewModal" class="modal" tabindex="10" role="dialog">
-  <div class="modal-dialog modal-lg" role="document">
+<button id="preview-button1" style="display: none;"type="button" class="btn button btn-light" data-bs-toggle="modal" data-bs-target="#filePreviewModal">Preview Video</button>
+
+<div class="modal fade" id="filePreviewModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">File Preview</h5>
@@ -68,7 +73,7 @@
         <div class="modal-body">
           <div class="d-flex justify-content-center">
             <div>
-              <video id="acquisitionVideoPreviewModalVideo" class="bg-black" style="" width="640" height="480" autoplay loop controls></video>
+              <video id="acquisitionVideoPreviewModalVideo" class="bg-black" width="640" height="480" autoplay loop controls></video>
               <div class="input-group w-75">
                   <span class="input-group-text">Recording Name</span>
                   <input id="acquisitionVideoPreviewModalDescriptionName" type="text" aria-label="First name" class="form-control" value="Acquisition 17#">
@@ -98,7 +103,7 @@
 
 
 <div id="startDisplayButtonBack" style="width: 640px;height:480px;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
-    <button class="btn button btn-light" id="start-camera" >Start Camera</button>
+  <button class="btn button btn-light" id="start-camera" >Start Camera</button>
 </div>
 
 

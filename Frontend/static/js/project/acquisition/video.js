@@ -6,6 +6,10 @@ const duration_input = document.querySelector("#video-duration");
 const recording_message = document.querySelector("#recording-message");
 const countdown = document.querySelector('#countdown');
 const class_adition = document.querySelector('#addClass')
+const preview_button = document.querySelector('#preview-button1')
+const number_of_videos = document.querySelector('#numberOfVideos');
+const number_of_recordings = document.querySelector('#numberOfRecordings');
+const number_of_recordings_input = document.querySelector('#numberOfRecordingsInput');
 
 let camera_stream;
 let media_recorder;
@@ -19,6 +23,9 @@ camera_button.addEventListener('click', async () => {
     
     camera_button.style.display = "none";
     camera_button_back.style.display = "none";
+
+   // make preview button invisible
+    preview_button.style.display = "none";
     
     video.srcObject = camera_stream;
     video.style.display = 'block';
@@ -28,9 +35,17 @@ camera_button.addEventListener('click', async () => {
     media_recorder.addEventListener('dataavailable', (e) => {
         blobs_recorded.push(e.data);
     });
+    let recording_number = 0;
     media_recorder.addEventListener('stop', async () => {
-        let recording = new Blob(blobs_recorded, {type:'video/webm'});
-        lauchDataPreview(recording);
+        let recording = new Blob(blobs_recorded, {type:'video/webm'}); 
+        let filename = "recording" + recording_number + ".webm";
+        recording_number++;
+        let url = URL.createObjectURL(recording);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = filename;  
+        blobs_recorded = [];
+        lauchDataPreview(recording); 
         /*
         let recording = new Blob(blobs_recorded, {type:'video/webm'});
         let data = new FormData();
@@ -65,63 +80,84 @@ record_button.addEventListener('click', async () => {
     record_button.disabled = true;
     
     blobs_recorded = [];
-    
+
+    let number_of_recordings = number_of_recordings_input.value;
     // TODO: make a way to visualize the tempos
     // let time = 0;
     // let interval = setInterval(()=>{ // display countdown
     
     // })
-    
-    let timeLeft = countdown_input.value;
-    // Update the countdown display every second
-    let countdownInterval = setInterval(() => {
-        timeLeft--;
-        if (timeLeft >= 0) {
-            countdown.innerHTML = timeLeft;
-        } else {
-            clearInterval(countdownInterval);
-        }
-        
-    }, 1000);
+
+    function recordVideo(){
+        let timeLeft = countdown_input.value;
+        let countdownInterval = setInterval(() => {
+            timeLeft--;
+            if (timeLeft >= 0) {
+                countdown.innerHTML = timeLeft;
+            } else {
+                clearInterval(countdownInterval);
+            }
+            
+        }, 1000);
 
 
-    setTimeout(()=>{ // countdown delay
-        countdown.innerHTML = "";
-        recording_message.style.display = "block";
+        setTimeout(()=>{ // countdown delay
+            countdown.innerHTML = "";
+            recording_message.style.display = "block";
 
-        recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
-        media_recorder.start(100); //
-        setTimeout(()=>{ // duration delay
-            recording_message.innerHTML = "";
-            media_recorder.stop(); //
-        }, duration_input.value*1000);
-    }, countdown_input.value*1000);
-})
+            recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
+            media_recorder.start(100); //
+            setTimeout(()=>{ // duration delay
+                recording_message.innerHTML = "";
+                media_recorder.stop(); //
+                number_of_recordings--;
+                if(number_of_recordings > 0){
+                    recordVideo();
+                }else{
+                    return;
+                }
+            }, duration_input.value*1000);
+        }, countdown_input.value*1000);
+    }
+    recordVideo();
 
+});
 const list_videos_fetch = async () => {
     console.log(class_adition.innerHTML)
     // console.log(video_table)
     const response = await fetch('http://127.0.0.1:5001/list_videos');
     let list = await response.json()
-    if(!list) return;
+    if(!list) return;    
+    list.sort((a, b) => a.name.localeCompare(b.name)); // Sort list alphabetically by name
     video_table.innerHTML = ""
     // console.log("LLL")
     // console.log(list)
     // list_videos.innerHTML = "";
     // list.sort();
+    let rowNumber = 1;
     for(let i of list) {
-        console.log(i._id)
-        let s = `<tr onclick=>
-                <th scope="row">1</th>
-                <td>${i.name}</td>
-                <td>${i.video_class}</td>
-                <td>${i.length}</td>
-                <td><span class="material-icons" style="cursor: pointer;">edit</span>
-                <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span></td>
+        // console.log(i._id)
+        let s = `<tr>
+                    <td>${i.name}</td>
+                    <td>${i.video_class}</td>
+                    <td>${i.length}</td>
+                    <td>
+                        <span class="material-icons" style="cursor: pointer;">edit</span>
+                        <span class="material-icons" style="cursor: pointer;">shuffle</span>
+                        <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
+                        <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
+                    </td>
                 </tr>` 
         let newElem = document.createElement('tr');
-        newElem.innerHTML=s
+        newElem.innerHTML=s  
+        let newElem2 = document.createElement('tr');
+        newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="640" height="480" autoplay controls/></td>`
+        newElem2.classList.add("collapse")
+        newElem2.id = `collapse${i._id}`
+        newElem2.colSpan = "4"
+        // newElem.onclick = () => fetchRecordingAndPlay(i._id)
         video_table.appendChild(newElem);
+        video_table.appendChild(newElem2)
     }
 };list_videos_fetch()
 
@@ -231,11 +267,10 @@ const addProjectClass = async () => {
 }
 
 fileInput.addEventListener("change", function (event) {
-    document.getElementById("preview-button").disabled = false;
+    preview_button.style.display = "block"; // show preview button
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
     filePreview.src = url;
-    filePreviewModal.show();
 });
 
 
@@ -244,3 +279,30 @@ fileInput.addEventListener("change", function (event) {
 //     classes.push(name);
 //     list_classes_fetch();
 // }
+
+// const fetchRecordingAndPlay = async (id) => {
+//     let data = new FormData();
+//     data.append('_id', id);
+//     const response = await fetch('http://127.0.0.1:5001/download', {method:'POST',body:data})
+//     let blob = await response.blob();
+//     // video_url = URL.createObjectURL(blob);
+//     video.src = URL.createObjectURL(blob)
+//     video.style.display = 'block'
+// }
+
+const tableLoadvideo = async (id) => {
+    let v = document.querySelector("#video"+id);
+    console.log(v.src)
+    if( v.src=="" ) {
+        console.log(id)
+        let data = new FormData();
+        data.append('_id', id);
+        const response = await fetch('http://127.0.0.1:5001/download', {method:'POST',body:data})
+        console.log("responded")
+        let blob = await response.blob();
+        // video_url = URL.createObjectURL(blob);
+        v.src = URL.createObjectURL(blob)
+    } else {
+        v.removeAttribute('src')
+    }
+}
