@@ -142,7 +142,7 @@ const list_videos_fetch = async () => {
                     <td>${i.video_class}</td>
                     <td>${i.length}</td>
                     <td>
-                        <span class="material-icons" style="cursor: pointer;">edit</span>
+                        <span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>
                         <span class="material-icons" style="cursor: pointer;">shuffle</span>
                         <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
                         <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
@@ -160,6 +160,113 @@ const list_videos_fetch = async () => {
         video_table.appendChild(newElem2)
     }
 };list_videos_fetch()
+
+
+const edit_video = async (id) => {
+    const row = document.querySelector(`tr[data-id="${id}"]`);
+    const name = row.querySelector("td:nth-child(1)").textContent;
+    const oldClass = row.querySelector("td:nth-child(2)").textContent;
+  
+    const newName = prompt("Enter the new name", name);
+    const newClass = prompt("Enter the new class", oldClass);
+  
+    if (newName === null || newClass === null) {
+      return;
+    }
+  
+    const data = { name: newName, video_class: newClass };
+  
+    try {
+      const response = await fetch(`http://127.0.0.1:5001/edit_video/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+  
+      row.querySelector("td:nth-child(1)").textContent = newName;
+      row.querySelector("td:nth-child(2)").textContent = newClass;
+  
+      alert("Video updated successfully");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("There was an error updating the video");
+    }
+  };
+
+  
+// const edit_video = async (id) => {
+
+//     // loop through all edit icons and attach a click event listener
+//     editIcons.forEach(editIcon => {
+//     editIcon.addEventListener('click', () => {
+//         // get the row element of the video
+//         const row = editIcon.parentElement.parentElement;
+        
+//         // get the name and class elements of the video
+//         const nameCell = row.children[0];
+//         const classCell = row.children[1];
+        
+//         // create input elements to replace the name and class elements
+//         const nameInput = document.createElement('input');
+//         nameInput.type = 'text';
+//         nameInput.value = nameCell.innerText;
+//         const classInput = document.createElement('select');
+//         classes.forEach(className => {
+//         const option = document.createElement('option');
+//         option.value = className;
+//         option.text = className;
+//         if (className === classCell.innerText) {
+//             option.selected = true;
+//         }
+//         classInput.add(option);
+//         });
+        
+//         // replace the name and class elements with the input elements
+//         nameCell.replaceWith(nameInput);
+//         classCell.replaceWith(classInput);
+        
+//         // create a save button
+//         const saveButton = document.createElement('button');
+//         saveButton.innerText = 'Save';
+        
+//         // add a click event listener to the save button
+//         saveButton.addEventListener('click', async () => {
+//         // get the new name and class from the input elements
+//         const newName = nameInput.value;
+//         const newClass = classInput.value;
+        
+//         // update the video in the database
+//         const response = await fetch(`http://127.0.0.1:5001/update_video/${row.id}`, {
+//             method: 'PUT',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ name: newName, video_class: newClass })
+//         });
+        
+//         // if the update was successful, replace the input elements with the new name and class elements
+//         if (response.ok) {
+//             const newNameCell = document.createElement('td');
+//             newNameCell.innerText = newName;
+//             const newClassCell = document.createElement('td');
+//             newClassCell.innerText = newClass;
+//             nameInput.replaceWith(newNameCell);
+//             classInput.replaceWith(newClassCell);
+//         } else {
+//             alert('Failed to update video');
+//         }
+//         });
+        
+//         // replace the edit icon with the save button
+//         editIcon.replaceWith(saveButton);
+//     });
+//     });
+// }
+
 
 const delete_video = async (_id) => {
     console.log("WWWWWWWWWWWWWWWWWWWW")
@@ -236,30 +343,45 @@ const filePreview = document.querySelector("#file-preview");
 fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 
 fileInput.addEventListener("change", function() {
-let file = fileInput.files[0];
-let fileName = file.name;
-let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
-let videoName = "video_" + lastWord;
+    let file = fileInput.files[0];
+    let fileName = file.name;
+    // get uploaded video file duration
+    let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+    let videoName = "video_" + lastWord;
 
-if (confirm("Do you want to upload " + fileName + "?")) {
-    // show message
-    fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+    if (confirm("Do you want to upload " + fileName + "?")) {
+        // show message
+        fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
 
-    let formData = new FormData();
-    formData.append("file", file);
-    formData.append("description", JSON.stringify({name: videoName}));
+        let formData = new FormData();
+        formData.append("file", file);
+        // get file video duration 
+        // let video = document.createElement("video");
+        // video.preload = "metadata";
+        // video.onloadedmetadata = function() {
+        //     window.URL.revokeObjectURL(video.src);
+        //     let duration = video.duration;
+        //     formData.append("description", JSON.stringify({name: videoName, length: duration}));
+        // }
 
-    fetch("http://127.0.0.1:5001/upload", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-} else {
-    // do nothing
-}
+        formData.append("description", JSON.stringify({name: videoName}));
+
+        fetch("http://127.0.0.1:5001/upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {console.log(data)})
+
+        //.catch(error => console.error(error));
+    } else {
+        // do nothing
+    }
 });
+
+
+
+
 const addProjectClass = async () => {
     let name = prompt("New class name?");
     classes.push(name);
