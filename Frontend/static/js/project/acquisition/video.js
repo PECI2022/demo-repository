@@ -15,6 +15,7 @@ let classes = ['Thumbsup','Thumbsdown','Peace']; // TODO: delete and replace thi
  
 
 camera_button.addEventListener('click', async () => {
+    // let response = await async ()
     camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false});
     
     camera_button.style.display = "none";

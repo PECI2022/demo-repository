@@ -17,6 +17,13 @@ class Operations:
     def __init__(self): 
         pass
 
+    # def new_project(self):
+    #     description = json.loads(request.form['description'])
+    #     _id = mongo_cli.generate_unique_id()
+    #     data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id)}
+    #     mongo_cli.insert_data(data,_id,"info")
+    #     return "done"
+
     def upload(self):
         print(request.files)
         file = request.files['file']    
@@ -32,6 +39,7 @@ class Operations:
         mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)
+        # self.insert_into_project(str(_id),description['project_id'])
         return {"result": "Correct"}
     
     def list_videos(self):
@@ -58,12 +66,22 @@ class Operations:
                 return True
         return False
     
+    # def insert_into_project(self,project_id,video_id):
+    #     project = mongo_cli.collection.find_one({'_id':project_id})
+    #     project['content'].append(video_id)
+    #     print(project)
+    
     
 operation = Operations()
 
 @app.route('/')
 def default():
     return "Running..."
+
+# @app.route('new_project', methods=['POST'])
+# def new_project():
+#     print("NEW PROJECT")
+#     return operation.new_project()
 
 @app.route('/upload', methods=['POST'])
 def upload():
