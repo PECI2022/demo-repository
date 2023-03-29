@@ -10,6 +10,7 @@ const preview_button = document.querySelector('#preview-button1')
 const number_of_videos = document.querySelector('#numberOfVideos');
 const number_of_recordings = document.querySelector('#numberOfRecordings');
 const number_of_recordings_input = document.querySelector('#numberOfRecordingsInput');
+const deleteVideoFromList = document.querySelector('#deleteVideoo');
 
 let camera_stream;
 let media_recorder;
@@ -273,10 +274,22 @@ const delete_video = async (_id) => {
     let data = new FormData()
     data.append('_id', JSON.stringify({_id:_id}))
     // console.log(data)
-    let response = await fetch('http://127.0.0.1:5001/delete_video', {
-        method: "POST",
-        body: data
+    // open modal to confirm delete
+    
+    $('#deleteVideo').modal('show')
+    // if user confirms delete then delete video
+    let deleteVideoFromList = false
+    $('#deleteVideo').on('click', '#deleteVideoo', async () => {
+        deleteVideoFromList = true
+        $('#deleteVideo').modal('hide')
+        let response = await fetch('http://127.0.0.1:5001/delete_video', {
+            method: "POST",
+            body: data
+        })
     })
+
+    
+
     // let a = await response.json()
     // console.log("WWW")
     // console.log(a['result'])
@@ -379,9 +392,6 @@ fileInput.addEventListener("change", function() {
     }
 });
 
-
-
-
 const addProjectClass = async () => {
     let name = prompt("New class name?");
     classes.push(name);
@@ -427,4 +437,26 @@ const tableLoadvideo = async (id) => {
     } else {
         v.removeAttribute('src')
     }
+}
+
+// jumbatron tabs
+var tabLinks = document.querySelectorAll('.jumbotron .nav-link');
+
+var activeTab = document.querySelector('.nav-link.active');
+activeTab.style.color = 'black';
+
+// Loop through tab links and add click event listener
+for (var i = 0; i < tabLinks.length; i++) {
+  tabLinks[i].addEventListener('click', function() {
+    // Remove 'active' class from all tab links
+    for (var j = 0; j < tabLinks.length; j++) {
+      tabLinks[j].classList.remove('active');
+      // Set the color to the previous color
+      tabLinks[j].style.color = '#61554d';
+    }
+    // Add 'active' class to the clicked tab link
+    this.classList.add('active');
+    // Set the color to black
+    this.style.color = 'black';
+  });
 }
