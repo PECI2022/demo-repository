@@ -348,10 +348,29 @@ const lauchDataPreview = videoBlob => {
 
 
 // upload video
+
+// input upload
+document.getElementById("file-button").addEventListener("click", function() {
+    document.getElementById("file-upload").click();
+  });
+
+  document.getElementById("file-upload").addEventListener("change", function() {
+    var fileName = this.value.split("\\").pop();
+    document.getElementById("file-name").innerHTML = fileName;
+});
+
 let fileInput = document.getElementById("file-upload");
 let fileNameSpan = document.getElementById("file-name"); 
 const filePreviewModal = document.querySelector("#filePreviewModal"); // modal
 const filePreview = document.querySelector("#file-preview");
+
+// write message center it when no file is selected
+fileNameSpan.innerHTML = "No file chosen";
+
+// center message
+fileNameSpan.style.display = "block";
+fileNameSpan.style.textAlign = "center";
+
 
 fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 
@@ -364,6 +383,7 @@ fileInput.addEventListener("change", function() {
 
     if (confirm("Do you want to upload " + fileName + "?")) {
         // show message
+        // add break line
         fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
 
         let formData = new FormData();
@@ -460,3 +480,5 @@ for (var i = 0; i < tabLinks.length; i++) {
     this.style.color = 'black';
   });
 }
+
+
