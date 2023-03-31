@@ -346,6 +346,21 @@ const lauchDataPreview = videoBlob => {
     document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => storeCurrentBlob(videoBlob)
 }
 
+const lauchDataPreview2 = videoBlob => {
+    $('#filePreviewModal').modal('show')
+    console.log(URL.createObjectURL(videoBlob))
+    document.querySelector('#file-preview').src = URL.createObjectURL(videoBlob)
+    document.querySelector('#file-preview').onclick = () => storeCurrentBlob(videoBlob)
+}
+
+
+function launchVideoPreview(file) {
+    event.preventDefault(); // prevent default button behavior
+    let blob = new Blob([file], { type: file.type });
+    lauchDataPreview2(blob);
+  }  
+  
+
 // input upload
 document.getElementById("file-button").addEventListener("click", function() {
     document.getElementById("file-upload").click();
@@ -411,25 +426,29 @@ folderInput.addEventListener("change", function() {
         let fileName = file.name;
         // get uploaded video file duration
         let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+        // blob for each video
         let videoName = "video_" + lastWord;
         folderNameSpan.innerHTML += "<br>" + videoName + ".webm";
-   }
 
-    if (confirm("Do you want to upload " + files.length + " videos from " + folderName + "?")) {
-        for(let i = 0; i < files.length; i++){
-            let file = files[i];
-            formData.append("file", file);
-
-            formData.append("description", JSON.stringify({name:file.name, class:"test", length:duration_input.value}))
-
-            fetch("http://127.0.0.1:5001/upload", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {console.log(data)})
-        }
+        // preview each video when clicked on the name with launchVideoPreview()
+        folderNameSpan.innerHTML += `<button class="btn btn-primary" onclick="launchVideoPreview('${file.name}')">Preview</button>`;    
+    
     }
+
+    for(let i = 0; i < files.length; i++){
+        let file = files[i];
+        formData.append("file", file);
+
+        formData.append("description", JSON.stringify({name:file.name, class:"test", length:duration_input.value}))
+
+        fetch("http://127.0.0.1:5001/upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {console.log(data)})
+    }
+    
 });
 
 fileInput.addEventListener("change", function() {

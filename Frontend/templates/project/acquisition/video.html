@@ -61,11 +61,28 @@
           <input type="file" id="file-upload" name="file-upload" style="display: none;">
         </form>
 
-        <!-- Instead of just choosing a file, choose a folder of videos-->
-        <form>
-                 </form>
         
-        
+        <!-- Modal -->
+        <div class="modal fade" id="filePreviewModal1" tabindex="-1" aria-labelledby="filePreviewModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="filePreviewModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <video id="file-preview" class="w-100" controls>
+                  <source src="" type="video/mp4">
+                </video>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
 
         <button id="preview-button1" style="display: none;margin-top: 30px;"type="button" class="btn button btn-light w-100" data-bs-toggle="modal" data-bs-target="#filePreviewModal">Preview Video</button>
       </div>
