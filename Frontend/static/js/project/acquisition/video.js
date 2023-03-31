@@ -346,26 +346,41 @@ const lauchDataPreview = videoBlob => {
     document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => storeCurrentBlob(videoBlob)
 }
 
-
-// upload video
-
 // input upload
 document.getElementById("file-button").addEventListener("click", function() {
     document.getElementById("file-upload").click();
-  });
+});
 
   document.getElementById("file-upload").addEventListener("change", function() {
     var fileName = this.value.split("\\").pop();
     document.getElementById("file-name").innerHTML = fileName;
 });
 
+// input folder upload
+document.getElementById("folder-button").addEventListener("click", function() {
+    document.getElementById("folder-upload").click();
+});
+
+document.getElementById("folder-upload").addEventListener("change", function() {
+    var folderName = this.value.split("\\").pop();
+    document.getElementById("folder-name").innerHTML = folderName;
+});
+
 let fileInput = document.getElementById("file-upload");
 let fileNameSpan = document.getElementById("file-name"); 
+let folderInput = document.getElementById("folder-upload");
+let folderNameSpan = document.getElementById("folder-name");
+
+
 const filePreviewModal = document.querySelector("#filePreviewModal"); // modal
 const filePreview = document.querySelector("#file-preview");
 
 // write message center it when no file is selected
-fileNameSpan.innerHTML = "No file chosen";
+fileNameSpan.innerHTML = "No file/folder chosen";
+// hide it when folder button is clicked
+
+
+
 
 // center message
 fileNameSpan.style.display = "block";
@@ -373,6 +388,49 @@ fileNameSpan.style.textAlign = "center";
 
 
 fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
+
+folderInput.setAttribute("webkitdirectory", ""); // Only accept video inputs
+folderInput.setAttribute("directory", ""); // Only accept video inputs
+
+folderInput.addEventListener("change", function() {
+    fileNameSpan.style.display = "none";
+    // get folder name
+    let folderName = folderInput.files[0].webkitRelativePath.split("/")[0];
+    
+    console.log("FOLDERRR")
+    folderNameSpan.innerHTML = "<b>Folder Name: </b>" + folderName;
+
+    // get all files from folder
+    let files = folderInput.files;
+
+    // send videos from folder to server
+    let formData = new FormData();
+    // print all files from folder
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let fileName = file.name;
+        // get uploaded video file duration
+        let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+        let videoName = "video_" + lastWord;
+        folderNameSpan.innerHTML += "<br>" + videoName + ".webm";
+   }
+
+    if (confirm("Do you want to upload " + files.length + " videos from " + folderName + "?")) {
+        for(let i = 0; i < files.length; i++){
+            let file = files[i];
+            formData.append("file", file);
+
+            formData.append("description", JSON.stringify({name:file.name, class:"test", length:duration_input.value}))
+
+            fetch("http://127.0.0.1:5001/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {console.log(data)})
+        }
+    }
+});
 
 fileInput.addEventListener("change", function() {
     let file = fileInput.files[0];
@@ -397,7 +455,7 @@ fileInput.addEventListener("change", function() {
         //     formData.append("description", JSON.stringify({name: videoName, length: duration}));
         // }
 
-        formData.append("description", JSON.stringify({name: videoName}));
+        formData.append("description", JSON.stringify({name: videoName, length:duration_input.value}));
 
         fetch("http://127.0.0.1:5001/upload", {
             method: "POST",
@@ -407,8 +465,6 @@ fileInput.addEventListener("change", function() {
         .then(data => {console.log(data)})
 
         //.catch(error => console.error(error));
-    } else {
-        // do nothing
     }
 });
 

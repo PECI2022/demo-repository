@@ -54,9 +54,18 @@
        
         <form>
           <button type="button"class="btn button btn-light w-100" id="file-button" style="margin-top: 30px;">Choose Video</button>
+          <button type="button" class="btn button btn-light w-100" id="folder-button" style="margin-top: 30px;">Choose Folder</button>
+          <span id="folder-name" style="margin-top: 30px;text-align: center !important; "></span>
+          <input type="file" id="folder-upload" name="folder-upload" style="display: none;" webkitdirectory mozdirectory msdirectory odirectory directory multiple>
           <span id="file-name" style="margin-top: 30px;text-align: center !important; "></span>
           <input type="file" id="file-upload" name="file-upload" style="display: none;">
         </form>
+
+        <!-- Instead of just choosing a file, choose a folder of videos-->
+        <form>
+                 </form>
+        
+        
 
         <button id="preview-button1" style="display: none;margin-top: 30px;"type="button" class="btn button btn-light w-100" data-bs-toggle="modal" data-bs-target="#filePreviewModal">Preview Video</button>
       </div>
