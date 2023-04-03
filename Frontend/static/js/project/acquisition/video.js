@@ -334,7 +334,7 @@ const lauchDataPreview = videoBlobs => {
         document.querySelector('#previewAcquisitionList').appendChild(e);
     }
 }
-window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
+// window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
 
 
 // upload video
