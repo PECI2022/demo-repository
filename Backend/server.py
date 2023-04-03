@@ -6,6 +6,7 @@ from gridfs import GridFS
 import json
 import os
 from Mongo_cli import MongoCli
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 mongo_cli = MongoCli()
@@ -35,7 +36,9 @@ class Operations:
         _id = mongo_cli.generate_unique_id()
         # print("HERE")
         # print(str(_id))
-        data = {"name":description['name'], "video_class":description['class'], "length":description['length'], "_id":str(_id)}
+        video_class = description.get('class')
+        video_length = description.get('length')
+        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id)}
         mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)
@@ -51,9 +54,7 @@ class Operations:
         return ret
     
     def download(self):
-        fileName = request.get_json()['name']
-        name = mongo_cli.generate_from_db(mongo_cli.collection.find_one({"info": fileName})['_id'])
-        return name
+        return mongo_cli.generate_from_db(ObjectId(request.form['_id']))
     
     def delete_video(self):
         description = json.loads(request.form['_id'])
