@@ -14,6 +14,7 @@ const number_of_recordings_input = document.querySelector('#numberOfRecordingsIn
 let camera_stream;
 let media_recorder;
 let blobs_recorded;
+let blobs = [];
 
 let classes = ['Thumbsup','Thumbsdown','Peace']; // TODO: delete and replace this variable with a fetch to the db
  
@@ -35,91 +36,63 @@ camera_button.addEventListener('click', async () => {
     media_recorder.addEventListener('dataavailable', (e) => {
         blobs_recorded.push(e.data);
     });
-    let recording_number = 0;
     media_recorder.addEventListener('stop', async () => {
         let recording = new Blob(blobs_recorded, {type:'video/webm'}); 
-        let filename = "recording" + recording_number + ".webm";
-        recording_number++;
-        let url = URL.createObjectURL(recording);
-        let a = document.createElement('a');
-        a.href = url;
-        a.download = filename;  
-        blobs_recorded = [];
-        lauchDataPreview(recording); 
-        /*
-        let recording = new Blob(blobs_recorded, {type:'video/webm'});
-        let data = new FormData();
-        data.append('file', recording);
+        blobs.push(recording)
+        //lauchDataPreview([recording]); 
         
-        // data.append('description', JSON.stringify({name:prompt("File Name?")}))
-        let description = lauchDataPreview(recording)
-        
-        if(!description) return;
-
-        data.append('description', JSON.stringify(description))
-
-        let response = await fetch('http://127.0.0.1:5001/upload', {
-            method: "POST",
-            body: data
-        });
-        alert("Video Saved on the Server"); // TODO: create a stylized popup
-        list_videos_fetch();
-        */
     });
-    //different type of recording
-    //start recording automatically
-    // blobs_recorded = [];
-    // media_recorder.start(5);
-    // setTimeout(()=>{ // duration delay
-    //     media_recorder.stop();
-    // }, duration_input.value*1000);
 });
 
 record_button.disabled=true;
 record_button.addEventListener('click', async () => {
     record_button.disabled = true;
     
-    blobs_recorded = [];
+    blobs = [];
 
-    let number_of_recordings = number_of_recordings_input.value;
+    // let number_of_recordings = number_of_recordings_input.value;
     // TODO: make a way to visualize the tempos
     // let time = 0;
     // let interval = setInterval(()=>{ // display countdown
     
     // })
 
-    function recordVideo(){
+    function recordVideo(counter){
         let timeLeft = countdown_input.value;
         let countdownInterval = setInterval(() => {
-            timeLeft--;
+            timeLeft-=100/1000;
             if (timeLeft >= 0) {
                 countdown.innerHTML = timeLeft;
             } else {
                 clearInterval(countdownInterval);
             }
             
-        }, 1000);
+        }, 100);
 
 
-        setTimeout(()=>{ // countdown delay
+        let t1 = setTimeout(()=>{ // countdown delay
             countdown.innerHTML = "";
             recording_message.style.display = "block";
 
             recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
+            blobs_recorded = []
             media_recorder.start(100); //
-            setTimeout(()=>{ // duration delay
+            let t2 = setTimeout(()=>{ // duration delay
                 recording_message.innerHTML = "";
-                media_recorder.stop(); //
-                number_of_recordings--;
-                if(number_of_recordings > 0){
-                    recordVideo();
+                media_recorder.stop() //
+                if(counter > 0){
+                    recordVideo(counter-1);
                 }else{
+                    lauchDataPreview(blobs);
+                    record_button.disabled = false;
                     return;
                 }
+                clearInterval(t1);
+                clearInterval(t2);
             }, duration_input.value*1000);
         }, countdown_input.value*1000);
     }
-    recordVideo();
+    recordVideo(number_of_recordings_input.value);
 
 });
 const list_videos_fetch = async () => {
@@ -142,7 +115,7 @@ const list_videos_fetch = async () => {
                     <td>${i.video_class}</td>
                     <td>${i.length}</td>
                     <td>
-                        <span class="material-icons" style="cursor: pointer;">edit</span>
+                        <span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>
                         <span class="material-icons" style="cursor: pointer;">shuffle</span>
                         <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
                         <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
@@ -160,6 +133,113 @@ const list_videos_fetch = async () => {
         video_table.appendChild(newElem2)
     }
 };list_videos_fetch()
+
+
+const edit_video = async (id) => {
+    const row = document.querySelector(`tr[data-id="${id}"]`);
+    const name = row.querySelector("td:nth-child(1)").textContent;
+    const oldClass = row.querySelector("td:nth-child(2)").textContent;
+  
+    const newName = prompt("Enter the new name", name);
+    const newClass = prompt("Enter the new class", oldClass);
+  
+    if (newName === null || newClass === null) {
+      return;
+    }
+  
+    const data = { name: newName, video_class: newClass };
+  
+    try {
+      const response = await fetch(`http://127.0.0.1:5001/edit_video/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+  
+      row.querySelector("td:nth-child(1)").textContent = newName;
+      row.querySelector("td:nth-child(2)").textContent = newClass;
+  
+      alert("Video updated successfully");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("There was an error updating the video");
+    }
+  };
+
+  
+// const edit_video = async (id) => {
+
+//     // loop through all edit icons and attach a click event listener
+//     editIcons.forEach(editIcon => {
+//     editIcon.addEventListener('click', () => {
+//         // get the row element of the video
+//         const row = editIcon.parentElement.parentElement;
+        
+//         // get the name and class elements of the video
+//         const nameCell = row.children[0];
+//         const classCell = row.children[1];
+        
+//         // create input elements to replace the name and class elements
+//         const nameInput = document.createElement('input');
+//         nameInput.type = 'text';
+//         nameInput.value = nameCell.innerText;
+//         const classInput = document.createElement('select');
+//         classes.forEach(className => {
+//         const option = document.createElement('option');
+//         option.value = className;
+//         option.text = className;
+//         if (className === classCell.innerText) {
+//             option.selected = true;
+//         }
+//         classInput.add(option);
+//         });
+        
+//         // replace the name and class elements with the input elements
+//         nameCell.replaceWith(nameInput);
+//         classCell.replaceWith(classInput);
+        
+//         // create a save button
+//         const saveButton = document.createElement('button');
+//         saveButton.innerText = 'Save';
+        
+//         // add a click event listener to the save button
+//         saveButton.addEventListener('click', async () => {
+//         // get the new name and class from the input elements
+//         const newName = nameInput.value;
+//         const newClass = classInput.value;
+        
+//         // update the video in the database
+//         const response = await fetch(`http://127.0.0.1:5001/update_video/${row.id}`, {
+//             method: 'PUT',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ name: newName, video_class: newClass })
+//         });
+        
+//         // if the update was successful, replace the input elements with the new name and class elements
+//         if (response.ok) {
+//             const newNameCell = document.createElement('td');
+//             newNameCell.innerText = newName;
+//             const newClassCell = document.createElement('td');
+//             newClassCell.innerText = newClass;
+//             nameInput.replaceWith(newNameCell);
+//             classInput.replaceWith(newClassCell);
+//         } else {
+//             alert('Failed to update video');
+//         }
+//         });
+        
+//         // replace the edit icon with the save button
+//         editIcon.replaceWith(saveButton);
+//     });
+//     });
+// }
+
 
 const delete_video = async (_id) => {
     console.log("WWWWWWWWWWWWWWWWWWWW")
@@ -192,39 +272,69 @@ const list_classes_fetch = async () => {
 };list_classes_fetch()
 
 // STORE VIDEO IN DB
-const storeCurrentBlob = async (blob) => {
-    let video_class = document.querySelector("#classDropdown").innerHTML
-    let data = new FormData();
-    data.append('file', blob);
-
-    let descriptionName = document.querySelector("#acquisitionVideoPreviewModalDescriptionName").value;
-    console.log(descriptionName)
-    data.append('description', JSON.stringify({name:descriptionName, class:video_class, length:duration_input.value}))
-
-    $('#acquisitionVideoPreviewModal').modal('hide')
-    
-    let response = await fetch('http://127.0.0.1:5001/upload', {
-        method: "POST",
-        body: data
-    });
-    let a = await response.json()
-    console.log(a['result'])
-    if(a['result'] == "Correct"){
-        alert("Video Saved on the Server"); // TODO: create a stylized popup
-        list_videos_fetch();
-    }else{
-        alert("Name already in use in this project")
-    }
-    record_button.disabled = false;
+const storeCurrentBlobs = (blobs) => {
+    blobs.forEach( async (blob) => {
+        let data = new FormData();
+        data.append('file', blob.blob);
+        
+        data.append('description', JSON.stringify({name:blob.name, class:blob.class, length:0}))
+        
+        $('#acquisitionVideoPreviewModal').modal('hide')
+        
+        let response = await fetch('http://127.0.0.1:5001/upload', {
+            method: "POST",
+            body: data
+        });
+        let a = await response.json()
+        console.log(a['result'])
+        if(a['result'] == "Correct"){
+            alert("Video Saved on the Server"); // TODO: create a stylized popup
+            list_videos_fetch();
+        }else{
+            alert("Name already in use in this project")
+        }
+    })
 }
 
 // VIDEO PREVIEWER + SEND TO DB
-const lauchDataPreview = videoBlob => {
-    $('#acquisitionVideoPreviewModal').modal('show')
-    console.log(URL.createObjectURL(videoBlob))
-    document.querySelector('#acquisitionVideoPreviewModalVideo').src = URL.createObjectURL(videoBlob)
-    document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => storeCurrentBlob(videoBlob)
+const lauchDataPreview = videoBlobs => {
+    $('#acquisitionVideoPreviewModal').modal('show');
+    document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => {
+        let blobs = []
+        for(let n of document.querySelector('#previewAcquisitionList').childNodes) {
+            if( n.id && n.id.startsWith("previewListId") ) {
+                let idSplit = n.id.split("-")
+                blobs.push({
+                    name: n.querySelector('.previewNameList').innerText,
+                    blob: videoBlobs[idSplit[1]],
+                    class: idSplit[2]
+                })
+            }
+        }
+        storeCurrentBlobs(blobs)
+    }
+
+
+
+    previewVideo = document.querySelector('#acquisitionVideoPreviewModalVideo');
+
+    document.querySelector('#previewAcquisitionList').innerHTML = "";
+    for(let i=0; i<videoBlobs.length; i++) {
+        let e = document.createElement('li');
+        e.setAttribute('class', 'list-group-item flex');
+        e.setAttribute('id', 'previewListId-'+i+'-'+document.querySelector('#classDropdown').innerText)
+        e.innerHTML = `
+            <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
+            <span class="previewNameList">${document.querySelector('#video_table').childNodes.length+i}_${document.querySelector('#classDropdown').innerText}</span>
+            <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard(this)">close</span>
+        `;
+        e.onclick = () => { previewVideo.src = URL.createObjectURL(videoBlobs[i]); }
+        if(i==0) e.click();
+
+        document.querySelector('#previewAcquisitionList').appendChild(e);
+    }
 }
+// window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
 
 
 // upload video
@@ -236,30 +346,45 @@ const filePreview = document.querySelector("#file-preview");
 fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 
 fileInput.addEventListener("change", function() {
-let file = fileInput.files[0];
-let fileName = file.name;
-let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
-let videoName = "video_" + lastWord;
+    let file = fileInput.files[0];
+    let fileName = file.name;
+    // get uploaded video file duration
+    let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+    let videoName = "video_" + lastWord;
 
-if (confirm("Do you want to upload " + fileName + "?")) {
-    // show message
-    fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+    if (confirm("Do you want to upload " + fileName + "?")) {
+        // show message
+        fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
 
-    let formData = new FormData();
-    formData.append("file", file);
-    formData.append("description", JSON.stringify({name: videoName}));
+        let formData = new FormData();
+        formData.append("file", file);
+        // get file video duration 
+        // let video = document.createElement("video");
+        // video.preload = "metadata";
+        // video.onloadedmetadata = function() {
+        //     window.URL.revokeObjectURL(video.src);
+        //     let duration = video.duration;
+        //     formData.append("description", JSON.stringify({name: videoName, length: duration}));
+        // }
 
-    fetch("http://127.0.0.1:5001/upload", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-} else {
-    // do nothing
-}
+        formData.append("description", JSON.stringify({name: videoName}));
+
+        fetch("http://127.0.0.1:5001/upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {console.log(data)})
+
+        //.catch(error => console.error(error));
+    } else {
+        // do nothing
+    }
 });
+
+
+
+
 const addProjectClass = async () => {
     let name = prompt("New class name?");
     classes.push(name);
@@ -304,5 +429,29 @@ const tableLoadvideo = async (id) => {
         v.src = URL.createObjectURL(blob)
     } else {
         v.removeAttribute('src')
+    }
+}
+
+const preview_discard = (elem) => {
+    let list = document.querySelector('#previewAcquisitionList')
+    list.removeChild(elem.parentNode);
+    // TODO, if(list.childNodes.length==0)
+}
+
+const preview_edit = (elem) => {
+    elem.style.color = "#3a3";
+    let nameElem = elem.parentNode.querySelector('.previewNameList');
+    nameElem.style.display = 'none';
+    let input = document.createElement('input');
+    input.placeholder = nameElem.innerText;
+    input.style.width = "70%";
+    elem.parentNode.insertBefore(input, nameElem);
+
+    elem.onclick = () => {
+        elem.style.color = "";
+        if( input.value != '' ) nameElem.innerText = input.value;
+        elem.parentNode.removeChild(input);
+        nameElem.style.display = '';
+        elem.onclick = () => preview_edit(elem);
     }
 }

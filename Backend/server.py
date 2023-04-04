@@ -29,7 +29,9 @@ class Operations:
         _id = mongo_cli.generate_unique_id()
         # print("HERE")
         # print(str(_id))
-        data = {"name":description['name'], "video_class":description['class'], "length":description['length'], "_id":str(_id)}
+        video_class = description.get('class')
+        video_length = description.get('length')
+        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id)}
         mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)

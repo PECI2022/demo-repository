@@ -7,7 +7,7 @@
 
 {% block acquisitionOptions %}
 <div class="btn-group w-100">
-    <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">Thumbsup</button>
+    <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">Thumbsup</button>
     <ul id="acquisitionClassesDropdown" class="dropdown-menu w-100">
         <!-- <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbup'">Thumbsup</button></li>
         <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbsdown'">Thumbsdown</button></li>
@@ -46,7 +46,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">File Preview</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -54,7 +54,7 @@
         <video id="file-preview" width="760" height="480" controls></video>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -74,22 +74,36 @@
           <div class="d-flex justify-content-center">
             <div>
               <video id="acquisitionVideoPreviewModalVideo" class="bg-black" width="640" height="480" autoplay loop controls></video>
-              <div class="input-group w-75">
+              <!-- <div class="input-group w-75">
                   <span class="input-group-text">Recording Name</span>
                   <input id="acquisitionVideoPreviewModalDescriptionName" type="text" aria-label="First name" class="form-control" value="Acquisition 17#">
-              </div> 
+              </div>  -->
             </div>
             <div style="width: 300px;">
-              <ul>
-                <li>asdfasdf</li>
-                <li>alsvpsp</li>
+              <ul class="list-group mx-3" id="previewAcquisitionList">
+                <li class="list-group-item flex">
+                  <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
+                  <span class="previewNameList">thumbsup_001</span>
+                  <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard(this)">close</span>
+                </li>
+                <!-- 
+                <li class="list-group-item flex">
+                  <span class="material-icons" style="cursor: pointer;font-size: 1rem;">edit</span>
+                  thumbsup_002
+                  <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard()">close</span>
+                </li>
+                <li class="list-group-item flex">
+                  <span class="material-icons" style="cursor: pointer;font-size: 1rem;">edit</span>
+                  thumbsup_003
+                  <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard()">close</span>
+                </li> -->
               </ul>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button id="acquisitionVideoPreviewModalStore" type="button" class="btn btn-primary">Save Recording</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="acquisitionVideoPreviewModalStore" type="button" class="btn btn-primary">Save Recordings</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
