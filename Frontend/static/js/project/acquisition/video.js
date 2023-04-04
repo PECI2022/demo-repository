@@ -123,6 +123,7 @@ record_button.addEventListener('click', async () => {
     recordVideo();
 
 });
+
 const list_videos_fetch = async () => {
     console.log(class_adition.innerHTML)
     // console.log(video_table)
@@ -135,12 +136,18 @@ const list_videos_fetch = async () => {
     // console.log(list)
     // list_videos.innerHTML = "";
     // list.sort();
+    const classOptions = ["ThumbsUp", "ThumbsDown", "Peace"];
     let rowNumber = 1;
     for(let i of list) {
         // console.log(i._id)
+        let dropdown = `<select id="classDropdown${i._id}">`;
+        for(let option of classOptions) {
+          dropdown += `<option value="${option}" ${option == i.video_class ? 'selected' : ''}>${option}</option>`;
+        }
+        dropdown += `</select>`;
         let s = `<tr>
                     <td>${i.name}</td>
-                    <td>${i.video_class}</td>
+                    <td>${dropdown}</td>
                     <td>${i.length}</td>
                     <td>
                         <span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>
@@ -159,8 +166,30 @@ const list_videos_fetch = async () => {
         // newElem.onclick = () => fetchRecordingAndPlay(i._id)
         video_table.appendChild(newElem);
         video_table.appendChild(newElem2)
+
+        // TODO FIX, NOT WORKING
+        document.querySelector(`#classDropdown${i._id}`).addEventListener('change', async (event) => {
+            const newClass = event.target.value;
+            fetch("http://127.0.0.1:5001/upload", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                video_class: newClass,
+              }),
+            }).then(async (response) => {
+              const updatedVideo = await response.json();
+              console.log(updatedVideo);
+            }).catch((error) => {
+              console.error(error);
+            });
+          });          
     }
-};list_videos_fetch()
+};
+list_videos_fetch();
+
+
 
 
 const edit_video = async (id) => {
@@ -287,9 +316,6 @@ const delete_video = async (_id) => {
             body: data
         })
     })
-
-    
-
     // let a = await response.json()
     // console.log("WWW")
     // console.log(a['result'])
@@ -419,37 +445,33 @@ folderInput.addEventListener("change", function() {
     let files = folderInput.files;
 
     // send videos from folder to server
-    let formData = new FormData();
     // print all files from folder
     for (let i = 0; i < files.length; i++) {
         let file = files[i];
         let fileName = file.name;
-        // get uploaded video file duration
-        let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
-        // blob for each video
-        let videoName = "video_" + lastWord;
-        folderNameSpan.innerHTML += "<br>" + videoName + ".webm";
-
-        // preview each video when clicked on the name with launchVideoPreview()
-        folderNameSpan.innerHTML += `<button class="btn btn-primary" onclick="launchVideoPreview('${file.name}')">Preview</button>`;    
-    
+        // check if the file is a video
+        if (file.type.indexOf("video") !== -1) {
+            // get uploaded video file duration
+            let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+            // blob for each video
+            let videoName = "video_" + lastWord;
+            folderNameSpan.innerHTML += "<br>" + videoName + ".webm";
+        
+            let formData = new FormData();
+            formData.append("file", file);
+        
+            formData.append("description", JSON.stringify({name:videoName, class:"test", length:duration_input.value}))
+        
+            fetch("http://127.0.0.1:5001/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {console.log(data)})
+        }
     }
-
-    for(let i = 0; i < files.length; i++){
-        let file = files[i];
-        formData.append("file", file);
-
-        formData.append("description", JSON.stringify({name:file.name, class:"test", length:duration_input.value}))
-
-        fetch("http://127.0.0.1:5001/upload", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {console.log(data)})
-    }
-    
 });
+
 
 fileInput.addEventListener("change", function() {
     let file = fileInput.files[0];
