@@ -10,7 +10,7 @@ class MongoCli(object):
     
     def insert_data(self, data, _id, topic):
         print(id)
-        if not self.find_document_by_id(_id):
+        if not self.find_project(_id):
             try:
                 doc = self.collection.insert_one({'_id': ObjectId(_id), topic: data})
             except Exception as e:
@@ -29,6 +29,55 @@ class MongoCli(object):
                 print(f'\n[x] ERROR - ADD NEW VALUES [x]: {e}')
             else:
                 print('\n[!] ADD NEW VALUES [!]')
+
+    def find_project(self, _id):
+        projects = self.collection.find()
+        for project in projects:
+            if project['info']['_id'] == _id:
+                return project['info']
+        return False
+    
+    def insert_in_project(self, project_id, data):
+        project = self.find_project(project_id)
+        print(data)
+        if self.check_existing_name(project["content"], data["name"]):
+            return {"result": "Error"}
+        project["content"].append(data)
+        print(project)
+        self.insert_data(project,project['_id'],"info")
+        return {"result": "Correct"}
+    
+    def delete_video(self, project_id, video_id):
+        project = self.find_project(project_id)
+        content = []
+        for video in project['content']:
+            if video['_id'] != video_id:
+                content.append(video)
+            else:
+                self.delete_from_db(video_id)
+        project["content"] = content
+        self.insert_data(project,project['_id'],"info")
+    
+    def list_video(self, project_id):
+        project = self.find_project(project_id)
+        videos = []
+        for video in project["content"]:
+            videos.append(video)
+        return videos
+    
+    def list_project(self):
+        projects = self.collection.find()
+        ret = []
+        for project in projects:
+            ret.append(project["info"])
+        return ret
+    
+    def check_existing_name(self, videos, name):
+        for video in videos:
+            if video["name"] == name:
+                return True
+        return False
+    
 
     def insert_media_file(self, _id, file_location):
         name = file_location

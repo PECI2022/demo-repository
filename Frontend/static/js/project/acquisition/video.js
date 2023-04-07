@@ -1,3 +1,8 @@
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString)
+const projectID = urlParams.get('id')
+// console.log(projectID)
+
 const camera_button_back = document.querySelector("#startDisplayButtonBack")
 const camera_button = document.querySelector("#start-camera");
 const record_button = document.querySelector("#record-video"); 
@@ -19,9 +24,11 @@ let blobs = [];
 let nextBlob = 0;
 
 let classes = ['Thumbsup','Thumbsdown','Peace']; // TODO: delete and replace this variable with a fetch to the db
+
  
 
 camera_button.addEventListener('click', async () => {
+    // let response = await async ()
     camera_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false});
     
     camera_button.style.display = "none";
@@ -108,7 +115,12 @@ record_button.addEventListener('click', async () => {
 const list_videos_fetch = async () => {
     console.log(class_adition.innerHTML)
     // console.log(video_table)
-    const response = await fetch('http://127.0.0.1:5001/list_videos');
+    let data = new FormData()
+    data.append("id", JSON.stringify({'id': projectID}))
+    const response = await fetch('http://127.0.0.1:5001/list_videos',{
+        method: "POST",
+        body: data
+    });
     let list = await response.json()
     if(!list) return;    
     list.sort((a, b) => a.name.localeCompare(b.name)); // Sort list alphabetically by name
@@ -257,7 +269,8 @@ const edit_video = async (id) => {
 const delete_video = async (_id) => {
     console.log("WWWWWWWWWWWWWWWWWWWW")
     let data = new FormData()
-    data.append('_id', JSON.stringify({_id:_id}))
+    data.append('_id', JSON.stringify({video_id:_id, project_id: projectID}))
+    
     // console.log(data)
     let response = await fetch('http://127.0.0.1:5001/delete_video', {
         method: "POST",
@@ -290,7 +303,7 @@ const storeCurrentBlobs = (blobs) => {
         let data = new FormData();
         data.append('file', blob.blob);
         
-        data.append('description', JSON.stringify({name:blob.name, class:blob.class, length:blob.duration}))
+        data.append('description', JSON.stringify({name:blob.name, class:blob.class, length:blob.duration, id:projectID}))
         
         $('#acquisitionVideoPreviewModal').modal('hide')
         
