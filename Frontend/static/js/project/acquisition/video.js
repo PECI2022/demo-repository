@@ -15,6 +15,7 @@ const preview_button = document.querySelector('#preview-button1')
 const number_of_videos = document.querySelector('#numberOfVideos');
 const number_of_recordings = document.querySelector('#numberOfRecordings');
 const number_of_recordings_input = document.querySelector('#numberOfRecordingsInput');
+const deleteVideoFromList = document.querySelector('#deleteVideoo');
 
 let camera_stream;
 let media_recorder;
@@ -272,9 +273,18 @@ const delete_video = async (_id) => {
     data.append('_id', JSON.stringify({video_id:_id, project_id: projectID}))
     
     // console.log(data)
+    // open modal to confirm delete
+    
+    $('#deleteVideo').modal('show')
+    // if user confirms delete then delete video
+    let deleteVideoFromList = false
+    $('#deleteVideo').on('click', '#deleteVideoo', async () => {
+        deleteVideoFromList = true
+        $('#deleteVideo').modal('hide')
     let response = await fetch('http://127.0.0.1:5001/delete_video', {
         method: "POST",
         body: data
+    })
     })
     // let a = await response.json()
     // console.log("WWW")
@@ -358,53 +368,121 @@ const lauchDataPreview = (videoBlobs) => {
 // window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
 
 
-// upload video
+const tableLoadvideo = async (id) => {
+    let v = document.querySelector("#video"+id);
+    console.log(v.src)
+    if( v.src=="" ) {
+        console.log(id)
+        let data = new FormData();
+        data.append('_id', id);
+        const response = await fetch('http://127.0.0.1:5001/download', {method:'POST',body:data})
+        console.log("responded")
+        let blob = await response.blob();
+        // video_url = URL.createObjectURL(blob);
+        v.src = URL.createObjectURL(blob)
+    } else {
+        v.removeAttribute('src')
+    }
+}
+
+// input upload
+document.getElementById("file-button").addEventListener("click", function() {
+    document.getElementById("file-upload").click();
+});
+
+  document.getElementById("file-upload").addEventListener("change", function() {
+    var fileName = this.value.split("\\").pop();
+    document.getElementById("file-name").innerHTML = fileName;
+});
+
+// input folder upload
+document.getElementById("folder-button").addEventListener("click", function() {
+    document.getElementById("folder-upload").click();
+});
+
+document.getElementById("folder-upload").addEventListener("change", function() {
+    var folderName = this.value.split("\\").pop();
+    document.getElementById("folder-name").innerHTML = folderName;
+});
+
 let fileInput = document.getElementById("file-upload");
 let fileNameSpan = document.getElementById("file-name"); 
+let folderInput = document.getElementById("folder-upload");
+let folderNameSpan = document.getElementById("folder-name");
+
+
 const filePreviewModal = document.querySelector("#filePreviewModal"); // modal
 const filePreview = document.querySelector("#file-preview");
 
+fileNameSpan.innerHTML = "No file/folder chosen";
+
+fileNameSpan.style.display = "block";
+fileNameSpan.style.textAlign = "center";
+
+
 fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 
-fileInput.addEventListener("change", function() {
-    let file = fileInput.files[0];
-    let fileName = file.name;
-    // get uploaded video file duration
-    let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
-    let videoName = "video_" + lastWord;
+folderInput.setAttribute("webkitdirectory", ""); // Only accept video inputs
+folderInput.setAttribute("directory", ""); // Only accept video inputs
 
-    if (confirm("Do you want to upload " + fileName + "?")) {
-        // show message
-        fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+folderInput.addEventListener("change", function() {
+    fileNameSpan.style.display = "none";
+    // get folder name
+    let folderName = folderInput.files[0].webkitRelativePath.split("/")[0];
+    
+    console.log("FOLDERRR")
+    folderNameSpan.innerHTML = "<b>Folder Name: </b>" + folderName;
 
-        let formData = new FormData();
-        formData.append("file", file);
-        // get file video duration 
-        // let video = document.createElement("video");
-        // video.preload = "metadata";
-        // video.onloadedmetadata = function() {
-        //     window.URL.revokeObjectURL(video.src);
-        //     let duration = video.duration;
-        //     formData.append("description", JSON.stringify({name: videoName, length: duration}));
-        // }
+    // get all files from folder
+    let files = folderInput.files;
 
-        formData.append("description", JSON.stringify({name: videoName}));
-
-        fetch("http://127.0.0.1:5001/upload", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {console.log(data)})
-
-        //.catch(error => console.error(error));
-    } else {
-        // do nothing
+    // send videos from folder to server
+    // print all files from folder
+    let blobs = [];
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let fileName = file.name;
+        // check if the file is a video
+        if (file.type.indexOf("video") !== -1) {
+            // get uploaded video file duration
+            let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+            // blob for each video
+            let videoName = "video_" + lastWord;
+            folderNameSpan.innerHTML += "<br>" + videoName + ".webm";
+        
+            let blob = {
+                blob: file,
+                name: videoName,
+                class: "test",
+                duration: duration_input.value
+            };
+            blobs.push(blob);
+        }
     }
+    
+    storeCurrentBlobs(blobs);
 });
 
 
 
+fileInput.addEventListener("change", function() {
+    let file = fileInput.files[0];
+    let fileName = file.name;
+    let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
+    let videoName = "video_" + lastWord;
+    console.log(URL.createObjectURL(file))
+
+    if (confirm("Do you want to upload " + fileName + "?")) {
+        
+        fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+        console.log(URL.createObjectURL(file))
+        let blobs = [];
+
+        blobs.push({blob: file, name: videoName, class: "test", duration: duration_input.value});
+
+        storeCurrentBlobs(blobs);
+    }
+});
 
 const addProjectClass = async () => {
     let name = prompt("New class name?");
@@ -436,48 +514,25 @@ fileInput.addEventListener("change", function (event) {
 //     video.style.display = 'block'
 // }
 
-const tableLoadvideo = async (id) => {
-    let v = document.querySelector("#video"+id);
-    console.log(v.src)
-    if( v.src=="" ) {
-        console.log(id)
-        let data = new FormData();
-        data.append('_id', id);
-        const response = await fetch('http://127.0.0.1:5001/download', {method:'POST',body:data})
-        console.log("responded")
-        let blob = await response.blob();
-        // video_url = URL.createObjectURL(blob);
-        v.src = URL.createObjectURL(blob)
-    } else {
-        v.removeAttribute('src')
+
+// jumbatron tabs
+var tabLinks = document.querySelectorAll('.jumbotron .nav-link');
+
+var activeTab = document.querySelector('.nav-link.active');
+activeTab.style.color = 'black';
+
+// Loop through tab links and add click event listener
+for (var i = 0; i < tabLinks.length; i++) {
+  tabLinks[i].addEventListener('click', function() {
+    // Remove 'active' class from all tab links
+    for (var j = 0; j < tabLinks.length; j++) {
+      tabLinks[j].classList.remove('active');
+      // Set the color to the previous color
+      tabLinks[j].style.color = '#61554d';
     }
-}
-
-const preview_discard = (elem) => {
-    let list = document.querySelector('#previewAcquisitionList')
-    list.removeChild(elem.parentNode);
-    // TODO, if(list.childNodes.length==0)
-}
-
-const preview_edit = (elem) => {
-    elem.style.color = "#3a3";
-    let nameElem = elem.parentNode.querySelector('.previewNameList');
-    nameElem.style.display = 'none';
-    let input = document.createElement('input');
-    input.placeholder = nameElem.innerText;
-    input.style.width = "70%";
-    elem.parentNode.insertBefore(input, nameElem);
-    input.focus();
-
-    input.addEventListener('input', ()=>{
-        nameElem.innerText = input.value;
-    })
-
-    elem.onclick = () => {
-        elem.style.color = "";
-        if( input.value != '' ) nameElem.innerText = input.value;
-        elem.parentNode.removeChild(input);
-        nameElem.style.display = '';
-        elem.onclick = () => preview_edit(elem);
-    }
+    // Add 'active' class to the clicked tab link
+    this.classList.add('active');
+    // Set the color to black
+    this.style.color = 'black';
+  });
 }
