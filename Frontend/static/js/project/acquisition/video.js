@@ -448,15 +448,24 @@ folderInput.addEventListener("change", function() {
             let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
             // blob for each video
             let videoName = "video_" + lastWord;
-            folderNameSpan.innerHTML += "<br>" + videoName + ".webm";
+            folderNameSpan.innerHTML += "<br>" + videoName ;
         
-            let blob = {
-                blob: file,
-                name: videoName,
-                class: "test",
-                duration: duration_input.value
-            };
-            blobs.push(blob);
+            let videoElement = document.createElement("video");
+        
+            videoElement.preload = "metadata";
+            videoElement.src = URL.createObjectURL(file);
+            videoElement.onloadedmetadata = function() {
+                let duration = Math.round(videoElement.duration); // get video duration
+                console.log(duration);
+                // blob for each video
+                let blob = {
+                    blob: file,
+                    name: videoName,
+                    class: "test",
+                    duration: duration
+                };
+                storeCurrentBlobs([blob]);
+            }
         }
     }
     
@@ -473,16 +482,28 @@ fileInput.addEventListener("change", function() {
     console.log(URL.createObjectURL(file))
 
     if (confirm("Do you want to upload " + fileName + "?")) {
-        
-        fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".webm";
+        fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".mp4";
         console.log(URL.createObjectURL(file))
-        let blobs = [];
 
-        blobs.push({blob: file, name: videoName, class: "test", duration: duration_input.value});
-
-        storeCurrentBlobs(blobs);
+        let videoElement = document.createElement("video");
+        
+        videoElement.preload = "metadata";
+        videoElement.src = URL.createObjectURL(file);
+        videoElement.onloadedmetadata = function() {
+            let duration = Math.round(videoElement.duration); // get video duration
+            console.log(duration);
+            // blob for each video
+            let blob = {
+                blob: file,
+                name: videoName,
+                class: "test",
+                duration: duration
+            };
+            storeCurrentBlobs([blob]);
+        }
     }
 });
+
 
 const addProjectClass = async () => {
     let name = prompt("New class name?");
