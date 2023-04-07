@@ -11,7 +11,7 @@ const duration_input = document.querySelector("#video-duration");
 const recording_message = document.querySelector("#recording-message");
 const countdown = document.querySelector('#countdown');
 const class_adition = document.querySelector('#addClass')
-const preview_button = document.querySelector('#preview-button1')
+// const preview_button = document.querySelector('#preview-button1')
 const number_of_videos = document.querySelector('#numberOfVideos');
 const number_of_recordings = document.querySelector('#numberOfRecordings');
 const number_of_recordings_input = document.querySelector('#numberOfRecordingsInput');
@@ -35,8 +35,8 @@ camera_button.addEventListener('click', async () => {
     camera_button.style.display = "none";
     camera_button_back.style.display = "none";
 
-   // make preview button invisible
-    preview_button.style.display = "none";
+   
+    //preview_button.style.display = "none";
     
     video.srcObject = camera_stream;
     video.style.display = 'block';
@@ -491,7 +491,7 @@ const addProjectClass = async () => {
 }
 
 fileInput.addEventListener("change", function (event) {
-    preview_button.style.display = "block"; // show preview button
+    // preview_button.style.display = "block"; // show preview button
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
     filePreview.src = url;
@@ -535,4 +535,33 @@ for (var i = 0; i < tabLinks.length; i++) {
     // Set the color to black
     this.style.color = 'black';
   });
+}
+
+const preview_discard = (elem) => {
+    let list = document.querySelector('#previewAcquisitionList')
+    list.removeChild(elem.parentNode);
+    // TODO, if(list.childNodes.length==0)
+}
+
+const preview_edit = (elem) => {
+    elem.style.color = "#3a3";
+    let nameElem = elem.parentNode.querySelector('.previewNameList');
+    nameElem.style.display = 'none';
+    let input = document.createElement('input');
+    input.placeholder = nameElem.innerText;
+    input.style.width = "70%";
+    elem.parentNode.insertBefore(input, nameElem);
+    input.focus();
+
+    input.addEventListener('input', ()=>{
+        nameElem.innerText = input.value;
+    })
+
+    elem.onclick = () => {
+        elem.style.color = "";
+        if( input.value != '' ) nameElem.innerText = input.value;
+        elem.parentNode.removeChild(input);
+        nameElem.style.display = '';
+        elem.onclick = () => preview_edit(elem);
+    }
 }
