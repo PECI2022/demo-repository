@@ -14,7 +14,9 @@ const number_of_recordings_input = document.querySelector('#numberOfRecordingsIn
 let camera_stream;
 let media_recorder;
 let blobs_recorded;
+
 let blobs = [];
+let nextBlob = 0;
 
 let classes = ['Thumbsup','Thumbsdown','Peace']; // TODO: delete and replace this variable with a fetch to the db
  
@@ -34,13 +36,13 @@ camera_button.addEventListener('click', async () => {
     
     media_recorder = new MediaRecorder(camera_stream, {mimeType: 'video/webm'});
     media_recorder.addEventListener('dataavailable', (e) => {
-        blobs_recorded.push(e.data);
+        blobs[nextBlob].blob_recorded.push(e.data);
     });
     media_recorder.addEventListener('stop', async () => {
-        let recording = new Blob(blobs_recorded, {type:'video/webm'}); 
-        blobs.push(recording)
-        //lauchDataPreview([recording]); 
-        
+        let recording = new Blob(blobs[nextBlob].blob_recorded, {type:'video/webm'});
+        blobs[nextBlob].blob = recording;
+        blobs[nextBlob].url = URL.createObjectURL(recording)
+        nextBlob++;
     });
 });
 
@@ -49,6 +51,7 @@ record_button.addEventListener('click', async () => {
     record_button.disabled = true;
     
     blobs = [];
+    nextBlob = 0;
 
     // let number_of_recordings = number_of_recordings_input.value;
     // TODO: make a way to visualize the tempos
@@ -57,30 +60,37 @@ record_button.addEventListener('click', async () => {
     
     // })
 
-    function recordVideo(counter){
+    const recordVideo = (counter) => {
         let timeLeft = countdown_input.value;
         let countdownInterval = setInterval(() => {
-            timeLeft-=100/1000;
+            timeLeft-=1;
             if (timeLeft >= 0) {
                 countdown.innerHTML = timeLeft;
             } else {
                 clearInterval(countdownInterval);
             }
             
-        }, 100);
+        }, 1000);
 
+        blobs.push({
+            blob: null,
+            url: null,
+            blob_recorded: [],
+            name: (document.querySelector('#video_table').childNodes.length+blobs.length) + "_" + document.querySelector('#classDropdown').innerText,
+            class: document.querySelector('#classDropdown').innerText,
+            duration: duration_input.value,
+        })
 
         let t1 = setTimeout(()=>{ // countdown delay
             countdown.innerHTML = "";
             recording_message.style.display = "block";
 
             recording_message.innerHTML = "Recording for <b>" + duration_input.value + "</b> seconds";
-            blobs_recorded = []
-            media_recorder.start(100); //
+            media_recorder.start(100);
             let t2 = setTimeout(()=>{ // duration delay
                 recording_message.innerHTML = "";
-                media_recorder.stop() //
-                if(counter > 0){
+                media_recorder.stop()
+                if(counter > 1){
                     recordVideo(counter-1);
                 }else{
                     lauchDataPreview(blobs);
@@ -111,12 +121,15 @@ const list_videos_fetch = async () => {
     for(let i of list) {
         // console.log(i._id)
         let s = `<tr>
-                    <td>${i.name}</td>
+                    <td>
+                        <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
+                        <span class="previewNameList">${i.name}</span>
+                    </td>
                     <td>${i.video_class}</td>
                     <td>${i.length}</td>
-                    <td>
-                        <span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>
-                        <span class="material-icons" style="cursor: pointer;">shuffle</span>
+                    <td class="d-flex justify-content-center">
+                        <!--<span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>-->
+                        <!--<span class="material-icons" style="cursor: pointer;">shuffle</span>-->
                         <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
                         <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
                     </td>
@@ -277,7 +290,7 @@ const storeCurrentBlobs = (blobs) => {
         let data = new FormData();
         data.append('file', blob.blob);
         
-        data.append('description', JSON.stringify({name:blob.name, class:blob.class, length:0}))
+        data.append('description', JSON.stringify({name:blob.name, class:blob.class, length:blob.duration}))
         
         $('#acquisitionVideoPreviewModal').modal('hide')
         
@@ -297,24 +310,19 @@ const storeCurrentBlobs = (blobs) => {
 }
 
 // VIDEO PREVIEWER + SEND TO DB
-const lauchDataPreview = videoBlobs => {
+const lauchDataPreview = (videoBlobs) => {
     $('#acquisitionVideoPreviewModal').modal('show');
     document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => {
-        let blobs = []
+        let selectedBlobs = []
         for(let n of document.querySelector('#previewAcquisitionList').childNodes) {
             if( n.id && n.id.startsWith("previewListId") ) {
-                let idSplit = n.id.split("-")
-                blobs.push({
-                    name: n.querySelector('.previewNameList').innerText,
-                    blob: videoBlobs[idSplit[1]],
-                    class: idSplit[2]
-                })
+                let idSplit = n.id.split("-");
+                videoBlobs[idSplit[1]].name = n.querySelector('.previewNameList').innerText;
+                selectedBlobs.push(videoBlobs[idSplit[1]]);
             }
         }
-        storeCurrentBlobs(blobs)
+        storeCurrentBlobs(selectedBlobs)
     }
-
-
 
     previewVideo = document.querySelector('#acquisitionVideoPreviewModalVideo');
 
@@ -322,13 +330,13 @@ const lauchDataPreview = videoBlobs => {
     for(let i=0; i<videoBlobs.length; i++) {
         let e = document.createElement('li');
         e.setAttribute('class', 'list-group-item flex');
-        e.setAttribute('id', 'previewListId-'+i+'-'+document.querySelector('#classDropdown').innerText)
+        e.setAttribute('id', 'previewListId-'+i+'-'+videoBlobs[i].class)
         e.innerHTML = `
             <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-            <span class="previewNameList">${document.querySelector('#video_table').childNodes.length+i}_${document.querySelector('#classDropdown').innerText}</span>
+            <span class="previewNameList">${videoBlobs[i].name}</span>
             <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard(this)">close</span>
         `;
-        e.onclick = () => { previewVideo.src = URL.createObjectURL(videoBlobs[i]); }
+        e.onclick = () => { previewVideo.src = videoBlobs[i].url; }
         if(i==0) e.click();
 
         document.querySelector('#previewAcquisitionList').appendChild(e);
@@ -446,6 +454,11 @@ const preview_edit = (elem) => {
     input.placeholder = nameElem.innerText;
     input.style.width = "70%";
     elem.parentNode.insertBefore(input, nameElem);
+    input.focus();
+
+    input.addEventListener('input', ()=>{
+        nameElem.innerText = input.value;
+    })
 
     elem.onclick = () => {
         elem.style.color = "";
