@@ -1,5 +1,6 @@
 from flask import Flask, send_from_directory, request, make_response
 from flask_cors import CORS
+from flask import jsonify
 from werkzeug.datastructures import FileStorage
 from pymongo import MongoClient
 from gridfs import GridFS
@@ -62,9 +63,12 @@ class Operations:
     
 operation = Operations()
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def default():
     return "Running..."
+
+ # http://127.0.0.1:5001/, The method is not allowed for the requested URL.
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -112,6 +116,40 @@ def download_audio():
 def list_audio():
     print("LIST AUDIO")
     return [i for i in os.listdir('.') if i.endswith('.mp3')]
+
+@app.route('/api/auth/signup', methods=['POST'])
+def signup():
+    data = request.json
+    username = data['username']
+    email = data['email']
+    password = data['password']
+    roles = data['roles']
+
+    # Check if username or email already exists in database, then create new user
+    if(username.exists() or email.exists()):
+        return jsonify({'error': 'User already exists'}), 400
+    
+    # Create new user
+    user = User(username, email, password, roles)
+    user.save()
+
+    response = {'message': 'User was registered successfully!'}
+    return jsonify(response), 200, {'Content-Type': 'application/json'}
+
+
+@app.route('/api/auth/signin', methods=['POST'])
+def signin():
+    if request.headers.get('Content-Type') != 'application/json':
+        return jsonify({'error': 'Invalid Content-Type'}), 400
+    
+    data = request.json
+    username = data['username']
+    password = data['password']
+    
+    # Check username and password in database, generate JWT token
+    response = {'accessToken': 'example_access_token'}
+    return jsonify(response), 200, {'Content-Type': 'application/json'}
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

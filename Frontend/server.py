@@ -15,6 +15,12 @@ def static_route(path):
     print(path)
     return render_template(path+'.html')
 
+# run the login api on /static/js/base.js
+@app.route('/login', methods=['POST'])
+def login():
+    print("LOGIN")
+    return "done"
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
