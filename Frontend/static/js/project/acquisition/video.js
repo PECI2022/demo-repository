@@ -347,14 +347,56 @@ const lauchDataPreview = (videoBlobs) => {
         e.setAttribute('class', 'list-group-item flex');
         e.setAttribute('id', 'previewListId-' + i + '-' + videoBlobs[i].class)
         e.innerHTML = `
-            <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-            <span class="previewNameList">${videoBlobs[i].name}</span>
-            <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard(this)">close</span>
+        <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
+        <span class="previewNameList">${videoBlobs[i].name}</span>
+        <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard(this)">close</span>
         `;
-        e.onclick = () => { previewVideo.src = videoBlobs[i].url; }
-        if (i == 0) e.click();
 
         document.querySelector('#previewAcquisitionList').appendChild(e);
+
+        e.onclick = () => { 
+            previewVideo.src = videoBlobs[i].url;
+
+            let oldee = e.parentElement.querySelector('.ee')
+            if( oldee ) e.parentElement.removeChild(oldee)
+
+            let ee = document.createElement('li');
+            ee.setAttribute('class', 'ee list-group-item flex');
+
+            // make options string
+            let options = "<option >Choose...</option>"
+            for(let c of classes) {
+                options += `<option class="eeClasses" value="${i}" ${c==videoBlobs[i].class ? "selected" : ""}>${c}</option>`
+            }
+
+            ee.innerHTML = `
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text">class</div>
+                    </div>
+                    <select class="custom-select mr-sm-2 form-control h-100" id="inlineFormCustomSelect">
+                        ${options}
+                    </select>
+                </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text">duration</div>
+                    </div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="00">
+                    <div class="input-group-text">:</div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="xx">
+                </div>
+            `;
+            e.after(ee);
+
+            for( let nn of ee.querySelectorAll(".eeClasses") ) {
+                nn.onclick = () => {
+                    videoBlobs[i].class = nn.innerText;
+                }
+            }
+        }
+        if (i == 0) e.click();
+
     }
 }
 // window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
@@ -577,4 +619,8 @@ const preview_edit = (elem) => {
         nameElem.style.display = '';
         elem.onclick = () => preview_edit(elem);
     }
+}
+
+const preview_edit_class = (elem) => {
+    elem.setAttribute('selected', 'true')
 }
