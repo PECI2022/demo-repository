@@ -124,7 +124,14 @@ const list_videos_fetch = async () => {
     });
     let list = await response.json()
     if (!list) return;
-    list.sort((a, b) => a.name.localeCompare(b.name)); // Sort list alphabetically by name
+
+    console.log(list)
+    list.sort((a, b) => {
+        console.log("sorting", a, tableSorting)
+        if( tableSorting[0]==1 ) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
+        else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
+    }); // Sort table
+
     video_table.innerHTML = ""
     // console.log("LLL")
     // console.log(list)

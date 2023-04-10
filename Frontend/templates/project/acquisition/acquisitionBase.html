@@ -29,13 +29,13 @@
     <hr>
     <h3>Records</h3>
     <div >
-        <table class="table table-striped table-secondary">
+        <table id="recordsTable" class="table table-striped table-bordered table-secondary" >
             <thead>
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Class</th>
-                <th scope="col">Duration</th>
-                <th scope="col">Date</th>
+                <th scope="col" onclick="editTableSorting(this)">Name</th>
+                <th scope="col" onclick="editTableSorting(this)">Class</th>
+                <th scope="col" onclick="editTableSorting(this)">Duration</th>
+                <th scope="col" onclick="editTableSorting(this)">Date</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -50,7 +50,9 @@
 
 </div>
 
-<!-- <script src="{{ url_for('static', filename='js/project/js') }}"></script> -->
-{% block acquisitionScript %} {% endblock %}
+{% endblock %}
 
+{% block projectBaseScript %}
+    <script src="{{ url_for('static', filename='js/project/acquisition/acquisitionBase.js') }}"></script>
+    {% block acquisitionScript %} {% endblock %}
 {% endblock %}

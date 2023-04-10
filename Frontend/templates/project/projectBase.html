@@ -34,6 +34,9 @@
 <div class="container-fluid my-3">
     {% block projectContent %} {% endblock %}
 </div>
+{% endblock %}
 
-<script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
+{% block baseScript %}
+    <script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
+    {% block projectBaseScript %} {% endblock %}
 {% endblock %}
