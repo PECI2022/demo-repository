@@ -131,6 +131,7 @@ const list_videos_fetch = async () => {
     // list_videos.innerHTML = "";
     // list.sort();
     let rowNumber = 1;
+    console.log(new Date( list[0].update ).toLocaleDateString() )
     for (let i of list) {
         // console.log(i._id)
         let s = `<tr>
@@ -140,6 +141,7 @@ const list_videos_fetch = async () => {
                     </td>
                     <td>${i.video_class}</td>
                     <td>${i.length}</td>
+                    <td>${new Date( i.update ).toLocaleDateString("en-GB")}</td>
                     <td class="d-flex justify-content-center">
                         <!--<span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>-->
                         <!--<span class="material-icons" style="cursor: pointer;">shuffle</span>-->
@@ -154,8 +156,11 @@ const list_videos_fetch = async () => {
         newElem2.classList.add("collapse")
         newElem2.id = `collapse${i._id}`
         newElem2.colSpan = "4"
+        let empty = document.createElement('tr');
+        empty.innerHTML = ""
         // newElem.onclick = () => fetchRecordingAndPlay(i._id)
         video_table.appendChild(newElem);
+        video_table.appendChild(empty);
         video_table.appendChild(newElem2)
     }
 }; list_videos_fetch()
