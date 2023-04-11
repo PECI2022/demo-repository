@@ -9,12 +9,17 @@ let tableHeadersDic = {
 }
 
 const editTableSorting = (elem) => {
-    let title = elem.innerText;
-    console.log(title)
+    let title = elem.id.slice(2);
+    
+    for( let th of elem.parentNode.childNodes ) {
+        if( th.id && th.id.startsWith("Th") )
+            th.querySelector("span").innerText = "";
+    }
 
     if( title in tableHeadersDic ) {
         if( tableSorting[1]==tableHeadersDic[title] ) tableSorting[0] = tableSorting[0]*-1;
         tableSorting[1] = tableHeadersDic[title];
+        elem.querySelector('span').innerText = tableSorting[0]==1 ? 'north_east' : 'south_east';
     }
     list_videos_fetch()
 }

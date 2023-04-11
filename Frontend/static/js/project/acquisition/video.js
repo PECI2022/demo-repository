@@ -114,7 +114,7 @@ record_button.addEventListener('click', async () => {
 
 });
 const list_videos_fetch = async () => {
-    console.log(class_adition.innerHTML)
+    // console.log(class_adition.innerHTML)
     // console.log(video_table)
     let data = new FormData()
     data.append("id", JSON.stringify({ 'id': projectID }))
@@ -125,9 +125,9 @@ const list_videos_fetch = async () => {
     let list = await response.json()
     if (!list) return;
 
-    console.log(list)
+    // console.log(list)
     list.sort((a, b) => {
-        console.log("sorting", a, tableSorting)
+        // console.log("sorting", a, tableSorting)
         if( tableSorting[0]==1 ) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
         else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
     }); // Sort table
@@ -138,7 +138,6 @@ const list_videos_fetch = async () => {
     // list_videos.innerHTML = "";
     // list.sort();
     let rowNumber = 1;
-    console.log(new Date( list[0].update ).toLocaleDateString() )
     for (let i of list) {
         // console.log(i._id)
         let s = `<tr>
@@ -631,8 +630,4 @@ const preview_edit = (elem) => {
         nameElem.style.display = '';
         elem.onclick = () => preview_edit(elem);
     }
-}
-
-const preview_edit_class = (elem) => {
-    elem.setAttribute('selected', 'true')
 }
