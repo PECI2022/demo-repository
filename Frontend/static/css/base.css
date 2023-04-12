@@ -5,7 +5,7 @@ body {
 }
 
 .mbg-black {
-  background-color: #9e7165; /* #76b5c5 */
+  background-color: #e0e2d7; /* #76b5c5 */
 }
 
 .mtext-white {
@@ -17,12 +17,14 @@ body {
 }
 
 .mbg-black #navbarTitle.active {
-  color: #ccc;
+  color: black;
+  /* make text bold */
+  font-weight: bold;
 }
 
 
 #scrollBtn:hover {
-  background-color: #9e7165;
+  background-color: black;
 }
 
 .card-container {
@@ -47,12 +49,12 @@ body {
     z-index: 99;
     border: none;
     outline: none;
-    background-color: #9e7165;
+    background-color: black;
     color: #343335;
     cursor: pointer;
     padding: 20px;
     border-radius: 10px;
-    background-image: url("{{ url_for('static', filename='imgs/up-arrow.png') }}");
+    background-image: "{{ url_for('static', filename='imgs/up-arrow.png') }}";
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -64,6 +66,12 @@ body {
 .card-container {
     display: flex;
     flex-wrap: wrap;
+}
+
+h6 {
+    font-size: 1.05em;
+    font-weight: 500;
+    color: black;
 }
 
 .content {
@@ -139,19 +147,19 @@ a {
 /* Get Started Button*/
 
  .cssbuttons-io-button {
-  background: #9e7165;
-  color: white;
+  background: white;
+  color: black;
   font-family: inherit;
   padding: 0.35em;
   padding-left: 1.2em;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 500;
   border-radius: 0.9em;
   border: none;
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
-  box-shadow: inset 0 0 1.6em -0.6em #61554d;
+  box-shadow: inset 0 0 1.6em -0.6em white;
   overflow: hidden;
   position: relative;
   height: 2.8em;
@@ -168,7 +176,7 @@ a {
   height: 2.2em;
   width: 2.2em;
   border-radius: 0.7em;
-  box-shadow: 0.1em 0.1em 0.6em 0.2em #61554d;
+  box-shadow: 0.05em 0.05em 0.23em 0.01em black;
   right: 0.3em;
   transition: all 0.3s;
 }
@@ -181,7 +189,7 @@ a {
   width: 1.1em;
   transition: transform 0.3s;
   transform: rotate(90deg);
-  color: #9e7165;
+  color: black;
 }
 
 /* index page: */
@@ -450,4 +458,130 @@ border-top-color: #262626;
 .social-media a:hover .tooltip-social {
 opacity: 1;
 transform: translate(-50%, -130%);
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 1500px;
+}
+
+
+
+body {
+  background: #e0e2d7;
+  color: black;
+  width: 100%;
+  max-width: 1500;
+  margin: 0 auto;
+}
+
+section {
+  margin: 5rem 2rem;
+}
+
+/* Section One */
+
+
+
+.section-one {
+  margin: 6rem 1rem 0;
+}
+
+.header {
+  font-size: 3.5rem;
+}
+
+.section-one-paragraph {
+  margin: 2rem 0;
+  width: 70%;
+  max-width: 500px;
+  line-height: 1.5rem;
+}
+
+
+.learn-more-btn {
+  background: #243a72;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: .8rem;
+  text-decoration: none;
+  color: white;
+}
+
+.learn-more-btn:hover {
+  background: #05091a;
+  color: white;
+}
+
+/* Section Two */
+#whiteSection {
+  background-color: white;
+  
+  padding: 20px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+
+/* Section Three */
+
+.section-three h3 {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 700px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Section Four */
+
+.flex-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+}
+
+.section-four p {
+  margin-bottom: 2rem;
+}
+
+.section-four-btn {
+  margin-bottom: rem;
+}
+
+/* Section Five */
+
+.section-five-flex-group {
+  flex-direction: row-reverse;
+}
+
+.section-five p {
+  margin-bottom: 2rem;
+}
+
+/* Section Six */
+
+.section-six p {
+  margin-bottom: 2rem;
+}
+
+/* Flex Group Mobile */
+
+@media (max-width: 800px) {
+  .flex-group {
+    flex-direction: column;
+  }
 }
