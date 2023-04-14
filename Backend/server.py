@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, request, make_response
+from flask import Flask, render_template, send_from_directory, request, make_response
 from flask_cors import CORS
 from werkzeug.datastructures import FileStorage
 from pymongo import MongoClient

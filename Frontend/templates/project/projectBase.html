@@ -8,39 +8,66 @@
 {% endblock %}
 
 {% block content %}
-<nav class="navbar navbar-expand-lg mbg-black" style="background-color: black;">
+<!-- <nav class="navbar navbar-expand-lg mbg-black" style="background-color: black;">
     <div class="container-fluid">
-        <ul class="navbar-nav" style="margin: auto;width=300px;">
+        <ul style="margin: auto;" id="nav2">
                
-            <!-- empty li to push buttons to the right -->
-            <li class="nav-item ml-auto"></li>
+
+            <li class="nav-item ml-auto" id ="list2"></li>
             
             
-            <li class="nav-item px-4">
-                <a class="nav-link m-0 " href="../projectAbout"; style="color: #e0e2d7" >Home</a>
+            <li class="nav-item px-4" id ="list2">
+                <a class="nav-link m-0 " href="../projectAbout"; style="color: #e0e2d7" {% if request.path == '/projectAbout' %} disabled {% endif %}>Home</a>
             </li>
 
-            <li class="nav-item px-4">
+            <li class="nav-item px-4" id ="list2">
                 <a class="nav-link m-0 " href="/project/acquisition/video" style="color: #e0e2d7" >Acquisition</a>
             </li>
            
-            <li class="nav-item px-4">
+            <li class="nav-item px-4" id ="list2">
                 <a class="nav-link m-0" href="/project/train/train" style="color: #e0e2d7">Train</a>
             </li>
             
-            <li class="nav-item px-4">
+            <li class="nav-item px-4" id ="list2">
                 <a class="nav-link m-0" href="/project/visualize/video" style="color: #e0e2d7">Visualize</a>
             </li>
-        </ul>
-    </div>
-</nav>
+        </ul> 
+    </div>  
+</nav> -->
 
-<div class="container-fluid my-3">
-    {% block projectContent %} {% endblock %}
+<div class="container-fluid" >
+    <div class="row" >
+        <div class="col-2">
+            <ul id="nav2"  style="margin: 0;position: fixed; top: 50%;-ms-transform: translateY(-50%);transform: translateY(-50%);"> 
+                <li id="list2"><a id="projectAboutLink" href="/project/projectAbout">Home Project</a></li>
+                <li id="list2"><a id="AcquisitionLink" href="/project/acquisition/video" >Acquisition</a></li>
+                <li id="list2"><a id="FeatureLink" href="/project/features/features">Features</a></li>
+                <li id="list2"><a id="TrainLink" href="/project/train/train">Train</a></li>
+                <li id="list2"><a id="VisualizeLink" href="/project/visualize/video">Visualize</a></li>
+            </ul>            
+        </div>
+        <div class="col-10">
+            {% block projectContent %} {% endblock %}
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block baseScript %}
+<script>
+    var project_id = localStorage.getItem("project_id");
+    var projectAboutLink = document.getElementById("projectAboutLink");
+    var AcquisitionLink = document.getElementById("AcquisitionLink");
+    var FeatureLink = document.getElementById("FeatureLink");
+    var TrainLink = document.getElementById("TrainLink");
+    var VisualizeLink = document.getElementById("VisualizeLink");
+
+    projectAboutLink.href = "/project/projectAbout?id=" + project_id;
+    AcquisitionLink.href = "/project/acquisition/video?id=" + project_id;
+    FeatureLink.href = "/project/features/features?id=" + project_id;
+    TrainLink.href = "/project/train/train?id=" + project_id;
+    VisualizeLink.href = "/project/visualize/video?id=" + project_id;
+</script>
     <script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
     {% block projectBaseScript %} {% endblock %}
 {% endblock %}

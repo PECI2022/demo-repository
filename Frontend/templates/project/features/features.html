@@ -4,47 +4,21 @@
 
 {% block projectContent %}
 <div class="container">
-  <h1 class="my-5" style="text-align: center;">Project #<span id="project-id"></span> </h1>
-
-  <script>
-    // Retrieve the project_id from localStorage
-    var project_id = localStorage.getItem("project_id");
-    
-    // Update the HTML with the project_id
-    document.getElementById("project-id").innerHTML = project_id;
-  </script>
+  <h1 class="my-5" style="text-align: center;">Data Features</h1>
   <div class="w-150" style="margin:auto;">
     
    
   <div class="mt-5" style="width:100%;margin:auto">
-    <h3 style="text-align: center;">Information about your project</h3>
-    <div class="my-4 row row-cols-1 row-cols-md-5 g-4">
-
+    <div class="my-3 row row-cols-2 row-cols-md-3 g-2">
       <div class="col">
         <div class="card h-100">
           <div class="card-body">
             <h5 class="card-title">
-              Description
+              Media-Pipe
               <hr> 
             </h5>
             <p class="card-text">
-              <textarea class="form-control" id="projectDescription" rows="5"></textarea>
-              <!-- <span class="material-icons" style="cursor: pointer;">edit</span><br>
-              &emsp;<br> -->
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">
-              Classes
-              <hr> 
-            </h5>
-            <p class="card-text">
-             
+              From: 
             </p>
           </div>
         </div>
@@ -117,34 +91,60 @@
           </div>
         </div>
       </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">
+              Add Feature
+              <hr> 
+            </h5>
+            <p class="card-text">
+              <span class="material-icons" style="display: flex;justify-content: center;;cursor: pointer;font-size: 10rem;" onclick="preview_edit(this)">add</span>
+                  
+          </div>
+        </div>
+      </div>
+
     </div>
     <div style="text-align: center;">
-        <button class="btn btn-danger" style="color: #e0e2d7;background-color: #61554d; border-color: #343335; margin-right: 20px; width: 190px;"  onclick="window.location.href='myProjects'">Save Project Changes</button>
-        <button class="btn btn-danger" style="background-color: #ff3333; border-color: #cc0000;width: 190px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Project</button>
-    
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete your account permanently?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete</button>
-                </div>
-            </div>
+      <button id="extract-btn" class="btn btn-secondary mt-5 mbg-black" style="width:100%;font-size:200%;">Extract Features</button>
+      <div class="progress" id="progress-bar" style="display:none;">
+        
+        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+          
+          <span id="progress-text">0%</span>
         </div>
-    </div>
-  </div>
+      </div>
+      
+      <script>
+        const extractBtn = document.getElementById('extract-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+      
+        extractBtn.addEventListener('click', () => {
+          extractBtn.style.display = 'none';
+      
+          progressBar.style.display = 'block';
+      
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += 5;
+            progressBar.firstElementChild.style.width = `${progress}%`;
+            progressText.innerText = `${progress}%`;
+      
+            if (progress === 100) {
+              clearInterval(interval);
+              progressBar.style.display = 'none';
+              extractBtn.style.display = 'block';
+            }
+          }, 500);
+        });
+      </script>
+      
+    
 
-</div>
-
-<script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
-  
+<script src="{{ url_for('static', filename='js/project/train/trainBase.js') }}"></script>
 {% block acquisitionScript %} {% endblock %}
 
 {% endblock %}
