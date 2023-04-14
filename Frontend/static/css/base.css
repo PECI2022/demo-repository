@@ -244,6 +244,7 @@ fill: currentColor;
 /*-- Tooltip Social Media --*/
 .tooltip-social {
 background: #262626;
+color: #fff;
 display: block;
 position: absolute;
 bottom: 0;
