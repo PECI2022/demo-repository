@@ -209,6 +209,9 @@ const edit_video = async (id) => {
     }
 };
 
+function projectAbout(pid) {
+    window.location.href = "project/projectAbout?id="+pid;
+}
 
 // const edit_video = async (id) => {
 

@@ -4,7 +4,7 @@ let category = "Gestures"
 function newProjectGo(pid) {
     // TODO, make an API request to delete the account from the backend
     // console.log(pid)
-    window.location.href = "/project/acquisition/video?id="+pid;
+    window.location.href = "project/projectAbout?id="+pid;
     // console.log(pid)
     alert("Project Created! You will be redirected to the project page!");
   }

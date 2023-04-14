@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %} Audio {% endblock %}
+
+{% block content %}
+
+ <style>
+    .big-button {
+    font-size: 18px;
+    padding: 12px;
+    }
+
+    .white-text {
+        color: white;
+    }
+
+</style>
+
+<div class="container-fluid my-3">
+    <div class="row row-cols-3 mx-5">
+        <div class="col-2">
+            <div class="d-grid gap-2">
+               
+            </div>
+        </div>
+        <div class="col-8" style="text-align: center;">
+            <div class="container">
+                    <!-- <div class="display"></div>
+                    </br>
+                    <div class="controllers"></div> -->
+
+                    <h1 style="color:white;text-align: center;">Audio Recording</h1>
+                    
+
+                    <div class="app">
+                        <select name="" id="micSelect"></select>
+
+                        <select id="visSelect">
+                            <option value="frequencybars">Bar</option>
+                            <option value="sinewave">Wave</option>
+                            <option value="circle">Circle</option>
+                        </select>
+
+                        <a id="download" style="color:white;" >Download</a>
+
+                        <div class="audio-controls">
+                            <button id="record">Record</button>
+                            <button id="stop" disabled>Stop</button>
+                            <audio id="audio" controls></audio>
+                        </div>
+
+                        <div id="msg">Recording...</div>
+                        <canvas width="500" height="300"></canvas>
+                    <div>
+                   
+                </div>
+        </div>
+        <div class="col-2 text-light" style="">
+            <h3  style="display: flex;cursor: pointer;" onclick="list_audio_fetch()"><a class="btn button p-0 text-light" >&#8635;</a> Audios List</h3> 
+            
+                    <ul id="list_audio">
+                        EMPTY
+                    </ul>
+        </div>
+    </div>
+
+</div>
+
+    
+</div>
+
+<script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+{% endblock %}
