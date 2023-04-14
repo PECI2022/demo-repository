@@ -23,7 +23,7 @@ class Operations:
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now()}
+        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0}
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
@@ -46,6 +46,35 @@ class Operations:
         return mongo_cli.insert_in_project(description['id'], data)
         # self.insert_into_project(str(_id),description['project_id'])
         # self.insert_in_project(description['id'],data)
+
+    def edit_class(self):
+        description = json.loads(request.form['description'])
+        video_class = description.get('class')
+        project_id = description.get('id')
+        video_id = description.get('video')
+        mongo_cli.edit_class(project_id,video_id,video_class)
+        return "done"
+    
+    def edit_name(self):
+        description = json.loads(request.form['description'])
+        video_name = description.get('name')
+        project_id = description.get('id')
+        video_id = description.get('video')
+        mongo_cli.edit_name(project_id,video_id,video_name)
+        return "done"
+    
+    def edit_description(self):
+        description = json.loads(request.form['description'])
+        project_description = description.get('subject')
+        project_id = description.get('id')
+        mongo_cli.edit_description(project_id,project_description)
+        return "done"
+    
+    def change_privacy(self):
+        description = json.loads(request.form['description'])
+        project_id = description.get('id')
+        mongo_cli.change_privacy(project_id)
+        return "done"
     
     # def insert_in_project(self, project_id, data):
 

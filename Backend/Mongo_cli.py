@@ -57,7 +57,46 @@ class MongoCli(object):
                 self.delete_from_db(video_id)
         project["content"] = content
         self.insert_data(project,project['_id'],"info")
+
+    def edit_class(self, project_id, video_id, new_class):
+        project = self.find_project(project_id)
+        content = []
+        for video in project['content']:
+            if video['_id'] != video_id:
+                content.append(video)
+            else:
+                video['video_class'] = new_class
+                content.append(video)
+        project["content"] = content
+        self.insert_data(project,project['_id'],"info")
     
+    def edit_name(self, project_id, video_id, new_name):
+        project = self.find_project(project_id)
+        content = []
+        for video in project['content']:
+            if video['_id'] != video_id:
+                content.append(video)
+            else:
+                video['video_class'] = new_name
+                content.append(video)
+        project["content"] = content
+        self.insert_data(project,project['_id'],"info")
+
+    def edit_description(self, project_id, description):
+        project = self.find_project(project_id)
+        project['subject'] = description
+        self.insert_data(project,project['_id'],"info")
+
+    def change_privacy(self,project_id):
+        project = self.find_project(project_id)
+        privacy = project['privacy']
+        if privacy == 1:
+            privacy = 0
+        else:
+            privacy = 1
+        project['privacy'] = privacy
+        self.insert_data(project,project_id,"info")
+
     def list_video(self, project_id):
         project = self.find_project(project_id)
         videos = []
