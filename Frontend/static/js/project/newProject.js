@@ -1,14 +1,21 @@
 const projectList = document.querySelector("#project_list")
 let category = "Gestures"
+var project_id = localStorage.getItem("project_id");
+
 
 function newProjectGo(pid) {
     // TODO, make an API request to delete the account from the backend
     // console.log(pid)
-    window.location.href = "/project/acquisition/video?id="+pid;
+    localStorage.setItem("project_id", pid);
+    window.location.href = "project/projectAbout?id=" + pid;
     // console.log(pid)
     alert("Project Created! You will be redirected to the project page!");
-  }
+}
 
+function getPID(){
+    return project_id
+}
+  
 const create_project = async () => {
     let data = new FormData()
     console.log(category)
