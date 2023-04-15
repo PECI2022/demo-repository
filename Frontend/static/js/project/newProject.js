@@ -7,7 +7,6 @@ function newProjectGo(pid) {
     // TODO, make an API request to delete the account from the backend
     // console.log(pid)
     localStorage.setItem("project_id", pid);
-    alert("Project Created! You will be redirected to the project page!");
     window.location.href = "project/projectAbout?id=" + pid;
     // console.log(pid)
 }
@@ -27,7 +26,7 @@ const create_project = async () => {
     })
     let a = await response.json()
     // pid = a['result']
-    
+    alert("Project Created! You will be redirected to the project page!");
     newProjectGo(a['result'])
 }
 

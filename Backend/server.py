@@ -27,6 +27,15 @@ class Operations:
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
+    
+    def new_feature(self):
+        description = json.loads(request.form['description'])
+        print("CATCH")
+        _id = mongo_cli.generate_unique_id()
+        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now()}
+        print(data)
+        mongo_cli.insert_data(data,_id,"info")
+        return {"result": str(_id)}
 
     def upload(self):
         print(request.files)
@@ -65,6 +74,9 @@ class Operations:
     def list_projects(self):
         return mongo_cli.list_project()
     
+    def list_features(self):
+        return mongo_cli.list_feature()
+    
     def download(self):
         return mongo_cli.generate_from_db(ObjectId(request.form['_id']))
     
@@ -97,6 +109,11 @@ def new_project():
     print("NEW PROJECT")
     return operation.new_project()
 
+@app.route('/new_feature', methods=['POST'])
+def new_feature():
+    print("NEW FEATURE")
+    return operation.new_feature()
+
 @app.route('/upload', methods=['POST'])
 def upload():
     print("UPLOAD")
@@ -116,6 +133,11 @@ def list_videos():
 def list_projects():
     print("PROJECTS")
     return operation.list_projects()
+
+@app.route('/list_features')
+def list_features():
+    print("FEATURES")
+    return operation.list_features()
 
 @app.route('/delete_video', methods=['POST'])
 def delete_video():
