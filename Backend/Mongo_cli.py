@@ -69,6 +69,20 @@ class MongoCli(object):
                 content.append(video)
         project["content"] = content
         self.insert_data(project,project['_id'],"info")
+
+    def edit(self, description):
+        project = self.find_project(description.get('id'))
+        content = []
+        edit = description.get('edit')
+        for video in project['content']:
+            if video['_id'] != description['video_id']:
+                content.append(video)
+            else:
+                video[edit] = description.get('new_elem')
+                content.append(video)
+        project['content'] = content
+        self.insert_data(project,description.get('id'),"info")
+
     
     def edit_name(self, project_id, video_id, new_name):
         project = self.find_project(project_id)

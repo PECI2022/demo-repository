@@ -47,34 +47,40 @@ class Operations:
         # self.insert_into_project(str(_id),description['project_id'])
         # self.insert_in_project(description['id'],data)
 
-    def edit_class(self):
-        description = json.loads(request.form['description'])
-        video_class = description.get('class')
-        project_id = description.get('id')
-        video_id = description.get('video')
-        mongo_cli.edit_class(project_id,video_id,video_class)
-        return "done"
+    # def edit_class(self):
+    #     description = json.loads(request.form['description'])
+    #     video_class = description.get('class')
+    #     project_id = description.get('id')
+    #     video_id = description.get('video')
+    #     mongo_cli.edit_class(project_id,video_id,video_class)
+    #     return "done"
     
-    def edit_name(self):
-        description = json.loads(request.form['description'])
-        video_name = description.get('name')
-        project_id = description.get('id')
-        video_id = description.get('video')
-        mongo_cli.edit_name(project_id,video_id,video_name)
-        return "done"
+    # def edit_name(self):
+    #     description = json.loads(request.form['description'])
+    #     video_name = description.get('name')
+    #     project_id = description.get('id')
+    #     video_id = description.get('video')
+    #     mongo_cli.edit_name(project_id,video_id,video_name)
+    #     return "done"
     
-    def edit_description(self):
-        description = json.loads(request.form['description'])
-        project_description = description.get('subject')
-        project_id = description.get('id')
-        mongo_cli.edit_description(project_id,project_description)
-        return "done"
+    # def edit_description(self):
+    #     description = json.loads(request.form['description'])
+    #     project_description = description.get('subject')
+    #     project_id = description.get('id')
+    #     mongo_cli.edit_description(project_id,project_description)
+    #     return "done"
     
-    def change_privacy(self):
+    # def change_privacy(self):
+    #     description = json.loads(request.form['description'])
+    #     project_id = description.get('id')
+    #     mongo_cli.change_privacy(project_id)
+    #     return "done"
+    
+    def edit_video(self):
         description = json.loads(request.form['description'])
-        project_id = description.get('id')
-        mongo_cli.change_privacy(project_id)
+        mongo_cli.edit(description)
         return "done"
+
     
     # def insert_in_project(self, project_id, data):
 
@@ -130,6 +136,11 @@ def new_project():
 def upload():
     print("UPLOAD")
     return operation.upload()
+
+@app.route('/edit', methods=['POST'])
+def edit():
+    print("EDIT")
+    return operation.edit_video()
 
 @app.route('/download', methods=['POST'])
 def download():
