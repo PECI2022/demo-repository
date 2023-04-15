@@ -8,6 +8,34 @@ body {
   background-color: #e0e2d7; /* #76b5c5 */
 }
 
+
+#nav2 {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 180px;
+}
+
+#list2 a {
+  display: block;
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+#list2 a.active {
+  background-color: black;
+  color: white;
+}
+
+#list2 a:hover:not(.active) {
+  background-color: white;
+  opacity: 0.8;
+  color: black;
+}
+
+
+
 .mtext-white {
   color: #61554d;
 }
