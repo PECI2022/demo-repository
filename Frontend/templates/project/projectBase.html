@@ -3,8 +3,8 @@
 {% block title %} Project {% endblock %}
 
 {% block additionalHeadBase %}
-    {% block additionalHeadProjectBase %}
-    {% endblock %}
+{% block additionalHeadProjectBase %}
+{% endblock %}
 {% endblock %}
 
 {% block content %}
@@ -35,18 +35,18 @@
     </div>  
 </nav> -->
 
-<div class="container-fluid" >
-    <div class="row" >
-        <div class="col-2">
-            <ul id="nav2"  style="margin: 0;position: fixed; top: 50%;-ms-transform: translateY(-50%);transform: translateY(-50%);"> 
-                <li id="list2"><a id="projectAboutLink" href="/project/projectAbout">Home Project</a></li>
-                <li id="list2"><a id="AcquisitionLink" href="/project/acquisition/video" >Acquisition</a></li>
-                <li id="list2"><a id="FeatureLink" href="/project/features/features">Features</a></li>
-                <li id="list2"><a id="TrainLink" href="/project/train/train">Train</a></li>
-                <li id="list2"><a id="VisualizeLink" href="/project/visualize/video">Visualize</a></li>
-            </ul>            
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-sm-3 col-md-2">
+            <ul id="nav2" class="w-100" style="margin: 0;position: relative; top: 50%;-ms-transform: translateY(-50%);transform: translateY(-50%);">
+                <li class="nav-item" id="list2"><a class="m-0" id="projectAboutLink" href="/project/projectAbout">Home Project</a></li>
+                <li class="nav-item" id="list2"><a class="m-0" id="AcquisitionLink" href="/project/acquisition/video">Acquisition</a></li>
+                <li class="nav-item" id="list2"><a class="m-0" id="FeatureLink" href="/project/features/features">Features</a></li>
+                <li class="nav-item" id="list2"><a class="m-0" id="TrainLink" href="/project/train/train">Train</a></li>
+                <li class="nav-item" id="list2"><a class="m-0" id="VisualizeLink" href="/project/visualize/video">Visualize</a></li>
+            </ul>
         </div>
-        <div class="col-10">
+        <div class="col-sm-9 col-md-10 p-0">
             {% block projectContent %} {% endblock %}
         </div>
     </div>
@@ -68,6 +68,6 @@
     TrainLink.href = "/project/train/train?id=" + project_id;
     VisualizeLink.href = "/project/visualize/video?id=" + project_id;
 </script>
-    <script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
-    {% block projectBaseScript %} {% endblock %}
+<script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
+{% block projectBaseScript %} {% endblock %}
 {% endblock %}

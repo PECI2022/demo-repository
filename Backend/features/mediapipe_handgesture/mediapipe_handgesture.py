@@ -42,7 +42,7 @@ class Mediapipe_handgesture:
                 timestamp = int(cap.get(cv2.CAP_PROP_POS_MSEC))
 
                 hand_landmarker_result = landmarker.detect_for_video(mp_image, timestamp)
-                print(hand_landmarker_result)
+                # print(hand_landmarker_result)
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break

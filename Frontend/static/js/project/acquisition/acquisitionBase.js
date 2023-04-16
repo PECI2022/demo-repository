@@ -1,5 +1,7 @@
 // console.log("acquisition base")
 
+document.querySelector('#divProjectContent').style.height = (window.innerHeight-50) + 'px';
+
 let tableSorting = [1,"name"];
 let tableHeadersDic = {
     'Name':'name',
@@ -23,6 +25,7 @@ const editTableSorting = (elem) => {
     }
     list_videos_fetch()
 }
+
 
 // $('#recordsTable').DataTable();
 // $('#recordsTable').bootstrapTable({
