@@ -151,6 +151,10 @@ class MongoCli(object):
         out.close()
         return name
     
+    def get_gridfs(self, _id):
+        fs = gridfs.GridFS(self.db)
+        return fs.get(ObjectId(_id))
+    
     def delete_from_db(self,_id):
         self.collection.delete_one({'_id': ObjectId(_id)})
         fs = gridfs.GridFS(self.db)

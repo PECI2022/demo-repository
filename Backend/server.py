@@ -8,9 +8,11 @@ import os
 from Mongo_cli import MongoCli
 from bson.objectid import ObjectId
 from datetime import datetime
+from features.mediapipe_handgesture.mediapipe_handgesture import Mediapipe_handgesture
 
 app = Flask(__name__)
 mongo_cli = MongoCli()
+pipe = Mediapipe_handgesture()
 fs = GridFS(mongo_cli.db)
 CORS(app)
 
@@ -23,13 +25,12 @@ class Operations:
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0}
+        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
 
     def upload(self):
-        print(request.files)
         file = request.files['file']    
         description = json.loads(request.form['description'])
         # if(self.check_existing_name(description['name'])):  
@@ -47,6 +48,15 @@ class Operations:
         # self.insert_into_project(str(_id),description['project_id'])
         # self.insert_in_project(description['id'],data)
 
+    def extract_features(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        features = project['features']
+        for video in project['content']:
+            features.append({"video_id": video['_id'], "features": pipe.getLandMarks(mongo_cli.get_gridfs(video['_id']))})
+        mongo_cli.insert_data(project,project['_id'],"info")
+        return "done"
+    
     # def edit_class(self):
     #     description = json.loads(request.form['description'])
     #     video_class = description.get('class')
@@ -161,6 +171,11 @@ def list_projects():
 def delete_video():
     print("DELETE")
     return operation.delete_video()
+
+@app.route('/extract_features', methods=['POST'])
+def extract_features():
+    print("FEATURES")
+    return operation.extract_features()
 
 # audio 
 @app.route('/upload_audio', methods=['POST'])
