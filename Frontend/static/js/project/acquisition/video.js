@@ -27,6 +27,21 @@ let nextBlob = 0;
 let classes = ['Thumbsup', 'Thumbsdown', 'Peace']; // TODO: delete and replace this variable with a fetch to the db
 
 
+// SET SIZE OF VIDEO DISPLAY DYNAMICALLY
+// window.addEventListener('load', ()=>{
+//     // camera_button_back.style.width = camera_button_back.parentElement.style.width;
+//     // camera_button_back.style.height = Math.round(camera_button_back.parentElement.style.width*(480/640));
+//     console.log( camera_button_back.style.width ) ;
+// })
+// let parentWidth = camera_button_back.parentElement.clientWidth;
+// console.log(parentWidth)
+// camera_button_back.style.width = parentWidth + 'px';
+// camera_button_back.style.height = parseInt(parentWidth)*(480/640) + "px" ;
+// console.log(parentWidth, camera_button_back.style.width, camera_button_back.style.height)
+camera_button_back.style.height = (camera_button_back.offsetWidth*(3/4)) + "px";
+window.addEventListener('resize', function(event) {
+    camera_button_back.style.height = (camera_button_back.offsetWidth*(3/4)) + "px";
+}, false);
 
 camera_button.addEventListener('click', async () => {
     // let response = await async ()

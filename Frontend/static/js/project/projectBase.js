@@ -1,5 +1,10 @@
 console.log("ProjectBase")
 
+document.querySelector('#divProjectContent').style.height = (window.innerHeight-50) + 'px';
+window.addEventListener('resize', function(event) {
+    document.querySelector('#divProjectContent').style.height = (window.innerHeight-50) + 'px';
+}, false);
+
 // Get the current URL path
 var path = window.location.pathname;
 

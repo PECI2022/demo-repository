@@ -1,7 +1,5 @@
 // console.log("acquisition base")
 
-document.querySelector('#divProjectContent').style.height = (window.innerHeight-50) + 'px';
-
 let tableSorting = [1,"name"];
 let tableHeadersDic = {
     'Name':'name',
