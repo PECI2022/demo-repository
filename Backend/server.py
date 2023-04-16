@@ -24,17 +24,21 @@ class Operations:
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
         data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now()}
+        data['info'] = {"_id": str(_id)}
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
+
     
     def new_feature(self):
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now()}
+        feature_type = description.get('feature_type', 'default_feature_type')
+        location = description.get('location', 'default_location')
+        data = {"name":description['name'], "feature_type": feature_type, "location": location, "content": [], "_id": str(_id), "update": datetime.now()}
         print(data)
-        mongo_cli.insert_data(data,_id,"info")
+        mongo_cli.insert_data(data,_id,"features")
         return {"result": str(_id)}
 
     def upload(self):

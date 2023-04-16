@@ -33,9 +33,10 @@ class MongoCli(object):
     def find_project(self, _id):
         projects = self.collection.find()
         for project in projects:
-            if project['info']['_id'] == _id:
-                return project['info']
+            if "_id" in project and project["_id"] == _id:
+                return project
         return False
+
     
     def insert_in_project(self, project_id, data):
         project = self.find_project(project_id)
@@ -69,8 +70,19 @@ class MongoCli(object):
         projects = self.collection.find()
         ret = []
         for project in projects:
-            ret.append(project["info"])
+            if "info" in project:
+                ret.append(project["info"])
         return ret
+
+    
+    def list_feature(self):
+        features = self.collection.find()
+        ret = []
+        for feature in features:
+            if "features" in feature:
+                ret.append(feature["features"])
+        return ret
+
     
     def check_existing_name(self, videos, name):
         for video in videos:

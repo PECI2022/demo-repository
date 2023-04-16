@@ -4,12 +4,11 @@ var project_id = localStorage.getItem("project_id");
 
 
 
-
 function newFeatureGo(pid) {
     // TODO, make an API request to delete the account from the backend
     // console.log(pid)
     localStorage.setItem("project_id", pid);
-    window.location.href = "features?id=" + pid;
+    window.location.href = "/project/features/features?id=" + pid;
     // console.log(pid)
 }
 
@@ -17,13 +16,18 @@ function newFeatureGo(pid) {
 
 const create_feature = async () => {
     let data = new FormData()
-    data.append('description', JSON.stringify({name: document.querySelector("#name").value, subject: document.querySelector("#description").value, model: document.querySelector("#model").value, category: category}))
+    data.append('description', JSON.stringify({
+        name: document.querySelector("#name").value, 
+        subject: document.querySelector("#description").value, 
+        model: document.querySelector("#model").value, 
+        category: category,
+        project_id: localStorage.getItem("project_id")
+    }))    
     let response = await fetch('http://127.0.0.1:5001/new_feature', {
         method: "POST",
         body: data
     })
     let a = await response.json()
-    // pid = a['result']
     alert("Feature Created! You will be redirected to the Features page!");
     newFeatureGo(a['result'])
 }
@@ -39,10 +43,10 @@ function get_category(val){
 
 window.onload = function(){
     category = "Feature"
-    load_content()
+    load_features()
 }
 
-const load_content = async () => {
+const load_features = async () => {
     const response = await fetch('http://127.0.0.1:5001/list_features')
     let features = await response.json()
     console.log(features)
