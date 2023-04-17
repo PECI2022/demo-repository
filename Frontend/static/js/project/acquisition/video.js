@@ -453,6 +453,8 @@ document.getElementById("file-button").addEventListener("click", function () {
 document.getElementById("file-upload").addEventListener("change", function () {
     var fileName = this.value.split("\\").pop();
     document.getElementById("file-name").innerHTML = fileName;
+
+    console.log("457: file-upload",fileName)
 });
 
 // input folder upload
@@ -539,11 +541,12 @@ fileInput.addEventListener("change", function () {
     let fileName = file.name;
     let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
     let videoName = "video_" + lastWord;
-    console.log(URL.createObjectURL(file))
+
+    console.log("544: ",URL.createObjectURL(file))
 
     if (confirm("Do you want to upload " + fileName + "?")) {
         fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".mp4";
-        console.log(URL.createObjectURL(file))
+        console.log("549: ",URL.createObjectURL(file))
 
         let videoElement = document.createElement("video");
 
@@ -551,7 +554,7 @@ fileInput.addEventListener("change", function () {
         videoElement.src = URL.createObjectURL(file);
         videoElement.onloadedmetadata = function () {
             let duration = Math.round(videoElement.duration); // get video duration
-            console.log(duration);
+            //console.log(duration);
             // blob for each video
             let blob = {
                 blob: file,
@@ -560,6 +563,15 @@ fileInput.addEventListener("change", function () {
                 duration: duration
             };
             storeCurrentBlobs([blob]);
+
+            let modalTitle = document.getElementById("filePreviewModalLabel");
+            modalTitle.innerHTML = fileName;
+
+            let videoPreview = document.getElementById("file-preview");
+            videoPreview.src = URL.createObjectURL(file);
+
+            let previewModal = new bootstrap.Modal(document.getElementById('filePreviewModal1'));
+            previewModal.show();
         }
     }
 });
