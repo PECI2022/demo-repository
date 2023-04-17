@@ -8,9 +8,11 @@ import os
 from Mongo_cli import MongoCli
 from bson.objectid import ObjectId
 from datetime import datetime
+from features.mediapipe_handgesture.mediapipe_handgesture import Mediapipe_handgesture
 
 app = Flask(__name__)
 mongo_cli = MongoCli()
+pipe = Mediapipe_handgesture()
 fs = GridFS(mongo_cli.db)
 CORS(app)
 
@@ -23,13 +25,12 @@ class Operations:
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now()}
+        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
 
     def upload(self):
-        print(request.files)
         file = request.files['file']    
         description = json.loads(request.form['description'])
         # if(self.check_existing_name(description['name'])):  
@@ -39,13 +40,66 @@ class Operations:
         _id = mongo_cli.generate_unique_id()
         video_class = description.get('class')
         video_length = description.get('length')
-        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now()}
+        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now(), "features": 0}
         # mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)
         return mongo_cli.insert_in_project(description['id'], data)
         # self.insert_into_project(str(_id),description['project_id'])
         # self.insert_in_project(description['id'],data)
+
+    def extract_features(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        print(project)
+        features = project['features']
+        for video in project['content']:
+            if video["features"] == 0:
+                video_name = mongo_cli.download_media_file(video['_id'])
+                _id = mongo_cli.generate_unique_id()
+                feature = str(pipe.getLandMarks(video_name))
+                mongo_cli.insert_data(feature,_id,"info")
+                features.append({"video_id": video['_id'], "video_features": _id})
+                os.remove(video_name)
+                video["features"] = 1
+        print(project)
+        mongo_cli.insert_data(project,project['_id'],"info")
+        return "done"
+    
+    # def edit_class(self):
+    #     description = json.loads(request.form['description'])
+    #     video_class = description.get('class')
+    #     project_id = description.get('id')
+    #     video_id = description.get('video')
+    #     mongo_cli.edit_class(project_id,video_id,video_class)
+    #     return "done"
+    
+    # def edit_name(self):
+    #     description = json.loads(request.form['description'])
+    #     video_name = description.get('name')
+    #     project_id = description.get('id')
+    #     video_id = description.get('video')
+    #     mongo_cli.edit_name(project_id,video_id,video_name)
+    #     return "done"
+    
+    # def edit_description(self):
+    #     description = json.loads(request.form['description'])
+    #     project_description = description.get('subject')
+    #     project_id = description.get('id')
+    #     mongo_cli.edit_description(project_id,project_description)
+    #     return "done"
+    
+    # def change_privacy(self):
+    #     description = json.loads(request.form['description'])
+    #     project_id = description.get('id')
+    #     mongo_cli.change_privacy(project_id)
+    #     return "done"
+    
+    def edit_video(self):
+        description = json.loads(request.form['description'])
+        mongo_cli.edit(description)
+        return "done"
+
     
     # def insert_in_project(self, project_id, data):
 
@@ -102,6 +156,11 @@ def upload():
     print("UPLOAD")
     return operation.upload()
 
+@app.route('/edit', methods=['POST'])
+def edit():
+    print("EDIT")
+    return operation.edit_video()
+
 @app.route('/download', methods=['POST'])
 def download():
     print("DOWNLOAD")
@@ -121,6 +180,11 @@ def list_projects():
 def delete_video():
     print("DELETE")
     return operation.delete_video()
+
+@app.route('/extract_features', methods=['POST'])
+def extract_features():
+    print("FEATURES")
+    return operation.extract_features()
 
 # audio 
 @app.route('/upload_audio', methods=['POST'])
