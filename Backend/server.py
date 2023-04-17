@@ -66,6 +66,18 @@ class Operations:
         mongo_cli.insert_data(project,project['_id'],"info")
         return "done"
     
+    def download_features(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        features = project['features']
+        fileName = "features.json"
+        with open(fileName, "w") as f:
+            for feature in features:
+                f.write(str(feature['video_id']))
+                f.write("\n")
+        return send_from_directory('./', fileName, as_attachment=True)
+    
+    
     def load_info(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
@@ -198,6 +210,11 @@ def delete_video():
 def extract_features():
     print("FEATURES")
     return operation.extract_features()
+
+@app.route('/download_features', methods=['POST'])
+def download_features():
+    print("DOWNLOAD FEATURES")
+    return operation.download_features()
 
 # audio 
 @app.route('/upload_audio', methods=['POST'])

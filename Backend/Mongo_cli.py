@@ -65,7 +65,7 @@ class MongoCli(object):
         for project in projects:
             if project['info']['_id'] == _id:
                 return project['info']
-            return False
+        return False
     
     def insert_in_project(self, project_id, data):
         project = self.find_project(project_id)
