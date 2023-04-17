@@ -25,7 +25,7 @@ class Operations:
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
+        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0}
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
@@ -52,14 +52,15 @@ class Operations:
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
         print(project)
-        features = project['features']
+        # features = project['features']
         for video in project['content']:
             if video["features"] == 0:
                 video_name = mongo_cli.download_media_file(video['_id'])
                 _id = mongo_cli.generate_unique_id()
                 feature = str(pipe.getLandMarks(video_name))
-                mongo_cli.insert_feature(feature,_id,"info")
-                features.append({"video_id": video['_id'], "video_features": _id})
+                data = {"_id": str(_id), "features": feature}
+                mongo_cli.insert_feature(data,_id,"info")
+                # features.append({"video_id": video['_id'], "video_features": str(_id)})
                 os.remove(video_name)
                 video["features"] = 1
         print(project)

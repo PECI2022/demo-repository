@@ -50,8 +50,6 @@ class Mediapipe_handgesture:
             
             cap.release()
             cv2.destroyAllWindows()
-            print("THIs")
-            print(hand_landmarker_result)
         return hand_landmarker_result
 
 
