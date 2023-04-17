@@ -25,7 +25,7 @@ class Operations:
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
+        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0}
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
@@ -52,19 +52,40 @@ class Operations:
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
         print(project)
-        features = project['features']
+        # features = project['features']
         for video in project['content']:
             if video["features"] == 0:
                 video_name = mongo_cli.download_media_file(video['_id'])
                 _id = mongo_cli.generate_unique_id()
                 feature = str(pipe.getLandMarks(video_name))
-                mongo_cli.insert_feature(feature,_id,"info")
-                features.append({"video_id": video['_id'], "video_features": _id})
+                data = {"_id": str(_id), "features": feature}
+                mongo_cli.insert_feature(data,_id,"info")
+                # features.append({"video_id": video['_id'], "video_features": str(_id)})
                 os.remove(video_name)
                 video["features"] = 1
         print(project)
         mongo_cli.insert_data(project,project['_id'],"info")
         return "done"
+    
+    def download_features(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        features = project['features']
+        fileName = "features.json"
+        with open(fileName, "w") as f:
+            for feature in features:
+                f.write(str(feature['video_id']))
+                f.write("\n")
+        return send_from_directory('./', fileName, as_attachment=True)
+    
+    
+    def load_info(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        tags = []
+        for video in project['content']:
+                tags.append(video['video_class'])
+        return {"name": project["name"], "description": project['subject'], "tags": tags, "category": project['category']}
     
     # def edit_class(self):
     #     description = json.loads(request.form['description'])
@@ -166,6 +187,11 @@ def download():
     print("DOWNLOAD")
     return operation.download()
 
+@app.route('/load_info', methods=['POST'])
+def load_info():
+    print("INFO")
+    return operation.load_info()
+
 @app.route('/list_videos', methods=['POST'])
 def list_videos():
     print("LIST")
@@ -185,6 +211,11 @@ def delete_video():
 def extract_features():
     print("FEATURES")
     return operation.extract_features()
+
+@app.route('/download_features', methods=['POST'])
+def download_features():
+    print("DOWNLOAD FEATURES")
+    return operation.download_features()
 
 # audio 
 @app.route('/upload_audio', methods=['POST'])

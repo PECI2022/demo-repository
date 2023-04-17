@@ -60,6 +60,16 @@ const calculate_features = async () => {
     })
 }
 
+const download_features = async () => {
+    console.log("HERE")
+    data = new FormData()
+    data.append('description', JSON.stringify({pid: projectID}))
+    let response = await fetch('http://127.0.0.1:5001/download_features', {
+        method: "POST",
+        body: data
+    })
+}
+
 // const load_features = async () => {
 //     const response = await fetch('http://127.0.0.1:5001/list_features')
 //     let features = await response.json()
@@ -82,3 +92,38 @@ const calculate_features = async () => {
 //         featuresList.appendChild(newElem)
 //     }
 // }
+
+
+const extractBtn = document.getElementById('calculateFeaturesbtn');
+const progressBar = document.getElementById('progress-bar');
+const progressText = document.getElementById('progress-text');
+const CalculatingFeatureText = document.getElementById('showText');
+const downloadBtn = document.getElementById('downloadBtn');
+
+extractBtn.addEventListener('click', () => {
+  extractBtn.style.display = 'none';
+  progressBar.style.display = 'block';
+  CalculatingFeatureText.style.display = 'block'; 
+
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += 5;
+    progressBar.firstElementChild.style.width = `${progress}%`;
+    progressText.innerText = `${progress}%`;
+
+    if (progress === 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          progressBar.style.display = 'none';
+          CalculatingFeatureText.style.display = 'none';
+          downloadBtn.style.display = 'block';
+          alert("Features Calculated! You can download the features now!");
+        }, 500);
+      }      
+  }, 100); 
+});
+
+downloadBtn.addEventListener('click', () => {
+    // TODO, download features from the backend
+});
