@@ -40,7 +40,7 @@ class Operations:
         _id = mongo_cli.generate_unique_id()
         video_class = description.get('class')
         video_length = description.get('length')
-        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now()}
+        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now(), "features": 0}
         # mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)
@@ -51,9 +51,18 @@ class Operations:
     def extract_features(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
+        print(project)
         features = project['features']
         for video in project['content']:
-            features.append({"video_id": video['_id'], "features": pipe.getLandMarks(mongo_cli.get_gridfs(video['_id']))})
+            if video["features"] == 0:
+                video_name = mongo_cli.download_media_file(video['_id'])
+                _id = mongo_cli.generate_unique_id()
+                feature = str(pipe.getLandMarks(video_name))
+                mongo_cli.insert_data(feature,_id,"info")
+                features.append({"video_id": video['_id'], "video_features": _id})
+                os.remove(video_name)
+                video["features"] = 1
+        print(project)
         mongo_cli.insert_data(project,project['_id'],"info")
         return "done"
     
