@@ -23,7 +23,7 @@ const create_feature = async () => {
         category: category,
         project_id: localStorage.getItem("project_id")
     }))    
-    let response = await fetch('http://127.0.0.1:5001/new_feature', {
+    let response = await fetch('http://127.0.0.1:5001/new_feature/' + localStorage.getItem("project_id"), {
         method: "POST",
         body: data
     })
@@ -69,3 +69,35 @@ const load_features = async () => {
     }
 }
 
+
+const extractBtn = document.getElementById('calculateFeaturesbtn');
+const progressBar = document.getElementById('progress-bar');
+const progressText = document.getElementById('progress-text');
+const CalculatingFeatureText = document.getElementById('showText');
+const downloadBtn = document.getElementById('downloadBtn');
+
+extractBtn.addEventListener('click', () => {
+  extractBtn.style.display = 'none';
+  progressBar.style.display = 'block';
+  CalculatingFeatureText.style.display = 'block'; 
+
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += 5;
+    progressBar.firstElementChild.style.width = `${progress}%`;
+    progressText.innerText = `${progress}%`;
+
+    if (progress === 100) {
+      clearInterval(interval);
+      progressBar.style.display = 'none';
+      CalculatingFeatureText.style.display = 'none';
+      downloadBtn.style.display = 'block';
+    }
+  }, 500);
+});
+
+downloadBtn.addEventListener('click', () => {
+    // TODO, download features from the backend
+});
+  

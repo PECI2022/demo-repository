@@ -29,16 +29,24 @@ class Operations:
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
 
-    
-    def new_feature(self):
+
+    def new_feature(self, project_id):
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
         feature_type = description.get('feature_type', 'default_feature_type')
         location = description.get('location', 'default_location')
-        data = {"name":description['name'], "feature_type": feature_type, "location": location, "content": [], "_id": str(_id), "update": datetime.now()}
+        data = {
+            "name": description['name'], 
+            "feature_type": feature_type, 
+            "location": location, 
+            "content": [], 
+            "_id": str(_id), 
+            "update": datetime.now(),
+            "project_id": project_id 
+        }
         print(data)
-        mongo_cli.insert_data(data,_id,"features")
+        mongo_cli.insert_data(data, _id, "features")
         return {"result": str(_id)}
 
     def upload(self):
@@ -113,10 +121,10 @@ def new_project():
     print("NEW PROJECT")
     return operation.new_project()
 
-@app.route('/new_feature', methods=['POST'])
-def new_feature():
+@app.route('/new_feature/<project_id>', methods=['POST'])
+def new_feature(project_id):
     print("NEW FEATURE")
-    return operation.new_feature()
+    return operation.new_feature(project_id)
 
 @app.route('/upload', methods=['POST'])
 def upload():
