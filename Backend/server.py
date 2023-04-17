@@ -58,7 +58,7 @@ class Operations:
                 video_name = mongo_cli.download_media_file(video['_id'])
                 _id = mongo_cli.generate_unique_id()
                 feature = str(pipe.getLandMarks(video_name))
-                mongo_cli.insert_data(feature,_id,"info")
+                mongo_cli.insert_feature(feature,_id,"info")
                 features.append({"video_id": video['_id'], "video_features": _id})
                 os.remove(video_name)
                 video["features"] = 1

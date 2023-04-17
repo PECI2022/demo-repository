@@ -6,7 +6,9 @@ class MongoCli(object):
     def __init__(self):
         self.client = MongoClient("mongodb://localhost:27017/")
         self.db = self.client['context_user']
+        # self.db.create_collection("features")   
         self.collection = self.db['context_user']
+        self.features = self.db['features']
     
     def insert_data(self, data, _id, topic):
         print(id)
@@ -30,12 +32,41 @@ class MongoCli(object):
             else:
                 print('\n[!] ADD NEW VALUES [!]')
 
+    def insert_feature(self, data, _id, topic):
+        print(id)
+        if not self.find_feature(_id):
+            try:
+                doc = self.features.insert_one({'_id': ObjectId(_id), topic: data})
+            except Exception as e:
+                print(f'\n[x] ERROR - INSERTED [x]: {e}')
+            else:
+                print('\n[!] INSERTED [!]')
+                return doc.inserted_id
+        else:
+            try:
+                self.features.find_one_and_update(
+                    {'_id': ObjectId(_id)},
+                    {'$set': {topic: data}},
+                    return_document=ReturnDocument.AFTER,
+                )
+            except Exception as e:
+                print(f'\n[x] ERROR - ADD NEW VALUES [x]: {e}')
+            else:
+                print('\n[!] ADD NEW VALUES [!]')
+
     def find_project(self, _id):
         projects = self.collection.find()
         for project in projects:
             if project['info']['_id'] == _id:
                 return project['info']
         return False
+    
+    def find_feature(self, _id):
+        projects = self.features.find()
+        for project in projects:
+            if project['info']['_id'] == _id:
+                return project['info']
+            return False
     
     def insert_in_project(self, project_id, data):
         project = self.find_project(project_id)
@@ -119,6 +150,8 @@ class MongoCli(object):
         return videos
     
     def list_project(self):
+        print("EJEJEJEJE")
+        print(self.collection)
         projects = self.collection.find()
         ret = []
         for project in projects:
