@@ -66,6 +66,14 @@ class Operations:
         mongo_cli.insert_data(project,project['_id'],"info")
         return "done"
     
+    def load_info(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        tags = []
+        for video in project['content']:
+                tags.append(video['video_class'])
+        return {"name": project["name"], "description": project['subject'], "tags": tags, "category": project['category']}
+    
     # def edit_class(self):
     #     description = json.loads(request.form['description'])
     #     video_class = description.get('class')
@@ -165,6 +173,11 @@ def edit():
 def download():
     print("DOWNLOAD")
     return operation.download()
+
+@app.route('/load_info', methods=['POST'])
+def load_info():
+    print("INFO")
+    return operation.load_info()
 
 @app.route('/list_videos', methods=['POST'])
 def list_videos():

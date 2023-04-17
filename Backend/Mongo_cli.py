@@ -6,9 +6,8 @@ class MongoCli(object):
     def __init__(self):
         self.client = MongoClient("mongodb://localhost:27017/")
         self.db = self.client['context_user']
-        # self.db.create_collection("features")   
         self.collection = self.db['context_user']
-        self.features = self.db['features']
+        self.features = self.db['features'] 
     
     def insert_data(self, data, _id, topic):
         print(id)
@@ -150,8 +149,6 @@ class MongoCli(object):
         return videos
     
     def list_project(self):
-        print("EJEJEJEJE")
-        print(self.collection)
         projects = self.collection.find()
         ret = []
         for project in projects:

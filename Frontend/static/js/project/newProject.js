@@ -8,7 +8,7 @@ function newProjectGo(pid) {
     // console.log(pid)
     localStorage.setItem("project_id", pid);
     alert("Project Created! You will be redirected to the project page!");
-    window.location.href = "project/projectAbout?id=" + pid;
+    window.location.href = "project/about/projectAbout?id=" + pid;
     // console.log(pid)
 }
 
