@@ -38,9 +38,9 @@ let classes = ['Thumbsup', 'Thumbsdown', 'Peace']; // TODO: delete and replace t
 // camera_button_back.style.width = parentWidth + 'px';
 // camera_button_back.style.height = parseInt(parentWidth)*(480/640) + "px" ;
 // console.log(parentWidth, camera_button_back.style.width, camera_button_back.style.height)
-camera_button_back.style.height = (camera_button_back.offsetWidth*(3/4)) + "px";
-window.addEventListener('resize', function(event) {
-    camera_button_back.style.height = (camera_button_back.offsetWidth*(3/4)) + "px";
+camera_button_back.style.height = (camera_button_back.offsetWidth * (3 / 4)) + "px";
+window.addEventListener('resize', function (event) {
+    camera_button_back.style.height = (camera_button_back.offsetWidth * (3 / 4)) + "px";
 }, false);
 
 camera_button.addEventListener('click', async () => {
@@ -116,7 +116,8 @@ record_button.addEventListener('click', async () => {
                 if (counter > 1) {
                     recordVideo(counter - 1);
                 } else {
-                    lauchDataPreview(blobs);
+                    console.log("119 Launch:" ,blobs);
+                    launchDataPreview(blobs);
                     record_button.disabled = false;
                     return;
                 }
@@ -143,7 +144,7 @@ const list_videos_fetch = async () => {
     // console.log(list)
     list.sort((a, b) => {
         // console.log("sorting", a, tableSorting)
-        if( tableSorting[0]==1 ) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
+        if (tableSorting[0] == 1) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
         else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
     }); // Sort table
 
@@ -162,7 +163,7 @@ const list_videos_fetch = async () => {
                     </td>
                     <td>${i.video_class}</td>
                     <td>${i.length}</td>
-                    <td>${new Date( i.update ).toLocaleDateString("en-GB")}</td>
+                    <td>${new Date(i.update).toLocaleDateString("en-GB")}</td>
                     <td class="d-flex justify-content-center">
                         <!--<span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>-->
                         <!--<span class="material-icons" style="cursor: pointer;">shuffle</span>-->
@@ -307,7 +308,7 @@ const delete_video = async (_id) => {
         })
         list_videos_fetch()
     })
-}
+} 
 
 const list_classes_fetch = async () => {
     // TODO: get classes from a fetch to server
@@ -350,7 +351,8 @@ const storeCurrentBlobs = async (blobs) => {
 }
 
 // VIDEO PREVIEWER + SEND TO DB
-const lauchDataPreview = (videoBlobs) => {
+const launchDataPreview = (videoBlobs) => {
+    console.log("354 videoBlobs:", videoBlobs);
     $('#acquisitionVideoPreviewModal').modal('show');
     document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => {
         let selectedBlobs = []
@@ -361,13 +363,12 @@ const lauchDataPreview = (videoBlobs) => {
                 selectedBlobs.push(videoBlobs[idSplit[1]]);
             }
         }
-        console.log(selectedBlobs)
+        console.log("365 selected Blobs",selectedBlobs)
         storeCurrentBlobs(selectedBlobs)
     }
 
     previewVideo = document.querySelector('#acquisitionVideoPreviewModalVideo');
 
-    document.querySelector('#previewAcquisitionList').innerHTML = "";
     for (let i = 0; i < videoBlobs.length; i++) {
         let e = document.createElement('li');
         e.setAttribute('class', 'list-group-item flex');
@@ -380,19 +381,19 @@ const lauchDataPreview = (videoBlobs) => {
 
         document.querySelector('#previewAcquisitionList').appendChild(e);
 
-        e.onclick = () => { 
+        e.onclick = () => {
             previewVideo.src = videoBlobs[i].url;
 
             let oldee = e.parentElement.querySelector('.ee')
-            if( oldee ) e.parentElement.removeChild(oldee)
+            if (oldee) e.parentElement.removeChild(oldee)
 
             let ee = document.createElement('li');
             ee.setAttribute('class', 'ee list-group-item flex');
 
             // make options string
             let options = "<option >Choose...</option>"
-            for(let c of classes) {
-                options += `<option class="eeClasses" value="${i}" ${c==videoBlobs[i].class ? "selected" : ""}>${c}</option>`
+            for (let c of classes) {
+                options += `<option class="eeClasses" value="${i}" ${c == videoBlobs[i].class ? "selected" : ""}>${c}</option>`
             }
 
             ee.innerHTML = `
@@ -415,7 +416,7 @@ const lauchDataPreview = (videoBlobs) => {
             `;
             e.after(ee);
 
-            for( let nn of ee.querySelectorAll(".eeClasses") ) {
+            for (let nn of ee.querySelectorAll(".eeClasses")) {
                 nn.onclick = () => {
                     videoBlobs[i].class = nn.innerText;
                 }
@@ -454,7 +455,7 @@ document.getElementById("file-upload").addEventListener("change", function () {
     var fileName = this.value.split("\\").pop();
     document.getElementById("file-name").innerHTML = fileName;
 
-    console.log("457: file-upload",fileName)
+    console.log("457: file-upload", fileName)
 });
 
 // input folder upload
@@ -526,12 +527,16 @@ folderInput.addEventListener("change", function () {
                     class: "test",
                     duration: duration
                 };
-                storeCurrentBlobs([blob]);
+                launchDataPreview([{
+                    url: URL.createObjectURL(file),
+                    name: videoName,
+                    class: "test",
+                    duration: duration
+                  }]);
             }
+            
         }
     }
-
-    storeCurrentBlobs(blobs);
 });
 
 
@@ -542,11 +547,11 @@ fileInput.addEventListener("change", function () {
     let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
     let videoName = "video_" + lastWord;
 
-    console.log("544: ",URL.createObjectURL(file))
+    console.log("544: ", URL.createObjectURL(file))
 
     if (confirm("Do you want to upload " + fileName + "?")) {
         fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".mp4";
-        console.log("549: ",URL.createObjectURL(file))
+        console.log("549: ", URL.createObjectURL(file))
 
         let videoElement = document.createElement("video");
 
@@ -562,17 +567,14 @@ fileInput.addEventListener("change", function () {
                 class: "test",
                 duration: duration
             };
-            storeCurrentBlobs([blob]);
-
-            let modalTitle = document.getElementById("filePreviewModalLabel");
-            modalTitle.innerHTML = fileName;
-
-            let videoPreview = document.getElementById("file-preview");
-            videoPreview.src = URL.createObjectURL(file);
-
-            let previewModal = new bootstrap.Modal(document.getElementById('filePreviewModal1'));
-            previewModal.show();
+            launchDataPreview([{
+                url: URL.createObjectURL(file),
+                name: videoName,
+                class: "test",
+                duration: duration
+              }]);
         }
+        console.log("531 videoElement: ", videoElement);
     }
 });
 
