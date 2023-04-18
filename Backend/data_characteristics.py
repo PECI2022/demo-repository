@@ -14,6 +14,7 @@ def tomp4(video):
     video_formats = [".mpeg", ".mpg", ".mpe", ".avi",
                      ".wmv", ".flv", ".mov", ".webm", ".mkv"]
     if getFileExtension(video) in video_formats:
+        print("Converting to mp4...")
         new_video = video[:-len(getFileExtension(video))] + ".mp4"
         subprocess.run(["ffmpeg", "-i", video, "-c:v", "libx264",
                        "-preset", "slow", "-crf", "22", "-c:a", "copy", new_video])
@@ -137,36 +138,27 @@ def separeteAudio(video):
 
 
 def getVideoCharacteristics(video):
-    # Load the video
-    cap = cv2.VideoCapture(video)
+    if getFileExtension(video) != ".mp4":
+        return getVideoCharacteristics(tomp4(video))       # send to mp4 to be uniform
+    else:
+        contrast = float(getContrast(video))
+        brightness = float(getBrightness(video))
+        sharpness = float(getSharpness(video))
+        saturation = float(getSaturation(video))
+        hue = float(getHue(video))
+        resolution = list(getResolution(video))
+        duration = float(getDuration(video))
 
-    # Get the number of frames in the video
-    num_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-
-    fps = int(cap.get(cv2.CAP_PROP_FPS))
-
-    avg_contrast = 0
-    avg_brightness = 0
-    # Loop through each frame in the video
-    for i in range(num_frames):
-        # Read the frame
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        # Calculate the mean brightness of the frame
-        brightness = np.mean(frame)
-
-        # Calculate the standard deviation of the brightness
-        std_dev = np.std(frame)
-
-        contrast = std_dev / brightness
-
-        avg_brightness += brightness
-        avg_contrast += contrast
-
-    cap.release()
-    return json.dumps({"brightness": int(avg_brightness / num_frames), "contrast": int((avg_contrast / num_frames)*100), "duration": round(num_frames / fps, 2)})
+        video_chars = {
+            "contrast": contrast,
+            "brightness": brightness,
+            "sharpness": sharpness,
+            "saturation": saturation,
+            "hue": hue,
+            "resolution": resolution,
+            "duration": duration
+        }
+        return json.dumps(video_chars)
 
 
 def main():
@@ -179,8 +171,10 @@ def main():
     # print(getResolution(tomp4(file)))
     # print(getDuration(tomp4(file)))
     # print(getSharpness(tomp4(file)))
-    #print(getSaturation(tomp4(file)))
-    print(getHue(tomp4(file)))
+    # print(getSaturation(tomp4(file)))
+    # print(getHue(tomp4(file)))
+    print(getVideoCharacteristics(file))
+    
 
 
 if __name__ == "__main__":
