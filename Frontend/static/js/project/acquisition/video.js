@@ -148,14 +148,15 @@ const list_videos_fetch = async () => {
     }); // Sort table
 
     video_table.innerHTML = ""
-    // console.log("LLL")
-    // console.log(list)
-    // list_videos.innerHTML = "";
-    // list.sort();
-    let rowNumber = 1;
+
     for (let i of list) {
         // console.log(i._id)
         let s = `<tr>
+                    <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)" style="cursor:pointer;display:${tableSorting[2]};">
+                        <span class="material-icons checkbox" style="line-height:40px";>
+                            check_box_outline_blank
+                        </span>
+                    </td>
                     <td>
                         <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                         <span class="previewNameList">${i.name}</span>
@@ -163,15 +164,10 @@ const list_videos_fetch = async () => {
                     <td>${i.video_class}</td>
                     <td>${i.length}</td>
                     <td>${new Date( i.update ).toLocaleDateString("en-GB")}</td>
-                    <td class="d-flex justify-content-center">
-                        <!--<span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>-->
-                        <!--<span class="material-icons" style="cursor: pointer;">shuffle</span>-->
-                        <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
-                        <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
-                    </td>
                 </tr>`
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
+        newElem.id = `acquisitionTR${i._id}`
         let newElem2 = document.createElement('tr');
         newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="640" height="480" autoplay controls/></td>`
         newElem2.classList.add("collapse")
@@ -294,7 +290,6 @@ const edit_video = async (id) => {
 
 
 const delete_video = async (_id) => {
-    console.log("WWWWWWWWWWWWWWWWWWWW")
     let data = new FormData()
     data.append('_id', JSON.stringify({ video_id: _id, project_id: projectID }))
 
@@ -645,4 +640,11 @@ const preview_edit = (elem) => {
         nameElem.style.display = '';
         elem.onclick = () => preview_edit(elem);
     }
+}
+
+const toogleCheckBox = (elem) => {
+    let checkbox = elem.querySelector('.checkbox')
+    let a = ['check_box', 'check_box_outline_blank']
+    if( checkbox.innerText==a[0] ) checkbox.innerText = a[1]
+    else checkbox.innerText = a[0]
 }

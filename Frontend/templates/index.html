@@ -157,190 +157,206 @@
 
 </div> -->
 
+<!-- <div class="container"> -->
 
 <!-- Section One -->
-  
-<section class="section-one"  style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <h3 data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!"class="header">Modular Framework for Data Acquisition and </br> Annotation to Support Interaction Scenarios</h3>
-   <!--<p class="section-one-paragraph" style="text-align: center;" data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!"> A place where you can explore Non Verbal DataSets... </p> --> 
-    <button class="cssbuttons-io-button" style="margin-top: 60px;" onclick="window.location.href='#section-three'"> Get started
+
+<section class="section-one"
+    style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <h3 data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!" class="header">Modular Framework
+        for Data Acquisition and </br> Annotation to Support Interaction Scenarios</h3>
+    <!--<p class="section-one-paragraph" style="text-align: center;" data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!"> A place where you can explore Non Verbal DataSets... </p> -->
+    <button class="cssbuttons-io-button" style="margin-top: 60px;" onclick="window.location.href='#section-three'">
+        Get started
         <div class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path fill="currentColor"
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
+            </svg>
         </div>
     </button>
 
-  </section>
-  
-  <!-- Section Two -->
-  <section class="section=two" style="display: flex;justify-content: center; align-items: center;">
-    <img style="width: 80%;height: 600px;" src="{{ url_for('static', filename='imgs/slogan.jpg') }}">
-  </section>
-<div id="whiteSection">
-  <!-- Section Three -->
-  <section class="section-three" id="section-three" >
-    <h3 >Our Mission</h3>
-  </section>
+</section>
 
-  
-  <!-- Section Four -->
-  <section class="section-four">
-    <div class="flex-group">
-      <div>
-        <img style="width: 650px;" src="{{ url_for('static', filename='imgs/database.png') }}">
+<!-- Section Two -->
+<section class="section=two" style="display: flex;justify-content: center; align-items: center;">
+    <img style="width: 80%;height: 600px;" src="{{ url_for('static', filename='imgs/slogan.jpg') }}">
+</section>
+<div id="whiteSection">
+
+    <div class="container">
+
+        <!-- Section Three -->
+        <section class="section-three" id="section-three">
+            <h3>Our Mission</h3>
+        </section>
+
+
+        <!-- Section Four -->
+        <section class="section-four">
+            <div class="flex-group">
+                <div>
+                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/database.png') }}">
+                </div>
+                <div class="content-container">
+                    <h3>Consult our Database</h3>
+                    <p>Here you can find and see all of the Non-Verbal DataSets created until today!</p>
+                    <a href="/browse" class="learn-more-btn section-four-btn">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Five -->
+        <section class="section-five">
+            <div class="flex-group section-five-flex-group">
+                <div>
+                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/acquisition.jpg') }}">
+                </div>
+                <div class="content-container">
+                    <h3>Video Acquisition</h3>
+                    <p>Where you can record or upload your own video(s) to create your own and new DataSet!</p>
+                    <a href="/project/acquisition/video" class="learn-more-btn section-four-btn">Read More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section six -->
+        <section class="section-six">
+            <div class="flex-group">
+                <div>
+                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/annotation.jpg') }}"">
       </div>
-      <div class="content-container">
-        <h3>Consult our Database</h3>
-        <p>Here you can find and see all of the Non-Verbal DataSets created until today!</p>
-        <a href="/browse" class="learn-more-btn section-four-btn" >Learn More</a>
-      </div>
+      <div class=" content-container">
+                    <h3>Video Annotation</h3>
+                    <p>At the video acquisition the user can label and annotate his own video(s) at his free will!</p>
+
+                </div>
+            </div>
+        </section>
     </div>
-  </section>
-  
-  <!-- Section Five -->
-  <section class="section-five">
-    <div class="flex-group section-five-flex-group">
-      <div>
-        <img style="width: 650px;" src="{{ url_for('static', filename='imgs/acquisition.jpg') }}">
-      </div>
-      <div class="content-container">
-        <h3>Video Acquisition</h3>
-        <p>Where you can record or upload your own video(s) to create your own and new DataSet!</p>
-        <a href="/project/acquisition/video" class="learn-more-btn section-four-btn">Read More</a>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Section six -->
-  <section class="section-six">
-    <div class="flex-group">
-      <div>
-        <img style="width: 650px;" src="{{ url_for('static', filename='imgs/annotation.jpg') }}"">
-      </div>
-      <div class="content-container">
-        <h3>Video Annotation</h3>
-        <p>At the video acquisition the user can label and annotate his own video(s) at his free will!</p>
-       
-      </div>
-    </div>
-  </section>  
 </div>
 
-  <section class="section-three">
+<section class="section-three">
     <h3>About Us</h3>
-            <div style="text-align:center;margin-top: 100px;"class="container">
-                <div class="row">
-                    <div class="col-sm">
-                        <div class="card" style="width: 13rem;">
-                            <img src="{{ url_for('static', filename='imgs/joao.jpg') }}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">João Afonso Ferreira</h5>
-                                <p class="card-text">MIECT</p>                      
-                                 <!--<a href="https://github.com/joaoafonso02" target="_blank">
+    <div style="text-align:center;margin-top: 100px;" class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card" style="width: 13rem;">
+                    <img src="{{ url_for('static', filename='imgs/joao.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">João Afonso Ferreira</h5>
+                        <p class="card-text">MIECT</p>
+                        <!--<a href="https://github.com/joaoafonso02" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
                                     </svg>
                                 </a> -->
-                            </div> 
-                        </div>
                     </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 13rem;">
-                            <img src="{{ url_for('static', filename='imgs/durvz.jpeg') }}"   height=205 class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Pedro Durval Cruzeiro</h5>
-                                <p class="card-text">LECI</p>
-                                
-                                 <!--<a href="https://github.com/your-username" target="_blank">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
-                                    </svg>
-                                </a> -->
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 13rem;">
-                            <img src="{{ url_for('static', filename='imgs/edu.png') }}" height=205 class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Eduardo Lopes Fernandes</h5>
-                                <p class="card-text">LECI</p>
-                                 <!-- <a href="https://github.com/your-username" target="_blank">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
-                                    </svg>
-                                </a> -->
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 13rem;" > 
-                            <img src="{{ url_for('static', filename='imgs/claroo.jpg') }}"  height=205 class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Guilherme Mendonça Claro</h5>
-                                <p class="card-text">MIECT</p>
-                                 <!--<a href="https://github.com/your-username" target="_blank">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
-                                    </svg>
-                                </a> -->
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="card" style="width: 13rem;">
-                            <img src="{{ url_for('static', filename='imgs/tiago.jpg') }}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Tiago Figueira Mostardinha</h5>
-                                <p class="card-text">LECI</p>
-                                <!-- <a href="https://github.com/your-username" target="_blank">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
-                                    </svg>
-                                </a> -->
-
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    
                 </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 13rem;">
+                    <img src="{{ url_for('static', filename='imgs/durvz.jpeg') }}" height=205 class="card-img-top"
+                        alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Pedro Durval Cruzeiro</h5>
+                        <p class="card-text">LECI</p>
 
-        <br>
-        <br>
-        <h4 style="text-align: center;">Oriented by:</h4>
-        <br>
+                        <!--<a href="https://github.com/your-username" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
+                                    </svg>
+                                </a> -->
 
-        <div class="container">
-        <div class="row justify-content-center"  style="margin-left: 270px;margin-top: 50px;">
-        <div class="col-sm-6 col-md-4">
-        <div class="card" style="width: 13rem;">
-            <img src="{{ url_for('static', filename='imgs/samuel.jpg') }}" class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">Samuel Silva</h5>
-                
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 13rem;">
+                    <img src="{{ url_for('static', filename='imgs/edu.png') }}" height=205 class="card-img-top"
+                        alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Eduardo Lopes Fernandes</h5>
+                        <p class="card-text">LECI</p>
+                        <!-- <a href="https://github.com/your-username" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
+                                    </svg>
+                                </a> -->
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 13rem;">
+                    <img src="{{ url_for('static', filename='imgs/claroo.jpg') }}" height=205 class="card-img-top"
+                        alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Guilherme Mendonça Claro</h5>
+                        <p class="card-text">MIECT</p>
+                        <!--<a href="https://github.com/your-username" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
+                                    </svg>
+                                </a> -->
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 13rem;">
+                    <img src="{{ url_for('static', filename='imgs/tiago.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Tiago Figueira Mostardinha</h5>
+                        <p class="card-text">LECI</p>
+                        <!-- <a href="https://github.com/your-username" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.312 3.438 9.8 8.205 11.385.6.11.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.723-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.09-.745.083-.73.083-.73 1.206.085 1.838 1.236 1.838 1.236 1.07 1.837 2.81 1.305 3.495.997.108-.776.42-1.305.765-1.605-2.67-.306-5.466-1.336-5.466-5.93 0-1.31.465-2.38 1.236-3.22-.135-.307-.54-1.535.105-3.202 0 0 1.02-.325 3.34 1.24.97-.27 2.01-.405 3.045-.41 1.03.005 2.075.14 3.045.41 2.32-1.565 3.34-1.24 3.34-1.24.645 1.667.24 2.895.12 3.202.765.84 1.23 1.91 1.23 3.22 0 4.608-2.8 5.62-5.475 5.915.42.36.81 1.096.81 2.215 0 1.605-.015 2.895-.015 3.29 0 .315.21.69.825.57C20.565 22.09 24 17.61 24 12.297 24 5.67 18.627.297 12 .297z"/>
+                                    </svg>
+                                </a> -->
+
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-        <div class="col-sm-6 col-md-4"  style="margin-right: 210px;">
-        <div class="card" style="width: 13rem;">
-            <img src="{{ url_for('static', filename='imgs/fabio.jpg') }}" class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">Fábio Barros</h5>
-                
+
+    </div>
+
+    <br>
+    <br>
+    <h4 style="text-align: center;">Oriented by:</h4>
+    <br>
+
+    <div class="container">
+        <div class="row justify-content-center" style="margin-left: 270px;margin-top: 50px;">
+            <div class="col-sm-6 col-md-4">
+                <div class="card" style="width: 13rem;">
+                    <img src="{{ url_for('static', filename='imgs/samuel.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Samuel Silva</h5>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4" style="margin-right: 210px;">
+                <div class="card" style="width: 13rem;">
+                    <img src="{{ url_for('static', filename='imgs/fabio.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Fábio Barros</h5>
+
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-        </div>
-        </div>
+    </div>
 
-  </section>
+</section>
+<!-- </div> -->
 
-  <footer style="margin-top: 60px;text-align: center;">
+<footer style="margin-top: 60px;text-align: center;">
     <p>&copy; 2023 MFDAA. All Rights Reserved.</p>
-  </footer>  
-  
+</footer>
+
 
 {% endblock %}
