@@ -32,51 +32,38 @@
                           <label for="name">Name</label>
                           <input type="text" class="form-control" id="name" placeholder="Enter name">
                         </div>
-                        <div class="form-group" style="margin-top: 10px;">
-                          <label for="description">Description</label>
-                          <textarea class="form-control" id="description" placeholder="Enter description"></textarea>
-                        </div>
-                        <div class="form-group" style="margin-top: 10px;">
-                          <label for="model">Base Model</label>
-                          <select style="height: 38px;margin-left: 0px;"class="form-control" id="model">
-                            <option>Linear regression model</option>
-                            <option>Decision tree model</option>
-                            <option>Logistic regression model</option>
-                          </select>
-                        </div>
+                        
+                
                         <div class="row" style="margin-top: 10px;">
                           <div class="col">
-                            <div class="form-group" id="Category" value="Gestures">
-                              <label for="option">Category</label>
-                              <div class="form-check" onclick="get_category('Video')">
-                                <input class="form-check-input"  type="radio" name="option" id="gestures" value="video">
-                                <label class="form-check-label" for="gestures">
-                                  Video
+                            <div class="form-group" id="Category" value="MediaPipe">
+                              <label for="option">Media Pipe Feature Calculator</label>
+                              <div class="form-check" onclick="get_category('Gesture')">
+                                <input class="form-check-input"  type="radio" name="option" id="Gesture" value="Gesture">
+                                <label class="form-check-label" for="Gesture">
+                                  Gesture recognition
                                 </label>
                               </div>
-                              <div class="form-check" onclick="get_category('Audio')">
-                                <input class="form-check-input" type="radio" name="option" id="audio" value="audio">
-                                <label class="form-check-label" for="audio">
-                                  Audio
+                              <div class="form-check" onclick="get_category('Face')">
+                                <input class="form-check-input" type="radio" name="option" id="Face" value="Face">
+                                <label class="form-check-label" for="Face">
+                                  Face Detection
+                                </label>
+                              </div>
+                            <div class="col">
+                              <div class="form-check" onclick="get_category('Pose')">
+                                <input class="form-check-input" type="radio" name="option" id="Pose" value="Pose">
+                                <label class="form-check-label" for="Pose">
+                                  Pose Detection
+                                </label>
+                              </div>
+                              <div class="form-check" onclick="get_category('Holistic')">
+                                <input class="form-check-input" type="radio" name="option" id="Holistic" value="Holistic">
+                                <label class="form-check-label" for="Holistic">
+                                  Holistic Detection
                                 </label>
                               </div>
                             </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group" id="Privacy" value="Public">
-                              <label for="option">Privacy</label>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" onclick="get_category('Gestures')" name="option" value="public" checked>
-                                <label class="form-check-label" for="public">
-                                  Public
-                                </label>
-                              </div>
-                              <div class="form-check" onclick="get_category('Video')">
-                                <input class="form-check-input"  type="radio" name="option" id="private" value="private">
-                                <label class="form-check-label" for="private">
-                                  Private
-                                </label>
-                              </div>
                             </div>
                           </div>
                         </div>
