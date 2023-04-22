@@ -167,13 +167,10 @@ operation = Operations()
 def default():
     return "Running..."
 
-<<<<<<< HEAD
 @app.route('/new_project', methods=['POST'])
 def new_project():
     print("NEW PROJECT")
     return operation.new_project()
-=======
->>>>>>> tiago
 
 @app.route('/upload', methods=['POST'])
 def upload():
