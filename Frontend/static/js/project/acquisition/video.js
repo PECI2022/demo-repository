@@ -116,7 +116,7 @@ record_button.addEventListener('click', async () => {
                 if (counter > 1) {
                     recordVideo(counter - 1);
                 } else {
-                    console.log("119 Launch:" ,blobs);
+                    // console.log("119 Launch:" ,blobs);
                     launchDataPreview(blobs);
                     record_button.disabled = false;
                     return;
@@ -143,7 +143,7 @@ const list_videos_fetch = async () => {
 
     // console.log(list)
     list.sort((a, b) => {
-        // console.log("sorting", a, tableSorting)
+        // // console.log("sorting", a, tableSorting)
         if (tableSorting[0] == 1) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
         else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
     }); // Sort table
@@ -158,20 +158,14 @@ const list_videos_fetch = async () => {
                             check_box_outline_blank
                         </span>
                     </td>
-                    <td>
-                        <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-                        <span class="previewNameList">${i.name}</span>
-                    </td>
-                    <td>${i.video_class}</td>
-                    <td>${i.length}</td>
-                    <td>${new Date( i.update ).toLocaleDateString("en-GB")}</td>
-                    <td>${new Date(i.update).toLocaleDateString("en-GB")}</td>
-                    <td class="d-flex justify-content-center">
-                        <!--<span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>-->
-                        <!--<span class="material-icons" style="cursor: pointer;">shuffle</span>-->
-                        <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
-                        <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
-                    </td>
+                    <!-- <td>
+                    <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
+                    <span class="previewNameList">${i.name}</span>
+                    </td> -->
+                    <td class="acquisitionTableName">${i.name}</td>
+                    <td class="acquisitionTableClass">${i.video_class}</td>
+                    <td class="acquisitionTableDuration">${i.length}</td>
+                    <td class="acquisitionTableDate">${new Date( i.update ).toLocaleDateString("en-GB")}</td>
                 </tr>`
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
@@ -227,75 +221,6 @@ const edit_video = async (id) => {
         alert("There was an error updating the video");
     }
 };
-
-
-// const edit_video = async (id) => {
-
-//     // loop through all edit icons and attach a click event listener
-//     editIcons.forEach(editIcon => {
-//     editIcon.addEventListener('click', () => {
-//         // get the row element of the video
-//         const row = editIcon.parentElement.parentElement;
-
-//         // get the name and class elements of the video
-//         const nameCell = row.children[0];
-//         const classCell = row.children[1];
-
-//         // create input elements to replace the name and class elements
-//         const nameInput = document.createElement('input');
-//         nameInput.type = 'text';
-//         nameInput.value = nameCell.innerText;
-//         const classInput = document.createElement('select');
-//         classes.forEach(className => {
-//         const option = document.createElement('option');
-//         option.value = className;
-//         option.text = className;
-//         if (className === classCell.innerText) {
-//             option.selected = true;
-//         }
-//         classInput.add(option);
-//         });
-
-//         // replace the name and class elements with the input elements
-//         nameCell.replaceWith(nameInput);
-//         classCell.replaceWith(classInput);
-
-//         // create a save button
-//         const saveButton = document.createElement('button');
-//         saveButton.innerText = 'Save';
-
-//         // add a click event listener to the save button
-//         saveButton.addEventListener('click', async () => {
-//         // get the new name and class from the input elements
-//         const newName = nameInput.value;
-//         const newClass = classInput.value;
-
-//         // update the video in the database
-//         const response = await fetch(`http://127.0.0.1:5001/update_video/${row.id}`, {
-//             method: 'PUT',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({ name: newName, video_class: newClass })
-//         });
-
-//         // if the update was successful, replace the input elements with the new name and class elements
-//         if (response.ok) {
-//             const newNameCell = document.createElement('td');
-//             newNameCell.innerText = newName;
-//             const newClassCell = document.createElement('td');
-//             newClassCell.innerText = newClass;
-//             nameInput.replaceWith(newNameCell);
-//             classInput.replaceWith(newClassCell);
-//         } else {
-//             alert('Failed to update video');
-//         }
-//         });
-
-//         // replace the edit icon with the save button
-//         editIcon.replaceWith(saveButton);
-//     });
-//     });
-// }
-
 
 const delete_video = async (_id) => {
     let data = new FormData()
@@ -354,7 +279,7 @@ const storeCurrentBlobs = async (blobs) => {
 
 // VIDEO PREVIEWER + SEND TO DB
 const launchDataPreview = (videoBlobs) => {
-    console.log("354 videoBlobs:", videoBlobs);
+    // console.log("354 videoBlobs:", videoBlobs);
     $('#acquisitionVideoPreviewModal').modal('show');
     document.querySelector('#acquisitionVideoPreviewModalStore').onclick = () => {
         let selectedBlobs = []
@@ -365,7 +290,7 @@ const launchDataPreview = (videoBlobs) => {
                 selectedBlobs.push(videoBlobs[idSplit[1]]);
             }
         }
-        console.log("365 selected Blobs",selectedBlobs)
+        // console.log("365 selected Blobs",selectedBlobs)
         storeCurrentBlobs(selectedBlobs)
     }
 
@@ -439,7 +364,7 @@ const tableLoadvideo = async (id) => {
         let data = new FormData();
         data.append('_id', id);
         const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
-        console.log("responded")
+        // console.log("responded")
         let blob = await response.blob();
         // video_url = URL.createObjectURL(blob);
         v.src = URL.createObjectURL(blob)
@@ -457,7 +382,7 @@ document.getElementById("file-upload").addEventListener("change", function () {
     var fileName = this.value.split("\\").pop();
     document.getElementById("file-name").innerHTML = fileName;
 
-    console.log("457: file-upload", fileName)
+    // console.log("457: file-upload", fileName)
 });
 
 // input folder upload
@@ -495,7 +420,7 @@ folderInput.addEventListener("change", function () {
     // get folder name
     let folderName = folderInput.files[0].webkitRelativePath.split("/")[0];
 
-    console.log("FOLDERRR")
+    // console.log("FOLDERRR")
     folderNameSpan.innerHTML = "<b>Folder Name: </b>" + folderName;
 
     // get all files from folder
@@ -549,11 +474,11 @@ fileInput.addEventListener("change", function () {
     let lastWord = fileName.split("_").pop().split(".")[0]; // get the last word of the file name
     let videoName = "video_" + lastWord;
 
-    console.log("544: ", URL.createObjectURL(file))
+    // console.log("544: ", URL.createObjectURL(file))
 
     if (confirm("Do you want to upload " + fileName + "?")) {
         fileNameSpan.innerHTML = "<b>NEW FILE NAME: </b>" + videoName + ".mp4";
-        console.log("549: ", URL.createObjectURL(file))
+        // console.log("549: ", URL.createObjectURL(file))
 
         let videoElement = document.createElement("video");
 
@@ -576,7 +501,7 @@ fileInput.addEventListener("change", function () {
                 duration: duration
               }]);
         }
-        console.log("531 videoElement: ", videoElement);
+        // console.log("531 videoElement: ", videoElement);
     }
 });
 

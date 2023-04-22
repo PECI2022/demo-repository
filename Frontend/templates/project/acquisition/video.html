@@ -1,98 +1,110 @@
 {% extends 'project/acquisition/acquisitionBase.html' %}
 
 {% block additionalHeadProjectBaseAcquisition %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/project/acquisition/video.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/project/acquisition/video.css') }}">
 {% endblock %}
 
 
 {% block acquisitionOptions %}
-  <!--Jumbatron-->
+<!--Jumbatron-->
 
-  <div class="jumbotron">
-    <ul class="nav nav-tabs w-100" id="myTab" role="tablist">
-      <li class="nav-item1 w-100">
-        <button class="nav-link active w-100" id="tab-Record" data-bs-toggle="pill" data-bs-target="#pills-Record" type="button" role="tab" aria-controls="pills-Record" aria-selected="true" style="color: #61554d;">Acquisition By Record</button>
-      </li>
-      <li class="nav-item w-100">
-        <button class="nav-link w-100" id="tab-upload" data-bs-toggle="pill" data-bs-target="#pills-upload" type="button" role="tab" aria-controls="pills-upload" aria-selected="false" style="color: #61554d">Acquisition By Upload</button>
-      </li>
-    </ul>
-    
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane show active" id="pills-Record" role="tabpanel" aria-labelledby="pills-Record">
-        <!-- <label  style="margin-top: 20px;max-width: 210px;">For acquisition you can record your own Videos!</label> -->
-        <div class="btn-group w-100" style="margin-top:30px"> 
-    <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">Thumbsup</button>
-    <ul id="acquisitionClassesDropdown" class="dropdown-menu w-100">
-              <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbup'">Thumbsup</button></li>
-        <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Thumbsdown'">Thumbsdown</button></li>
-              <li><button class="dropdown-item block" onclick="document.querySelector('#classDropdown').innerHTML='Peace'">Peace</button></li> 
-    </ul>
-          
-    <button id="addClass" onclick="addProjectClass()">+</button>
-</div>  
-<div class="input-group w-100">
-    <span class="input-group-text" style="width:70%;">Countdown</span>
-    <input id="video-countdown" type="number" aria-label="First name" class="form-control" value="3">
-</div> 
-<div class="input-group w-100">
-    <span class="input-group-text" style="width:70%;">Duration</span>
-    <input id="video-duration" type="number" aria-label="First name" class="form-control" value="3">
-</div> 
-<div class="input-group w-100">
-  <span class="input-group-text" style="width:70%;">Number of recordings</span>
-  <input id="numberOfRecordingsInput" type="number" aria-label="First name" class="form-control" value="1">
-</div> 
-  
-<button class="btn button btn-light w-100" id="record-video" disabled>Record</button>
+<div class="jumbotron">
+  <ul class="nav nav-tabs w-100" id="myTab" role="tablist">
+    <li class="nav-item1 w-100">
+      <button class="nav-link active w-100" id="tab-Record" data-bs-toggle="pill" data-bs-target="#pills-Record"
+        type="button" role="tab" aria-controls="pills-Record" aria-selected="true" style="color: #61554d;">Acquisition
+        By Record</button>
+    </li>
+    <li class="nav-item w-100">
+      <button class="nav-link w-100" id="tab-upload" data-bs-toggle="pill" data-bs-target="#pills-upload" type="button"
+        role="tab" aria-controls="pills-upload" aria-selected="false" style="color: #61554d">Acquisition By
+        Upload</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane show active" id="pills-Record" role="tabpanel" aria-labelledby="pills-Record">
+      <!-- <label  style="margin-top: 20px;max-width: 210px;">For acquisition you can record your own Videos!</label> -->
+      <div class="btn-group w-100" style="margin-top:30px">
+        <button id="classDropdown" class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+          data-bs-auto-close="true" aria-expanded="false">Thumbsup</button>
+        <ul id="acquisitionClassesDropdown" class="dropdown-menu w-100">
+          <li><button class="dropdown-item block"
+              onclick="document.querySelector('#classDropdown').innerHTML='Thumbup'">Thumbsup</button></li>
+          <li><button class="dropdown-item block"
+              onclick="document.querySelector('#classDropdown').innerHTML='Thumbsdown'">Thumbsdown</button></li>
+          <li><button class="dropdown-item block"
+              onclick="document.querySelector('#classDropdown').innerHTML='Peace'">Peace</button></li>
+        </ul>
+
+        <button id="addClass" onclick="addProjectClass()">+</button>
+      </div>
+      <div class="input-group w-100">
+        <span class="input-group-text" style="width:70%;">Countdown</span>
+        <input id="video-countdown" type="number" aria-label="First name" class="form-control" value="3">
+      </div>
+      <div class="input-group w-100">
+        <span class="input-group-text" style="width:70%;">Duration</span>
+        <input id="video-duration" type="number" aria-label="First name" class="form-control" value="3">
+      </div>
+      <div class="input-group w-100">
+        <span class="input-group-text" style="width:70%;">Number of recordings</span>
+        <input id="numberOfRecordingsInput" type="number" aria-label="First name" class="form-control" value="1">
+      </div>
+
+      <button class="btn button btn-light w-100" id="record-video" disabled>Record</button>
 
       <!-- <button class="btn button btn-light w-100 mt-3" class="nav-link" id="tab-upload" data-bs-toggle="pill" id="record-video" data-bs-target="#pills-upload" aria-controls="pills-upload" aria-selected="false" >Import</button> -->
 
-      </div>
-  
-      <div class="tab-pane" id="pills-upload" role="tabpanel" aria-labelledby="tab-upload">
+    </div>
 
-<form>
-          <button type="button"class="btn button btn-light w-100" id="file-button" style="margin-top: 30px;">Choose Video</button>
-          <button type="button" class="btn button btn-light w-100" id="folder-button" style="margin-top: 30px;">Choose Folder</button>
-          <span id="folder-name" style="margin-top: 30px;text-align: center !important; "></span>
-          <input type="file" id="folder-upload" name="folder-upload" style="display: none;" webkitdirectory mozdirectory msdirectory odirectory directory multiple>
-          <span id="file-name" style="margin-top: 30px;text-align: center !important; "></span>
-          <input type="file" id="file-upload" name="file-upload" style="display: none;">
-</form>
+    <div class="tab-pane" id="pills-upload" role="tabpanel" aria-labelledby="tab-upload">
+
+      <form>
+        <button type="button" class="btn button btn-light w-100" id="file-button" style="margin-top: 30px;">Choose
+          Video</button>
+        <button type="button" class="btn button btn-light w-100" id="folder-button" style="margin-top: 30px;">Choose
+          Folder</button>
+        <span id="folder-name" style="margin-top: 30px;text-align: center !important; "></span>
+        <input type="file" id="folder-upload" name="folder-upload" style="display: none;" webkitdirectory mozdirectory
+          msdirectory odirectory directory multiple>
+        <span id="file-name" style="margin-top: 30px;text-align: center !important; "></span>
+        <input type="file" id="file-upload" name="file-upload" style="display: none;">
+      </form>
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="filePreviewModal1" tabindex="-1" aria-labelledby="filePreviewModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="filePreviewModalLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <video id="file-preview" class="w-100" controls>
-                  <source src="" type="video/mp4">
-                </video>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
+      <!-- Modal -->
+      <div class="modal fade" id="filePreviewModal1" tabindex="-1" aria-labelledby="filePreviewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="filePreviewModalLabel"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <video id="file-preview" class="w-100" controls>
+                <source src="" type="video/mp4">
+              </video>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
-
-
-
-        <!-- <button id="preview-button1" style="display: none;margin-top: 30px;"type="button" class="btn button btn-light w-100" data-bs-toggle="modal" data-bs-target="#filePreviewModal">Preview Video</button> -->
       </div>
+
+
+
+      <!-- <button id="preview-button1" style="display: none;margin-top: 30px;"type="button" class="btn button btn-light w-100" data-bs-toggle="modal" data-bs-target="#filePreviewModal">Preview Video</button> -->
     </div>
-    
   </div>
+
+</div>
 
 
 <div class="modal fade" id="filePreviewModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">File Preview</h5>
@@ -112,31 +124,34 @@
 
 
 <div id="acquisitionVideoPreviewModal" class="modal" tabindex="10" role="dialog">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Preview Acquisition</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="d-flex justify-content-center">
-            <div>
-              <video id="acquisitionVideoPreviewModalVideo" class="bg-black" width="640" height="480" autoplay loop controls></video>
-              <!-- <div class="input-group w-75">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Preview Acquisition</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center">
+          <div>
+            <video id="acquisitionVideoPreviewModalVideo" class="bg-black" width="640" height="480" autoplay loop
+              controls></video>
+            <!-- <div class="input-group w-75">
                   <span class="input-group-text">Recording Name</span>
                   <input id="acquisitionVideoPreviewModalDescriptionName" type="text" aria-label="First name" class="form-control" value="Acquisition 17#">
               </div>  -->
-            </div>
-            <div style="width: 300px;">
-              <ul class="list-group mx-3" id="previewAcquisitionList">
-                <li class="list-group-item flex">
-                  <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-                  <span class="previewNameList">thumbsup_001</span>
-                  <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard(this)">close</span>
-                </li>
-                <!-- 
+          </div>
+          <div style="width: 300px;">
+            <ul class="list-group mx-3" id="previewAcquisitionList">
+              <li class="list-group-item flex">
+                <span class="material-icons" style="cursor: pointer;font-size: 1rem;"
+                  onclick="preview_edit(this)">edit</span>
+                <span class="previewNameList">thumbsup_001</span>
+                <span class="material-icons text-danger" style="cursor: pointer;float:right"
+                  onclick="preview_discard(this)">close</span>
+              </li>
+              <!-- 
                 <li class="list-group-item flex">
                   <span class="material-icons" style="cursor: pointer;font-size: 1rem;">edit</span>
                   thumbsup_002
@@ -147,54 +162,58 @@
                   thumbsup_003
                   <span class="material-icons text-danger" style="cursor: pointer;float:right" onclick="preview_discard()">close</span>
                 </li> -->
-              </ul>
-            </div>
+            </ul>
           </div>
         </div>
-        <div class="modal-footer">
-          <button id="acquisitionVideoPreviewModalStore" type="button" class="btn btn-primary">Save Recording</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="acquisitionVideoPreviewModalStore" type="button" class="btn btn-primary">Save Recording</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
+</div>
 
 
 
 
 <!-- Modal -->
-<div class="modal fade" id="deleteVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-body" role="document">
     <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="deleteModalLabel">Delete Selected Video</h5>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-                 <p>Are you sure you want to delete your video permanently?</p>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                 <button type="button" class="btn btn-danger" id="deleteVideoo">Delete</button>
-        </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Selected Video</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete your video permanently?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="deleteVideoo">Delete</button>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
 
 {% block acquisitionDisplay %}
 
-<div id="countdown" ></div>
+<div id="countdown"></div>
 <div id="recording-message" style="display:none">Recording...</div>
 
 
-<div id="startDisplayButtonBack" style="width: 100%;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
-  <button class="btn button btn-light" id="start-camera" >Start Camera</button>
+<div id="startDisplayButtonBack"
+  style="width: 100%;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
+  <button class="btn button btn-light" id="start-camera">Start Camera</button>
 </div>
 
 
-<video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
-<video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
+<video id="video" width="640" height="480" autoplay
+  style="background-color: #111;margin:5px auto; display: none;"></video>
+<video id="video_loader" width="640" height="480" autoplay
+  style="background-color: #111;margin:5px auto; display: none;"></video>
 
 
 {% endblock %}

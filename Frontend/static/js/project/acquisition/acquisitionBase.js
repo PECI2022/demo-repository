@@ -35,18 +35,37 @@ const acquisitionTableEdit = () => {
         btn2.onclick = acquisitionTableDelete;
     }
 
-    document.querySelector('#_ThCheck').style.display = ''
-    for( let i of document.querySelectorAll('.TdCheckBox') ) {
-        i.style.display = '';
+    // document.querySelector('#_ThCheck').style.display = ''
+    for( let i of video_table.childNodes ) {
+        if( !i.id.startsWith('acquisition') ) continue
+        // i.querySelector('.TdCheckBox').style.display = ''
+        i.querySelector('.acquisitionTableName').innerHTML = `
+            <input type="text" class="input" value=${i.querySelector('.acquisitionTableName').innerText}></input>
+        `;
+        i.querySelector('.acquisitionTableClass').innerHTML = `
+            <div class="btn-group w-100" >
+                <button class="btn btn-light dropdown-toggle py-1" type="button" data-bs-toggle="dropdown"
+                data-bs-auto-close="true" aria-expanded="false" style="font-size:0.8rem;">Thumbsup</button>
+                <ul id="acquisitionClassesDropdown" class="dropdown-menu w-100">
+                    ${ classes.map(classe => 
+                        `<li><button class="dropdown-item block"
+                        onclick="this.parentElement.parentElement.parentElement.querySelector('.dropdown-toggle').innerText='${classe}'">${classe}</button></li>`
+                    ).join('\n') }
+                </ul>
+            </div>
+        `;
     }
     btn.innerHTML = btn.innerHTML + ' Confirm?'
 
     btn.onclick = () => {
         tableSorting[2] = 'none'
-        document.querySelector('#_ThCheck').style.display = 'none';
-        for( let i of document.querySelectorAll('.TdCheckBox') ) {
-            i.style.display = 'none';
-            i.querySelector('span').innerText = 'check_box_outline_blank'
+        // document.querySelector('#_ThCheck').style.display = 'none';
+        for( let i of video_table.childNodes ) {
+            if( !i.id.startsWith('acquisition') ) continue
+            // i.querySelector('.TdCheckBox').style.display = 'none';
+            // i.querySelector('.TdCheckBox').innerText = 'check_box_outline_blank';
+            i.querySelector('.acquisitionTableName').innerHTML = i.querySelector('input').value;
+            i.querySelector('.acquisitionTableClass').innerHTML = i.querySelector('.dropdown-toggle').innerText;
         }
         btn.innerHTML = btn.innerHTML.substring(0,btn.innerHTML.length-' Confirm?'.length)
 
@@ -85,8 +104,7 @@ const acquisitionTableDelete = () => {
 
         document.querySelector('#acquisitionDelete').onclick = acquisitionTableDelete;
 
-        console.log(toDelete)
-        for(let i of toDelete) await delete_video(i)
+        if(toDelete.length>0) delete_video(toDelete)
     }
 }
 

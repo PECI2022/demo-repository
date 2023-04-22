@@ -77,14 +77,14 @@ class MongoCli(object):
         self.insert_data(project,project['_id'],"info")
         return {"result": "Correct"}
     
-    def delete_video(self, project_id, video_id):
+    def delete_videos(self, project_id, videos_id):
         project = self.find_project(project_id)
         content = []
         for video in project['content']:
-            if video['_id'] != video_id:
-                content.append(video)
+            if video['_id'] in videos_id:
+                self.delete_from_db(video['_id'])
             else:
-                self.delete_from_db(video_id)
+                content.append(video)
         project["content"] = content
         self.insert_data(project,project['_id'],"info")
 

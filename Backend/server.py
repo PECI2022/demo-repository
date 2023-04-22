@@ -146,7 +146,7 @@ class Operations:
     def delete_video(self):
         description = json.loads(request.form['_id'])
         # mongo_cli.delete_from_db(description['_id'])
-        mongo_cli.delete_video(description['project_id'], description['video_id'])
+        mongo_cli.delete_videos(description['project_id'], description['video_id'])
         return "done"
 
     # def check_existing_name(self,name):
