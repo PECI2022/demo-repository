@@ -164,9 +164,7 @@ const list_videos_fetch = async () => {
                     </td>
                     <td>${i.video_class}</td>
                     <td>${i.length}</td>
-<<<<<<< HEAD
                     <td>${new Date( i.update ).toLocaleDateString("en-GB")}</td>
-=======
                     <td>${new Date(i.update).toLocaleDateString("en-GB")}</td>
                     <td class="d-flex justify-content-center">
                         <!--<span class="material-icons" style="cursor: pointer; onclick="edit_video('${i._id}')">edit</span>-->
@@ -174,7 +172,6 @@ const list_videos_fetch = async () => {
                         <span class="material-icons" style="cursor: pointer;" data-bs-toggle="collapse" href="#collapse${i._id}" onclick="tableLoadvideo('${i._id}')">visibility</span>
                         <span class="material-icons text-danger" style="cursor: pointer;" onclick="delete_video('${i._id}')">delete_forever</span>
                     </td>
->>>>>>> ui-tiago
                 </tr>`
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
