@@ -29,6 +29,16 @@ class Operations:
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
+    
+    def delete_project(self, project_id):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(project_id)
+        if project:
+            mongo_cli.delete_from_db(project_id)
+            return {"result": "Project deleted successfully"}
+        else:
+            return {"result": "Project not found"}
+
 
     def upload(self):
         file = request.files['file']    
@@ -171,6 +181,11 @@ def default():
 def new_project():
     print("NEW PROJECT")
     return operation.new_project()
+
+@app.route('/delete_project/<project_id>', methods=['POST'])
+def delete_project(project_id):
+    print("PROJECT DELETED")
+    return operation.delete_project(project_id)
 
 @app.route('/upload', methods=['POST'])
 def upload():

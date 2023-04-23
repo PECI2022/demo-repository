@@ -88,6 +88,14 @@ class MongoCli(object):
         project["content"] = content
         self.insert_data(project,project['_id'],"info")
 
+    def delete_project(self, project_id):
+        project = self.find_project(project_id)
+        if project:
+            self.collection.delete_one({"_id": project["_id"]})
+            return {"result": "Deleted successfully."}
+        else:
+            return {"result": "Project not found."}
+
     # def edit_class(self, project_id, video_id, new_class):
     #     project = self.find_project(project_id)
     #     content = []

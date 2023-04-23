@@ -1,147 +1,98 @@
 {% extends 'project/projectBase.html' %}
 
-{% block title %} Train {% endblock %}
+{% block title %} Project Home {% endblock %}
 
 {% block projectContent %}
 <div class="container" onload="load_info()">
-  <h1 class="my-5" style="text-align: center;" id="project_title"> </h1>
-<!-- 
-  <script>
-    // Retrieve the project_id from localStorage
-    var project_id = localStorage.getItem("project_id");
-    
-    // Update the HTML with the project_id
-    document.getElementById("project-id").innerHTML = project_id;
-  </script> -->
-  <div class="w-150" style="margin:auto;">
-    
-   
-  <div class="mt-5" style="width:100%;margin:auto">
-    <h3 style="text-align: center;">Information about your project</h3>
-    <div class="my-4 row row-cols-1 row-cols-md-5 g-4">
-
-      <div class="col">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">
-              Description
-              <hr> 
-            </h5>
-            <p class="card-text">
-              <textarea class="form-control" id="projectDescription" rows="5"></textarea>
-              <!-- <span class="material-icons" style="cursor: pointer;">edit</span><br>
-              &emsp;<br> -->
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">
-              Classes
-              <hr> 
-            </h5>
-            <p class="card-text">
-             
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">
-              Tags
-              <hr> 
-            </h5>
-            <p class="card-text">
-              #HandGesture <br>
-              #HandMovements <br>
-
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">
-              Category
-              <hr> 
-            </h5>
-            <p class="card-text">
-              <form>
-                <div class="form-group" id="Category" value="video"></div>
-                <div class="form-check" onclick="get_category('Video')">
-                  <input class="form-check-input" type="radio" name="option" id="gestures" value="video" checked>
-                  <label class="form-check-label" for="video">
-                    Video
-                  </label>
+  <div class="w-100" style="margin:auto;">
+    <div class="mt-3" style="width:100%;margin:auto">
+      <h1 style="text-align: center;" id="project_title"> </h1>
+      <section class="second-section2">
+        <div class="container">
+          <div class="row mb-3">
+            <div class="col-md-12 col-sm-6">
+              <div class="card mt-0">
+                <div class="card-body">
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">info</span> Description</h5>
+                  <p id="projectDescription" class="card-text"></p>
                 </div>
-                <div class="form-check" onclick="get_category('Audio')">
-                  <input class="form-check-input" type="radio" name="option" id="audio" value="audio">
-                  <label class="form-check-label" for="audio">
-                    Audio
-                  </label>
-                </div>
-              </form>
-              
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">
-              Features
-              <hr> 
-            </h5>
-            <p class="card-text">
-              Length  <br>
-              Resolution <br>
-              Color <br>
-              Brightness <br>
-              Contrast <br>
-              Sharpness <br>
-              Saturation <br>
-              Hue <br>
-             
-
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align: center;">
-        <button class="btn btn-danger" style="color: #e0e2d7;background-color: #61554d; border-color: #343335; margin-right: 20px; width: 190px;"  onclick="window.location.href='myProjects'">Save Project Changes</button>
-        <button class="btn btn-danger" style="background-color: #ff3333; border-color: #cc0000;width: 190px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Project</button>
-    
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete your account permanently?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete</button>
-                </div>
+              </div>
             </div>
-        </div>
-    </div>
-  </div>
+          </div>
 
+          <div class="row mb-3">
+            <div class="col-md-12 col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">category</span> Category</h5>
+                  <p class="card-text">
+                    <select id="category" name="category" style="height: 40px;background-color: #f2f2f2; border: none; color: black;padding: 10px 16px;font-size: 16px;border-radius: 10px;">
+                      <option value="video">Video</option>
+                      <option value="audio">Audio</option>
+                    </select>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-12 col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">sell</span> Tags</h5>
+                  <p id="tags" class="card-text">
+                    #HandGesture <br>
+                    #HandMovements <br> 
+                  </p>
+                  <div>
+                    <input type="text" id="newTagInput" placeholder="Enter new tag">
+                    <button onclick="addTag()" class="btn btn-primary">Add tag</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-12 col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">new_releases</span> Features</h5>
+                  <p class="card-text">No feature calculated for now</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+     
+ 
+      <div class="mb-3" style="text-align: center;">
+          <button class="btn btn-primary" style="color: #e0e2d7; margin-right: 20px; width: 190px;"  onclick="window.location.href='myProjects'">Save Project Changes</button>
+          <button class="btn btn-danger" style="background-color: #ff3333;width: 190px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Project</button>
+      
+          <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete Project</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete your project permanently?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" onclick="delete_project()">Delete</button>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
 </div>
+
 
 <script src="{{ url_for('static', filename='js/project/about/projectHome.js') }}"></script>
   
