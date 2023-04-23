@@ -30,7 +30,8 @@
 
     <div class="d-flex m-2">
         <h3>Records</h3>
-        <button id="acquisitionEdit" class="btn btn-dark ms-auto" onclick="acquisitionTableEdit(this)" style="font-size: 1.3rem;"><span class="material-icons">edit</span></button>
+        <input type="text" class="ms-auto" name="" id="acquisitionSearch" placeholder="Search:" oninput="list_videos_fetch()">
+        <button id="acquisitionEdit" class="btn btn-dark ms-1" onclick="acquisitionTableEdit(this)" style="font-size: 1.3rem;"><span class="material-icons">edit</span></button>
         <button id="acquisitionDelete" class="btn btn-dark ms-1" onclick="acquisitionTableDelete(this)" style="font-size: 1.3rem;"><span class="material-icons">delete</span></button>
     </div>
     <div>

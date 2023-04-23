@@ -151,7 +151,11 @@ const list_videos_fetch = async () => {
     video_table.innerHTML = ""
 
     for (let i of list) {
-        // console.log(i._id)
+        if( acquisitionSearch.value!="" && 
+            i.name.match(new RegExp(acquisitionSearch.value))==null &&
+            i.video_class.match(new RegExp(acquisitionSearch.value))==null
+        ) continue;
+        console.log()
         let s = `<tr>
                     <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)" style="cursor:pointer;display:${tableSorting[2]};">
                         <span class="material-icons checkbox" style="line-height:40px";>
@@ -170,6 +174,7 @@ const list_videos_fetch = async () => {
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
+        // newElem.onclick = () => 
         let newElem2 = document.createElement('tr');
         newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="640" height="480" autoplay controls/></td>`
         newElem2.classList.add("collapse")
@@ -177,7 +182,19 @@ const list_videos_fetch = async () => {
         newElem2.colSpan = "4"
         let empty = document.createElement('tr');
         empty.innerHTML = ""
-        // newElem.onclick = () => fetchRecordingAndPlay(i._id)
+        const ff = () => {
+            for( let i of video_table.childNodes ) {
+                if( i.id.startsWith('collapse') && !i.classList.contains('collapse') ) i.classList.add('collapse');
+            }
+            tableLoadvideo(i._id);
+            newElem2.classList.remove('collapse');
+            
+            newElem.onclick = () => {
+                newElem2.classList.add('collapse');
+                newElem.onclick = ff;
+            }
+        }
+        newElem.onclick = ff;
         video_table.appendChild(newElem);
         video_table.appendChild(empty);
         video_table.appendChild(newElem2)
@@ -214,7 +231,7 @@ const edit_video = async (id) => {
 
         row.querySelector("td:nth-child(1)").textContent = newName;
         row.querySelector("td:nth-child(2)").textContent = newClass;
-
+        tableLoadvideo
         alert("Video updated successfully");
     } catch (error) {
         console.error("Error:", error);
@@ -588,9 +605,3 @@ const preview_edit = (elem) => {
     }
 }
 
-const toogleCheckBox = (elem) => {
-    let checkbox = elem.querySelector('.checkbox')
-    let a = ['check_box', 'check_box_outline_blank']
-    if( checkbox.innerText==a[0] ) checkbox.innerText = a[1]
-    else checkbox.innerText = a[0]
-}

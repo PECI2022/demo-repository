@@ -31,8 +31,7 @@ const acquisitionTableEdit = () => {
 
     if( document.querySelector('#acquisitionDelete').innerText.endsWith('?') ) {
         let btn2 = document.querySelector('#acquisitionDelete');
-        btn2.innerHTML = btn2.innerHTML.substring(0,btn2.innerHTML.length-' Confirm?'.length)
-        btn2.onclick = acquisitionTableDelete;
+        btn2.click();
     }
 
     // document.querySelector('#_ThCheck').style.display = ''
@@ -79,8 +78,7 @@ const acquisitionTableDelete = () => {
 
     if( document.querySelector('#acquisitionEdit').innerText.endsWith('?') ) {
         let btn2 = document.querySelector('#acquisitionEdit');
-        btn2.innerHTML = btn2.innerHTML.substring(0,btn2.innerHTML.length-' Confirm?'.length)
-        btn2.onclick = acquisitionTableEdit;
+        btn2.click();
     }
 
     document.querySelector('#_ThCheck').style.display = ''
@@ -114,4 +112,13 @@ const toogleAllAcquisitionChecks = (elem) => {
     for( let i of document.querySelectorAll('.TdCheckBox') ) {
         i.querySelector('span').innerText = a
     }
+}
+
+const toogleCheckBox = (elem) => {
+    // let b = document.querySelector("#collapse"+elem.parentElement.id.substring(13))
+    elem.parentElement.click();
+    let checkbox = elem.querySelector('.checkbox')
+    let a = ['check_box', 'check_box_outline_blank']
+    if( checkbox.innerText==a[0] ) checkbox.innerText = a[1]
+    else checkbox.innerText = a[0]
 }
