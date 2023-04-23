@@ -140,11 +140,11 @@ const list_videos_fetch = async () => {
     if (!list) return;
 
     // console.log(list)
-    list.sort((a, b) => {
-        // // console.log("sorting", a, tableSorting)
-        if (tableSorting[0] == 1) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
-        else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
-    }); // Sort table
+    // list.sort((a, b) => {
+    //     // // console.log("sorting", a, tableSorting)
+    //     if (tableSorting[0] == 1) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
+    //     else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
+    // }); // Sort table
 
     video_table.innerHTML = ""
     for (let i of list) {
@@ -282,10 +282,11 @@ extractBtn.addEventListener('click', () => {
     if (progress === 100) {
         clearInterval(interval);
         setTimeout(() => {
-          progressBar.style.display = 'none';
-          CalculatingFeatureText.style.display = 'none';
-          downloadBtn.style.display = 'block';
-          alert("Features Calculated! You can download the features now!");
+            extractBtn.style.display = 'block';
+            progressBar.style.display = 'none';
+            CalculatingFeatureText.style.display = 'none';
+            downloadBtn.style.display = 'block';
+            alert("Features Calculated! You can download the features now!");
         }, 500);
       }      
   }, 100); 
