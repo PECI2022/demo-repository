@@ -11,20 +11,16 @@
         <div href="newFeature" id="featuresHere" style="display:flex; align-items: center;">
             <h1 class="mtext-white" style="color:black">Features</h1>
                    <!-- Button trigger modal -->
-              <button type="button" onclick="calculate_features()" class="btn btn-light" style="margin-left: auto;background-color: white; border-color: grey;">
+              <button type="button" class="btn btn-light" style="margin-left: auto;background-color: white; border-color: grey;" data-bs-toggle="modal" data-bs-target="#newFeature">
                 New Feature
               </button>
 
-             
-          
-          
+             <div class="modal fade" id="newFeature" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
 
-             <!-- <div class="modal fade" id="newFeature" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true"> -->
-
-                <!-- <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="overlay"></div>
-                    <div class="modal-header"> 
+                    <div class="modal-header">
                       <h5 class="modal-title">New Feature</h5>
                       <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -36,51 +32,38 @@
                           <label for="name">Name</label>
                           <input type="text" class="form-control" id="name" placeholder="Enter name">
                         </div>
-                        <div class="form-group" style="margin-top: 10px;">
-                          <label for="description">Description</label>
-                          <textarea class="form-control" id="description" placeholder="Enter description"></textarea>
-                        </div>
-                        <div class="form-group" style="margin-top: 10px;">
-                          <label for="model">Base Model</label>
-                          <select style="height: 38px;margin-left: 0px;"class="form-control" id="model">
-                            <option>Linear regression model</option>
-                            <option>Decision tree model</option>
-                            <option>Logistic regression model</option>
-                          </select>
-                        </div>
+                        
+                
                         <div class="row" style="margin-top: 10px;">
                           <div class="col">
-                            <div class="form-group" id="Category" value="Gestures">
-                              <label for="option">Category</label>
-                              <div class="form-check" onclick="get_category('Video')">
-                                <input class="form-check-input"  type="radio" name="option" id="gestures" value="video">
-                                <label class="form-check-label" for="gestures">
-                                  Video
+                            <div class="form-group" id="Category" value="MediaPipe">
+                              <label for="option">Media Pipe Feature Calculator</label>
+                              <div class="form-check" onclick="get_category('MediaPipeHand')">
+                                <input class="form-check-input"  type="radio" name="option" id="Gesture" value="Gesture">
+                                <label class="form-check-label" for="Gesture">
+                                  Gesture recognition
                                 </label>
                               </div>
-                              <div class="form-check" onclick="get_category('Audio')">
-                                <input class="form-check-input" type="radio" name="option" id="audio" value="audio">
-                                <label class="form-check-label" for="audio">
-                                  Audio
+                              <div class="form-check" onclick="get_category('Face')">
+                                <input class="form-check-input" type="radio" name="option" id="Face" value="Face">
+                                <label class="form-check-label" for="Face">
+                                  Face Detection
+                                </label>
+                              </div>
+                            <div class="col">
+                              <div class="form-check" onclick="get_category('Pose')">
+                                <input class="form-check-input" type="radio" name="option" id="Pose" value="Pose">
+                                <label class="form-check-label" for="Pose">
+                                  Pose Detection
+                                </label>
+                              </div>
+                              <div class="form-check" onclick="get_category('Holistic')">
+                                <input class="form-check-input" type="radio" name="option" id="Holistic" value="Holistic">
+                                <label class="form-check-label" for="Holistic">
+                                  Holistic Detection
                                 </label>
                               </div>
                             </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group" id="Privacy" value="Public">
-                              <label for="option">Privacy</label>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" onclick="get_category('Gestures')" name="option" value="public" checked>
-                                <label class="form-check-label" for="public">
-                                  Public
-                                </label>
-                              </div>
-                              <div class="form-check" onclick="get_category('Video')">
-                                <input class="form-check-input"  type="radio" name="option" id="private" value="private">
-                                <label class="form-check-label" for="private">
-                                  Private
-                                </label>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -88,14 +71,14 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="create_feature()">Save changes</button>
+                        <button type="button" class="btn btn-primary" onclick="createFeature()">Save changes</button>
                     </div>
                 </div>
             </div>
             
 
             
-        </div> -->
+        </div>
     </div>
     <hr class="mbg-white border-3 opacity-100" style="border-color: #eee;">
 
@@ -136,7 +119,11 @@
         </div>
       </div>
     </div>
-
+    
+    <div class="container">
+      <div id="table_popper" >
+      </div>
+    </div>
     <button id="calculateFeaturesbtn" onclick="calculate_features()" class="btn btn-secondary mt-5 mbg-black" style="width:100%;font-size:200%;">Calculate Features</button>
 
     <p id="showText"  class="mt-5 mbg-black" style="display:none;text-align: center;width:100%;font-size:200%;">Calculating features...</p>
@@ -149,8 +136,8 @@
     <button id="downloadBtn" onclick="download_features()" class="btn btn-primary mt-5" style="display:none;text-align: center;width:100%;font-size:200%;">Download Features</button>
 
 
-    <script src="{{ url_for('static', filename='js/project/newFeature.js') }}"></script>
-  
+    <script src="{{ url_for('static', filename='js/project/features/newFeature.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/project/acquisition/acquisitionBase.js') }}"></script>
 {% block acquisitionScript %} {% endblock %}
 
 {% endblock %}

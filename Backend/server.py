@@ -25,7 +25,7 @@ class Operations:
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0}
+        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
         print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
@@ -40,7 +40,7 @@ class Operations:
         _id = mongo_cli.generate_unique_id()
         video_class = description.get('class')
         video_length = description.get('length')
-        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now(), "features": 0}
+        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now(), "MediaPipeHand": 0}
         # mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)
@@ -48,22 +48,44 @@ class Operations:
         # self.insert_into_project(str(_id),description['project_id'])
         # self.insert_in_project(description['id'],data)
 
+    def new_feature(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        _id = mongo_cli.generate_unique_id()
+
+        if description['feature'] not in project['features']:
+            project['features'].append(str(_id))
+            mongo_cli.insert_data(project,project['_id'],"info")
+
+        data = {"_id": str(_id), "name": description['name'], "class": description['feature'], "data": [], "update": datetime.now()}
+        mongo_cli.insert_feature(data,_id,"info")
+        
+        return "done"
+    
+    def list_features(self):
+        description = json.loads(request.form['description'])
+        return mongo_cli.list_features(description['pid'])
+
     def extract_features(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
-        print(project)
-        # features = project['features']
-        for video in project['content']:
-            if video["features"] == 0:
+        videos_id = description['videos']
+        feature = mongo_cli.find_feature(description['feature'])
+        vid = project['content']
+        for video_id in videos_id:
+            video = mongo_cli.find_video(video_id,description['pid'])
+
+            if video['_id'] not in feature['data']:
+                vid.remove(video)
                 video_name = mongo_cli.download_media_file(video['_id'])
-                _id = mongo_cli.generate_unique_id()
-                feature = str(pipe.getLandMarks(video_name))
-                data = {"_id": str(_id), "features": feature}
-                mongo_cli.insert_feature(data,_id,"info")
-                # features.append({"video_id": video['_id'], "video_features": str(_id)})
+                f = str(pipe.getLandMarks(video_name))
                 os.remove(video_name)
-                video["features"] = 1
-        print(project)
+                content = {"video_id": video['_id'], "feature": f}
+                mongo_cli.insert_in_feature(feature['_id'],content)
+                video[feature['class']] = feature['_id']
+                vid.append(video)
+
+        project['content'] = vid
         mongo_cli.insert_data(project,project['_id'],"info")
         return "done"
     
@@ -78,6 +100,11 @@ class Operations:
                 f.write("\n")
         return send_from_directory('./', fileName, as_attachment=True)
     
+    # def load_checked_videos(self):
+    #     description = json.loads(request.form['description'])
+    #     feature = mongo_cli.find_feature(description['id'])
+    #     checks = []
+    #     for 
     
     def load_info(self):
         description = json.loads(request.form['description'])
@@ -197,6 +224,11 @@ def list_videos():
     print("LIST")
     return operation.list_videos()
 
+@app.route('/list_features', methods=['POST'])
+def list_features():
+    print("LIST_FEATURES")
+    return operation.list_features()
+
 @app.route('/list_projects')
 def list_projects():
     print("PROJECTS")
@@ -206,6 +238,11 @@ def list_projects():
 def delete_video():
     print("DELETE")
     return operation.delete_video()
+
+@app.route('/new_feature', methods=['POST'])
+def new_feature():
+    print("NEW_FEATURE")
+    return operation.new_feature()
 
 @app.route('/extract_features', methods=['POST'])
 def extract_features():

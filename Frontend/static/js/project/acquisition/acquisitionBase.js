@@ -74,6 +74,7 @@ const acquisitionTableEdit = () => {
 }
 
 const acquisitionTableDelete = () => {
+    // On the first click
     tableSorting[2] = ''
     let btn = document.querySelector('#acquisitionDelete');
 
@@ -89,6 +90,7 @@ const acquisitionTableDelete = () => {
     }
     btn.innerHTML = btn.innerHTML + ' Confirm?'
 
+    // On the confirm click
     btn.onclick = async () => {
         tableSorting[2] = 'none'
         document.querySelector('#_ThCheck').style.display = 'none';
