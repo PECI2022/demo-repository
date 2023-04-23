@@ -61,10 +61,10 @@ class MongoCli(object):
         return False
     
     def find_feature(self, _id):
-        projects = self.features.find()
-        for project in projects:
-            if project['info']['_id'] == _id:
-                return project['info']
+        features = self.features.find()
+        for feature in features:
+            if feature['info']['_id'] == _id:
+                return feature
         return False
     
     def insert_in_project(self, project_id, data):
@@ -76,7 +76,7 @@ class MongoCli(object):
         print(project)
         self.insert_data(project,project['_id'],"info")
         return {"result": "Correct"}
-    
+
     def delete_video(self, project_id, video_id):
         project = self.find_project(project_id)
         content = []
@@ -153,6 +153,13 @@ class MongoCli(object):
         ret = []
         for project in projects:
             ret.append(project["info"])
+        return ret
+    
+    def list_feature(self):
+        features = self.collection.find()
+        ret = []
+        for feature in features:
+            return feature['info']
         return ret
     
     def check_existing_name(self, videos, name):

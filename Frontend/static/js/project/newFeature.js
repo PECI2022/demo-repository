@@ -14,22 +14,22 @@ function newFeatureGo(pid) {
 
 
 
-const create_feature = async () => {
-    let data = new FormData()
+const createFeature = async () => {
+    const data = new FormData();
     data.append('description', JSON.stringify({
-        name: document.querySelector("#name").value, 
-        subject: document.querySelector("#description").value, 
-        model: document.querySelector("#model").value, 
-        category: category,
-        project_id: localStorage.getItem("project_id")
-    }))    
-    let response = await fetch('http://127.0.0.1:5001/new_feature/' + localStorage.getItem("project_id"), {
+      name: document.querySelector("#name").value,
+      category: document.querySelector('input[name="option"]:checked').value,
+      project_id: localStorage.getItem("project_id")
+    }));
+    
+    let response = await fetch('http://127.0.0.1:5001/new_feature', {
         method: "POST",
         body: data
     })
     let a = await response.json()
     alert("Feature Created! You will be redirected to the Features page!");
     newFeatureGo(a['result'])
+
 }
 
 const load_feature = async (pid) =>{
@@ -47,7 +47,7 @@ window.onload = function(){
 }
 
 const load_features = async () => {
-    const response = await fetch('http://127.0.0.1:5001/list_features')
+    const response = await fetch('http://127.0.0.1:5001/list_features', )
     let features = await response.json()
     console.log(features)
     for(let feature of features){
