@@ -139,7 +139,8 @@ def separeteAudio(video):
 
 def getVideoCharacteristics(video):
     if getFileExtension(video) != ".mp4":
-        return getVideoCharacteristics(tomp4(video))       # send to mp4 to be uniform
+        # send to mp4 to be uniform
+        return getVideoCharacteristics(tomp4(video))
     else:
         contrast = float(getContrast(video))
         brightness = float(getBrightness(video))
@@ -161,6 +162,28 @@ def getVideoCharacteristics(video):
         return json.dumps(video_chars)
 
 
+def trim_video(json_data):
+    # Load the JSON data
+    video_info = json.loads(json_data)
+
+    # Get the video file name and check if it exists
+    video_name = video_info["name"]
+    if not os.path.exists(video_name):
+        raise ValueError("Video file not found")
+
+    # Get the start and end times for the trim
+    start_time = video_info["start"]
+    end_time = video_info["end"]
+
+    # Trim the video using ffmpeg
+    output_name = f"{os.path.splitext(video_name)[0]}_trimmed.mp4"
+    subprocess.run(["ffmpeg", "-i", video_name, "-ss", str(start_time),
+                   "-to", str(end_time), "-c", "copy", output_name])
+
+    # Return the output file name
+    return output_name
+
+
 def main():
     file = "./asdf.webm"
     # print(getFileExtension(file))
@@ -173,8 +196,21 @@ def main():
     # print(getSharpness(tomp4(file)))
     # print(getSaturation(tomp4(file)))
     # print(getHue(tomp4(file)))
-    print(getVideoCharacteristics(file))
-    
+    # print(getVideoCharacteristics(file))
+
+    video_info = {
+        "name": "video.mp4",
+        "start": 0,
+        "end": 1
+    }
+
+    # Convert the JSON object to a string
+    json_data = json.dumps(video_info)
+
+    # Call the trim_video function and get the output file name
+    output_name = trim_video(json_data)
+
+    print(f"Trimmed video saved as {output_name}")
 
 
 if __name__ == "__main__":
