@@ -54,7 +54,7 @@ const delete_project = async (project_id) => {
     let a = await response.json()
   
     alert("Project Deleted! You will be redirected to MyProjects page!");
-    window.location.href = '../../MyProjects'
+    window.location.href = '/myProjects'
   }
 
 window.onload = function () {

@@ -99,7 +99,7 @@ record_button.addEventListener('click', async () => {
             blob: null,
             url: null,
             blob_recorded: [],
-            name: (document.querySelector('#video_table').childNodes.length + blobs.length) + "_" + document.querySelector('#classDropdown').innerText,
+            name: (document.querySelector('#video_table').childNodes.length/3 + blobs.length) + "_" + document.querySelector('#classDropdown').innerText,
             class: document.querySelector('#classDropdown').innerText,
             duration: duration_input.value,
         })
@@ -155,7 +155,6 @@ const list_videos_fetch = async () => {
             i.name.match(new RegExp(acquisitionSearch.value))==null &&
             i.video_class.match(new RegExp(acquisitionSearch.value))==null
         ) continue;
-        console.log()
         let s = `<tr>
                     <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)" style="cursor:pointer;display:${tableSorting[2]};">
                         <span class="material-icons checkbox" style="line-height:40px";>
@@ -286,7 +285,7 @@ const storeCurrentBlobs = async (blobs) => {
         let a = await response.json()
         console.log(a['result'])
         if (a['result'] == "Correct") {
-            alert("Video Saved on the Server"); // TODO: create a stylized popup
+            // alert("Video Saved on the Server"); // TODO: create a stylized popup
             list_videos_fetch();
         } else {
             alert("Name already in use in this project")
@@ -313,6 +312,7 @@ const launchDataPreview = (videoBlobs) => {
 
     previewVideo = document.querySelector('#acquisitionVideoPreviewModalVideo');
 
+    document.querySelector('#previewAcquisitionList').innerHTML = ''
     for (let i = 0; i < videoBlobs.length; i++) {
         let e = document.createElement('li');
         e.setAttribute('class', 'list-group-item flex');
