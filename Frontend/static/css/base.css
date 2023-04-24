@@ -34,7 +34,35 @@ body {
   color: black;
 }
 
+/* ======================
+---- SECOND SECTION------
+=======================*/
 
+.second-section2 {
+	padding: 0px 0px;
+}
+
+.second-section2 .service-item {
+	text-align: center;
+  margin-top: 20px;
+}
+
+.vertical-line {
+  border-right: 2px solid black;
+  height: 100%;
+}
+
+#iconsimg {
+  width: 50px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.second-section2 h4 {
+	font-size: 16px;
+	color: black;
+}
 
 .mtext-white {
   color: #61554d;
