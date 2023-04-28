@@ -53,7 +53,13 @@ function get_category(val){
 
 const createFeature = async () => {
     console.log(projectID)
-    let featureName = document.querySelector("#name").value
+    let featureName = document.querySelector("#name").value.trim()
+    if (featureName === '') {
+        const checkedCheckbox = document.querySelector('input[type="checkbox"]:checked');
+        if (checkedCheckbox) {
+            featureName = checkedCheckbox.parentElement.querySelector('label').innerText;
+        }
+    }
     let data = new FormData()
     data.append('description', JSON.stringify({pid: projectID, feature:category, name: featureName}))
     let response = await fetch('http://127.0.0.1:5001/new_feature', {
@@ -63,6 +69,8 @@ const createFeature = async () => {
     window.location.href='features?id='+projectID
     list_features()
 }
+  
+  
 
 const list_features = async () => {
 
@@ -80,7 +88,7 @@ const list_features = async () => {
         // console.log(i)
         // let d = JSON.stringify(i)
         // console.log(d)
-        let input = `<div class="col-8" id="${i._id}">
+        let input = `<div class="col-12" id="${i._id}">
                         <div class="card h-100">
                         <div class="card-body">
                             <h3 class="card-title">${i.name}</h3>
