@@ -305,6 +305,7 @@ downloadBtn.addEventListener('click', () => {
 
 
 const fecthFeature = async (id) => {
+    featuresModalTitle.innerText = document.querySelector("#acquisitionTR"+id).querySelector('.acquisitionTableName').innerText;
 
     // get landmarks
     let data = new FormData()
