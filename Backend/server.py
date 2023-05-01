@@ -106,6 +106,18 @@ class Operations:
         if fid not in project['features']: return None
         return mongo_cli.get_feature(fid, video_id)
     
+    def get_public_projects(self):
+        projects = mongo_cli.list_project()
+        ret = []
+        # print(projects)
+        i = 0
+        for project in projects:
+            if i == 6: break
+            if project['privacy'] == 0:
+                ret.append(project)
+            i += 1
+        return ret
+    
     def download_features(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
@@ -250,6 +262,11 @@ def list_videos():
 def get_features():
     print("GET FEATURES")
     return operation.get_features()
+
+@app.route('/get_public_projects')
+def get_public_projects():
+    print("PUBLICS")
+    return operation.get_public_projects()
 
 @app.route('/list_features', methods=['POST'])
 def list_features():
