@@ -89,3 +89,13 @@ const load_content = async () => {
       projectList.appendChild(newElem);
     }
   };
+
+  function addTag() {
+    var tagInput = document.getElementById("newTagInput");
+    var tags = document.getElementById("tags");
+    var tag = tagInput.value;
+    if (tag) {
+      tags.innerHTML += "#" + tag + "<br>";
+      tagInput.value = "";
+    }
+  }
