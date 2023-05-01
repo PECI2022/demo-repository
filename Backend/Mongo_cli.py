@@ -62,6 +62,7 @@ class MongoCli(object):
     
     def find_feature(self, _id):
         features = self.features.find()
+        print(features)
         for feature in features:
             if feature["info"]['_id'] == _id:
                 return feature['info']
@@ -86,6 +87,7 @@ class MongoCli(object):
     
     def insert_in_feature(self, feature_id, data):
         feature = self.find_feature(feature_id)
+        feature['data'].append(data)
         self.insert_feature(feature, feature['_id'], "info")
         return {"result": "Correct"}
     
@@ -173,6 +175,14 @@ class MongoCli(object):
         for project in projects:
             ret.append(project["info"])
         return ret
+    
+    def get_feature(self, feature_id, video_id):
+        features = self.find_feature(feature_id)
+        for feature in features['data']:
+            if feature['video_id'] == video_id:
+                return {'landmarks': feature['feature']}
+            
+        return {'landmarks': None}
     
     def check_existing_name(self, videos, name):
         for video in videos:
