@@ -77,35 +77,46 @@ class Operations:
     def extract_features(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
+        print(description)
+        videos_id = description['videos']
+        feature = mongo_cli.find_feature(description['feature'])
+        vid = project['content']
+        for video_id in videos_id:
+            video = mongo_cli.find_video(video_id,description['pid'])
+
+            if video['_id'] not in feature['data']:
+                vid.remove(video)
+                video_name = mongo_cli.download_media_file(video['_id'])
+                f = str(pipe.getLandMarks(video_name))
+                os.remove(video_name)
+                content = {"video_id": video['_id'], "feature": f}
+                mongo_cli.insert_in_feature(feature['_id'],content)
+                video[feature['class']] = feature['_id']
+                vid.append(video)
+
+        project['content'] = vid
+        mongo_cli.insert_data(project,project['_id'],"info")
+        return "done"
+
+    def get_features(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
         video_id = description['video_id']
-        video = mongo_cli.download_media_file(video_id)
-        f = pipe.getLandMarks(video)
-        os.remove( video )
-        return {"landmarks":f}
-
-        # vvvvv Código do durval vvvv
-        # description = json.loads(request.form['description'])
-        # project = mongo_cli.find_project(description['pid'])
-        # videos_id = description['videos']
-        # feature = mongo_cli.find_feature(description['feature'])
-        # vid = project['content']
-        # for video_id in videos_id:
-        #     video = mongo_cli.find_video(video_id,description['pid'])
-
-        #     if video['_id'] not in feature['data']:
-        #         vid.remove(video)
-        #         video_name = mongo_cli.download_media_file(video['_id'])
-        #         f = str(pipe.getLandMarks(video_name))
-        #         os.remove(video_name)
-        #         content = {"video_id": video['_id'], "feature": f}
-        #         mongo_cli.insert_in_feature(feature['_id'],content)
-        #         video[feature['class']] = feature['_id']
-        #         vid.append(video)
-
-        # project['content'] = vid
-        # mongo_cli.insert_data(project,project['_id'],"info")
-        # return "done"
-        # ^^^^^ ^^^^^
+        fid = description['fid']
+        if fid not in project['features']: return None
+        return mongo_cli.get_feature(fid, video_id)
+    
+    def get_public_projects(self):
+        projects = mongo_cli.list_project()
+        ret = []
+        # print(projects)
+        i = 0
+        for project in projects:
+            if i == 6: break
+            if project['privacy'] == 0:
+                ret.append(project)
+            i += 1
+        return ret
     
     def download_features(self):
         description = json.loads(request.form['description'])
@@ -246,6 +257,16 @@ def load_info():
 def list_videos():
     print("LIST")
     return operation.list_videos()
+
+@app.route('/get_features', methods=['POST'])
+def get_features():
+    print("GET FEATURES")
+    return operation.get_features()
+
+@app.route('/get_public_projects')
+def get_public_projects():
+    print("PUBLICS")
+    return operation.get_public_projects()
 
 @app.route('/list_features', methods=['POST'])
 def list_features():

@@ -156,6 +156,7 @@ const list_videos_fetch = async () => {
     for (let i of list) {
         let s
         // console.log(i[currentFeature] == 0)
+        let newElem = document.createElement('tr');
         if (i[currentFeature['class']] == 0) {
             s = `<tr>
                         <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)">
@@ -188,8 +189,9 @@ const list_videos_fetch = async () => {
                     <td class="acquisitionTableDuration">${i.length}</td>
                     <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
                 </tr>`
+                newElem.onclick = () => fetchFeature(i._id)
         }
-        let newElem = document.createElement('tr');
+        
         newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
         newElem.style.cursor = 'pointer'
@@ -200,7 +202,7 @@ const list_videos_fetch = async () => {
         // newElem2.colSpan = "4"
         // let empty = document.createElement('tr');
         // empty.innerHTML = ""
-        newElem.onclick = () => fecthFeature(i._id)
+        
         video_table.appendChild(newElem);
         // video_table.appendChild(empty);
         // video_table.appendChild(newElem2)
@@ -304,16 +306,18 @@ downloadBtn.addEventListener('click', () => {
 });
 
 
-const fecthFeature = async (id) => {
+const fetchFeature = async (id) => {
+    console.log("HERE")
     featuresModalTitle.innerText = document.querySelector("#acquisitionTR"+id).querySelector('.acquisitionTableName').innerText;
 
     // get landmarks
     let data = new FormData()
     data.append('description', JSON.stringify({
         pid: projectID,
-        video_id: id
+        video_id: id,
+        fid: currentFeature['_id']
     }))
-    let response = await fetch('http://127.0.0.1:5001/extract_features', {
+    let response = await fetch('http://127.0.0.1:5001/get_features', {
         method: "POST",
         body: data
     });
