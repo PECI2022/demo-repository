@@ -153,6 +153,9 @@ const list_videos_fetch = async () => {
     // }); // Sort table
 
     video_table.innerHTML = ""
+
+    console.log("LIST",list);
+
     for (let i of list) {
         let s
         // console.log(i[currentFeature] == 0)
@@ -212,7 +215,7 @@ const list_videos_fetch = async () => {
 function pop_table(feature) {
     table_popper.innerHTML = ""
     currentFeature = feature
-    console.log(currentFeature)
+    //console.log(currentFeature)
     let header = `<hr class="my-3">
                     <table id="recordsTable" class="table table-striped table-bordered table-secondary">
                         <thead>
