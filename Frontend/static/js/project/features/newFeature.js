@@ -122,6 +122,7 @@ const calculate_features = async () => {
     })
 
     list_videos_fetch()
+    alert("All Calculated!")
 }
 
 const download_features = async () => {
@@ -295,7 +296,7 @@ extractBtn.addEventListener('click', () => {
                 progressBar.style.display = 'none';
                 CalculatingFeatureText.style.display = 'none';
                 downloadBtn.style.display = 'block';
-                alert("Features Calculated! You can download the features now!");
+                // alert("Features Calculated! You can download the features now!");
             }, 500);
         }
     }, 100);

@@ -432,7 +432,7 @@ fileInput.setAttribute("accept", "video/*"); // Only accept video inputs
 folderInput.setAttribute("webkitdirectory", ""); // Only accept video inputs
 folderInput.setAttribute("directory", ""); // Only accept video inputs
 
-folderInput.addEventListener("change", function () {
+folderInput.addEventListener("change", async () => {
     fileNameSpan.style.display = "none";
     // get folder name
     let folderName = folderInput.files[0].webkitRelativePath.split("/")[0];
@@ -465,18 +465,13 @@ folderInput.addEventListener("change", function () {
                 let duration = Math.round(videoElement.duration); // get video duration
                 console.log(duration);
                 // blob for each video
-                let blob = {
+                blobs.push({
                     blob: file,
                     name: videoName,
                     class: "test",
                     duration: duration
-                };
-                launchDataPreview([{
-                    url: URL.createObjectURL(file),
-                    name: videoName,
-                    class: "test",
-                    duration: duration
-                  }]);
+                });
+                if( blobs.length==files.length ) launchDataPreview(blobs)
             }
             
         }
