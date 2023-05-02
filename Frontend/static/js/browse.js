@@ -88,7 +88,6 @@ const list_projects = async () => {
   console.log("PROJECT LIST")
   const response = await fetch("http://127.0.0.1:5001/get_public_projects");
   let projects = await response.json()
-  console.log(projects)
 
   createCard(projects)
 
