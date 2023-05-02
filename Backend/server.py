@@ -87,7 +87,7 @@ class Operations:
             if video['_id'] not in feature['data']:
                 vid.remove(video)
                 video_name = mongo_cli.download_media_file(video['_id'])
-                f = str(pipe.getLandMarks(video_name))
+                f = pipe.getLandMarks(video_name)
                 os.remove(video_name)
                 content = {"video_id": video['_id'], "feature": f}
                 mongo_cli.insert_in_feature(feature['_id'],content)

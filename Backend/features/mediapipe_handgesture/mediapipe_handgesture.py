@@ -41,18 +41,22 @@ class Mediapipe_handgesture:
 
                 timestamp = int(cap.get(cv2.CAP_PROP_POS_MSEC))
 
-                hand_landmarker_result.append(landmarker.detect_for_video(mp_image, timestamp))
-                # print("THIs")
-                # print(hand_landmarker_result)
+                landmark = landmarker.detect_for_video(mp_image, timestamp)
+                if len(landmark.hand_landmarks) != 0:
+                    hand_landmarker_result.append([{'x':i.x,'y':i.y,'z':i.z} for i in landmark.hand_landmarks[0]])
+                else:
+                    hand_landmarker_result.append([])
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
             
             cap.release()
             cv2.destroyAllWindows()
+
         return hand_landmarker_result
 
 
 if __name__=='__main__':
     featureClass = Mediapipe_handgesture()
-    # print(featureClass.getLandMarks('yeye.webm'))
+    result = featureClass.getLandMarks('yeye.webm')
+    print(result)

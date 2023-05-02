@@ -305,7 +305,7 @@ downloadBtn.addEventListener('click', () => {
     // TODO, download features from the backend
 });
 
-
+const lines = [[0,1],[1,2],[2,3],[3,4],[0,5],[0,17],[5,6],[5,9],[6,7],[7,8],[9,10],[9,13],[10,11],[11,12],[13,14],[13,17],[14,15],[15,16],[17,18],[18,19],[19,20]]
 const fetchFeature = async (id) => {
     console.log("HERE")
     featuresModalTitle.innerText = document.querySelector("#acquisitionTR"+id).querySelector('.acquisitionTableName').innerText;
@@ -322,7 +322,7 @@ const fetchFeature = async (id) => {
         body: data
     });
     let landmarks = (await response.json())['landmarks']
-    
+    // console.log(landmarks)
 
     // get video
     data = new FormData();
@@ -348,13 +348,23 @@ const fetchFeature = async (id) => {
         let currentFrame = Math.floor((featuresVideo.currentTime/featuresVideo.duration)*landmarks.length);
         if( currentFrame<0 || currentFrame>=landmarks.length ) return;
 
-        let currentLandmarks = landmarks[currentFrame]['hand_landmarks'];
+        let currentLandmarks = landmarks[currentFrame];
         if( currentLandmarks.length==0 ) return;
 
-        for(let mark of currentLandmarks[0]) {
-            ctx_handpoints.fillStyle = "blue";
-            ctx_handpoints.fillRect(mark.x*640, mark.y*480, 10, 10);
+        for(let mark of currentLandmarks) {
+            ctx_handpoints.beginPath();
+            ctx_handpoints.arc(mark.x*640, mark.y*480, 5, 0, 2 * Math.PI);
+            ctx_handpoints.fill();
         }
+        
+        for( let line of lines ) {
+            console.log(currentLandmarks[line[0]].x,currentLandmarks[line[0]].y)
+            ctx_handpoints.beginPath();
+            ctx_handpoints.moveTo(currentLandmarks[line[0]].x*640,currentLandmarks[line[0]].y*480);
+            ctx_handpoints.lineTo(currentLandmarks[line[1]].x*640,currentLandmarks[line[1]].y*480);
+            ctx_handpoints.stroke();
+        }
+
 
     }, 1000/60);
 
