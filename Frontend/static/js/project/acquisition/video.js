@@ -129,9 +129,8 @@ record_button.addEventListener('click', async () => {
     recordVideo(number_of_recordings_input.value);
 
 });
+
 const list_videos_fetch = async () => {
-    // console.log(class_adition.innerHTML)
-    // console.log(video_table)
     let data = new FormData()
     data.append("id", JSON.stringify({ 'id': projectID }))
     const response = await fetch('http://127.0.0.1:5001/list_videos', {
@@ -141,17 +140,16 @@ const list_videos_fetch = async () => {
     let list = await response.json()
     if (!list) return;
 
-    // console.log(list)
     list.sort((a, b) => {
-        // // console.log("sorting", a, tableSorting)
         if (tableSorting[0] == 1) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
         else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
     }); // Sort table
 
     video_table.innerHTML = ""
 
+    console.log(list);
     for (let i of list) {
-        if( acquisitionSearch.value!="" && 
+        if(acquisitionSearch.value!="" && 
             i.name.match(new RegExp(acquisitionSearch.value))==null &&
             i.video_class.match(new RegExp(acquisitionSearch.value))==null
         ) continue;
@@ -161,33 +159,29 @@ const list_videos_fetch = async () => {
                             check_box_outline_blank
                         </span>
                     </td>
-                    <!-- <td>
-                    <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-                    <span class="previewNameList">${i.name}</span>
-                    </td> -->
                     <td class="acquisitionTableName">${i.name}</td>
                     <td class="acquisitionTableClass">${i.video_class}</td>
                     <td class="acquisitionTableDuration">${i.length}</td>
                     <td class="acquisitionTableDate">${new Date( i.update ).toLocaleDateString("en-GB")}</td>
+                    <td class="p-0 text-center">
+                    <button type="button" class="btn btn-primary" data-toggle="popover" data-placement="left" data-trigger="focus" title="${i.name}" data-html="true" data-content='<video id="video${i._id}" width="320" height="240" controls><source src="http://127.0.0.1:5001/videos/${i._id}" type="video/mp4"></video>'><i class="fas fa-play"></i></button>
+                    </td>
                 </tr>`
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
-        // newElem.onclick = () => 
+
         let newElem2 = document.createElement('tr');
-        newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="640" height="480" autoplay controls/></td>`
+        newElem2.innerHTML = `<td colspan="6" class="text-center"><video id="video${i._id}" width="320" height="240" autoplay controls/></td>`
         newElem2.classList.add("collapse")
         newElem2.id = `collapse${i._id}`
-        newElem2.colSpan = "4"
-        let empty = document.createElement('tr');
-        empty.innerHTML = ""
+        
         const ff = () => {
-            for( let i of video_table.childNodes ) {
-                if( i.id.startsWith('collapse') && !i.classList.contains('collapse') ) i.classList.add('collapse');
+            for( let j of video_table.childNodes ) {
+                if( j.id.startsWith('collapse') && !j.classList.contains('collapse') ) j.classList.add('collapse');
             }
             tableLoadvideo(i._id);
             newElem2.classList.remove('collapse');
-            
             newElem.onclick = () => {
                 newElem2.classList.add('collapse');
                 newElem.onclick = ff;
@@ -195,10 +189,17 @@ const list_videos_fetch = async () => {
         }
         newElem.onclick = ff;
         video_table.appendChild(newElem);
-        video_table.appendChild(empty);
-        video_table.appendChild(newElem2)
+        video_table.appendChild(newElem2);
+        $('[data-toggle="popover"]').popover();
+        $(document).on('click', function (e) {
+            $('[data-toggle="popover"]').each(function () {
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+        });
     }
-}; list_videos_fetch()
+}; list_videos_fetch();
 
 
 const edit_video = async (id) => {

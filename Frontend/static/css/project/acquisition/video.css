@@ -3,3 +3,17 @@
     transition: none;
     display: none;
 }
+.popover {
+    position: absolute;
+    z-index: 9999;
+    width: 320px;
+    height: 180px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 0 10px #ccc;
+}
+.popover video {
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
+}
