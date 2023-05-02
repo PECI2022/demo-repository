@@ -89,15 +89,34 @@ const list_projects = async () => {
   const response = await fetch("http://127.0.0.1:5001/get_public_projects");
   let projects = await response.json()
 
+  // initialize the list of projects
   createCard(projects)
 
   const searchInput = document.querySelector('[community-search]');
+  const filterInput = document.querySelector('[community-filter]');
 
+  let filterProject = []
+  filterInput.addEventListener('change', e => {
+    const filter = e.target.value.toLowerCase(); 
+    console.log("FILTER",filter)
+
+    projects.forEach(proj => {
+      
+      if (filter == "") {
+        filterProject = projects;
+      } else if (proj.category.toLowerCase() == filter) {
+        filterProject.push(proj)
+      }
+    })
+  });
+
+
+  let searchProject = []
   searchInput.addEventListener('input', e => {
     inputValue = e.target.value.toLowerCase(); // assign the value inside the listener
     projectList.innerHTML = "";
     
-    let searchProject = []
+    
     projects.forEach(proj => {
       if (inputValue == "") {
         searchProject = projects;
