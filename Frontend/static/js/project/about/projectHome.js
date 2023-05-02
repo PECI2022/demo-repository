@@ -25,7 +25,8 @@ const load_info = async () => {
   projectDescription.innerHTML = info["description"]
 }
 
-function addTag() {
+function addTag(event) {
+  event.preventDefault();
   var tagInput = document.getElementById("newTagInput");
   var tags = document.getElementById("tags");
   var tag = tagInput.value;
