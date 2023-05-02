@@ -73,15 +73,6 @@ const list_projects = async () => {
 
   for (let project of projects) {
 
-    const searchInput = document.querySelector('[community-search]');
-    let inputValue = ''; // declare the variable outside the listener
-
-    searchInput.addEventListener('input', e => {
-      inputValue = e.target.value.toLowerCase(); // assign the value inside the listener
-    });
-    console.log(inputValue);
-
-
     let list = `<div class="col" id="project_${project._id}">
                       <div class="card h-100" >
                         <div class="card-body" onclick="newProjectGo('${project._id}')">
@@ -97,5 +88,27 @@ const list_projects = async () => {
     let newElem = document.createElement("div");
     newElem.innerHTML = list;
     projectList.appendChild(newElem);
+
+    const searchInput = document.querySelector('[community-search]');
+
+    searchInput.addEventListener('input', e => {
+      inputValue = e.target.value.toLowerCase(); // assign the value inside the listener
+
+      projectList.querySelectorAll('.card').forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const text = card.querySelector('.card-text').textContent.toLowerCase();
+
+        if (inputValue !== '') {
+          if (title.includes(inputValue) || text.includes(inputValue)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        } else {
+          card.style.display = '';
+        }
+      }
+      );
+    });
   }
 }; list_projects()
