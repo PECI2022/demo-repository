@@ -181,7 +181,34 @@
 
 <!-- Section Two -->
 <section class="section=two" style="display: flex;justify-content: center; align-items: center;">
-    <img style="width: 80%;height: 600px;" src="{{ url_for('static', filename='imgs/slogan.jpg') }}">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          
+          <div class="carousel-item active">
+            <img src="{{ url_for('static', filename='imgs/hand.png') }}" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{{ url_for('static', filename='imgs/thumbsU.png') }}" class="d-block w-100" alt="...">
+          </div>
+        </div>
+
+        <div class="carousel-item">
+            <video src="{{ url_for('static', filename='imgs/demo.mp4') }}" class="d-block w-100" controls></video>
+          </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
 </section>
 <div id="whiteSection">
 
@@ -189,7 +216,8 @@
 
         <!-- Section Three -->
         <section class="section-three" id="section-three">
-            <h3>Our Mission</h3>
+            <h3>Our Mission</h3><br>
+            <h4>Unleash insights hidden in Non-Verbal Communications!</h4>
         </section>
 
 
@@ -200,8 +228,8 @@
                     <img style="width: 650px;" src="{{ url_for('static', filename='imgs/database.png') }}">
                 </div>
                 <div class="content-container">
-                    <h3>Consult our Database</h3>
-                    <p>Here you can find and see all of the Non-Verbal DataSets created until today!</p>
+                    <h3>Consult our Community projects</h3>
+                    <p>Here you can find and see all of the Non-Verbal DataSets created until today, including yoursx   !</p>
                     <a href="/browse" class="learn-more-btn section-four-btn">Learn More</a>
                 </div>
             </div>
@@ -214,9 +242,9 @@
                     <img style="width: 650px;" src="{{ url_for('static', filename='imgs/acquisition.jpg') }}">
                 </div>
                 <div class="content-container">
-                    <h3>Video Acquisition</h3>
-                    <p>Where you can record or upload your own video(s) to create your own and new DataSet!</p>
-                    <a href="/project/acquisition/video" class="learn-more-btn section-four-btn">Read More</a>
+                    <h3>Create your own projects</h3>
+                    <p>Where you can record or upload your own video(s) to create your own DataSet, and use it to calculate and extract features using MediaPipe (Gestures, Face, Pose Detection)</p>
+                    <a href="myProjects" class="learn-more-btn section-four-btn">Read More</a>
                 </div>
             </div>
         </section>

@@ -64,6 +64,18 @@ body {
 	color: black;
 }
 
+#carouselExampleIndicators {
+  max-width: 1050px;
+  margin: auto;
+}
+
+/* Set the height of the carousel images */
+.carousel-item img {
+  height: 500px;
+  object-fit: contain; /* Ensure images maintain aspect ratio */
+}
+
+
 .mtext-white {
   color: #61554d;
 }
@@ -400,7 +412,6 @@ section {
 /* Section Two */
 #whiteSection {
   background-color: white;
-  
   padding: 20px;
   margin: 0 auto;
   width: 100%;
