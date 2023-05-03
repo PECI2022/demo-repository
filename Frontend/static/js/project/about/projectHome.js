@@ -9,13 +9,13 @@ window.addEventListener('load', () => {
   load_info(projectID2);
 
   let data = new FormData();
-    data.append(
-      "description",
-      JSON.stringify({
-        pid: project_id,
-        tags: tags
-      }),
-    );
+  data.append(
+    "description",
+    JSON.stringify({
+      pid: project_id,
+      tags: tags
+    }),
+  );
 
   fetch('http://127.0.0.1:5001/load_info', {
     method: 'POST',
@@ -27,9 +27,29 @@ window.addEventListener('load', () => {
     const tagsListed = document.getElementById("tags");
     tagsListed.innerHTML = "";
     for (let tag of data.tags) {
-      tagsListed.innerHTML += "#" + tag + "<br>";
+      var tagElement = document.createElement("span");
+      tagElement.innerHTML = "#" + tag + " ";
+      var deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "x";
+      deleteButton.style.marginLeft = "5px";
+      deleteButton.style.fontSize = "10px";
+      deleteButton.style.color = "red";
+      deleteButton.addEventListener("click", function() {
+        var index = data.tags.indexOf(tag);
+        if (index !== -1) {
+          data.tags.splice(index, 1);
+          localStorage.setItem("tags", JSON.stringify(data.tags));
+          tagsListed.removeChild(tagElement);
+          updateTagsInput();
+        }
+      });
+      tagElement.appendChild(deleteButton);
+      tagElement.style.display = "inline-block";
+      tagElement.style.marginRight = "5px";
+      tagsListed.appendChild(tagElement);
     }
   });
+
 });
 
 
@@ -50,63 +70,69 @@ const load_info = async () => {
 };
 
 
-// function updateTags() {
-//   let tags = JSON.parse(localStorage.getItem("tags"));
-//   console.log(tags);
-//   var tagInput = document.getElementById("newTagInput");
-//   var tagsListed = document.getElementById("tags");
-//   var tag = tagInput.value;
-  
-//   // check if the tag already exists in the list
-//   if (tags.indexOf(tag) === -1 && tag) {
-//     // add the new tag to the list and update localStorage
-//     tags.push(tag);
-//     localStorage.setItem("tags", JSON.stringify(tags));
+function updateTags() {
+  let tags = JSON.parse(localStorage.getItem("tags"));
+  console.log(tags);
+  var tagInput = document.getElementById("newTagInput");
+  var tagsListed = document.getElementById("tags");
+  var tag = tagInput.value;
+
+  if (!tags.includes(tag)) {
+    // add the new tag to the list and update localStorage
+    tags.push(tag);
+    localStorage.setItem("tags", JSON.stringify(tags));
+
+    // update the tags list on the page
+    tagsListed.innerHTML += "#" + tag + " ";
+    tagInput.value = "";
+
+    // set newTag to the new tag and clear the input field
+    let newTag = tag;
+    tagInput.value = "";
+
+    let data = new FormData();
+    data.append(
+      "description",
+      JSON.stringify({
+        pid: project_id,
+        tags: tag
+      }),
+    );
     
-//     // update the tags list on the page
-//     tagsListed.innerHTML += "#" + tag + "<br>";
-//     tagInput.value = "";
+    // TODO
+    fetch('http://127.0.0.1:5001/update_tags', {
+      method: 'POST',
+      body: data
+    })
+    //   .then(response => {
+    //     // if (response.ok) {
+    //     //   console.log('Tags updated successfully!');
+    //     //   // fetch updated tags from server and update localStorage and tagsListed
+    //     //   fetch('http://127.0.0.1:5001/load_info', {
+    //     //     method: 'POST',
+    //     //     body: data
+    //     //   })
+    //     //   .then(response => response.json())
+    //     //   .then(data => {
+    //     //     localStorage.setItem("tags", JSON.stringify(data.tags));
+    //     //     tagsListed.innerHTML = "";
+    //     //     for (let tag of data.tags) {
+    //     //       console.log(tag);
+    //     //       tagsListed.innerHTML += "# " + tag + "<br>";
+    //     //     }
+    //     //   })
+    //     // } else {
+    //     //   console.error('Error updating tags:', response.status);
+    //     // }
+    //   })
+    //   console.table(tags);
+    // }, 1500); // set delay in milliseconds here
+  } else {
+    alert("Project already contains '" + tag + "' tag!");
+  }
 
-//     // send the updated tags to the server
-//     let data = new FormData();
-//     data.append(
-//       "description",
-//       JSON.stringify({
-//         pid: project_id,
-//         tags: tags
-//       }),
-//     );
+}
 
-//     fetch('http://127.0.0.1:5001/update_tags', {
-//       method: 'POST',
-//       body: data
-//     })
-//     .then(response => {
-//       if (response.ok) {
-//         console.log('Tags updated successfully!');
-//         // fetch updated tags from server and update localStorage and tagsListed
-//         fetch('http://127.0.0.1:5001/load_info', {
-//           method: 'POST',
-//           body: data
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//           localStorage.setItem("tags", JSON.stringify(data.tags));
-//           tagsListed.innerHTML = "";
-//           for (let tag of data.tags) {
-//             tagsListed.innerHTML += "#" + tag + "<br>";
-//           }
-//         })
-
-//       } else {
-//         console.error('Error updating tags:', response.status);
-//       }
-//     })
-
-//     console.table(tags);
-
-//   }
-// }
 
 
 

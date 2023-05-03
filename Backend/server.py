@@ -121,12 +121,12 @@ class Operations:
         #         tags.append(video['video_class'])
         return {"name": project["name"], "description": project['subject'], "tags": project['tags'], "category": project['category']}
     
-    # def update_tags(self):
-    #     description = json.loads(request.form['description'])
-    #     project = mongo_cli.find_project(description['pid'])
-    #     project['tags'] += description['tags']
-    #     mongo_cli.insert_data(project, project['_id'], "info")
-    #     return "done"
+    def update_tags(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        project['tags'] += description['tags']
+        mongo_cli.insert_data(project, project['_id'], "info")
+        return "done"
 
 
 
@@ -216,10 +216,10 @@ def new_project():
     print("NEW PROJECT")
     return operation.new_project()
 
-# @app.route('/update_tags', methods=['POST'])
-# def update_tags():
-#     print("UPDATE TAGS")
-#     return operation.update_tags()
+@app.route('/update_tags', methods=['POST'])
+def update_tags():
+    print("UPDATE TAGS")
+    return operation.update_tags()
 
 @app.route('/delete_project/<project_id>', methods=['POST'])
 def delete_project(project_id):
