@@ -108,6 +108,7 @@ const list_projects = async () => {
         filterProject.push(proj)
       }
     })
+    
   });
 
 
