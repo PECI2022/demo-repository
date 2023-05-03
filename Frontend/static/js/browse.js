@@ -63,7 +63,7 @@ function newProjectGo(pid) {
 }
 
 
-function createCard(projects){
+function createCard(projects) {
   for (let project of projects) {
     let list = `<div class="col" id="project_${project._id}">
                       <div class="card h-100" >
@@ -89,38 +89,41 @@ const list_projects = async () => {
   const response = await fetch("http://127.0.0.1:5001/get_public_projects");
   let projects = await response.json()
 
-  // initialize the list of projects
   createCard(projects)
 
   const searchInput = document.querySelector('[community-search]');
-  const filterInput = document.querySelector('[community-filter]');
 
-  let filterProject = []
-  filterInput.addEventListener('change', e => {
-    const filter = e.target.value.toLowerCase(); 
-    console.log("FILTER",filter)
+  searchInput.addEventListener('input', e => {
+    let filterProject = []
+    const filterButton = document.getElementById('filter-button');
+    filterButton.addEventListener('click', handleFilter);
+
+    let filter ="";
+    const handleFilter = () => {
+      filter = document.querySelector('#category').value;
+    }
+
+
+    console.log("FILTER", filter)
 
     projects.forEach(proj => {
-      
+
       if (filter == "") {
         filterProject = projects;
       } else if (proj.category.toLowerCase() == filter) {
         filterProject.push(proj)
       }
     })
-    
-  });
+    console.log("FILTER PROJECT", filterProject)
 
 
-  let searchProject = []
-  searchInput.addEventListener('input', e => {
     inputValue = e.target.value.toLowerCase(); // assign the value inside the listener
     projectList.innerHTML = "";
-    
-    
-    projects.forEach(proj => {
+
+    let searchProject = []
+    filterProject.forEach(proj => {
       if (inputValue == "") {
-        searchProject = projects;
+        searchProject = filterProject;
       } else if (proj.name.toLowerCase().includes(inputValue) || proj.subject.toLowerCase().includes(inputValue)) {
         searchProject.push(proj)
       }

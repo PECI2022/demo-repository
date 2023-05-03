@@ -5,79 +5,86 @@
 {% block aditionalHead %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 <style>
- .form-control {
-  width: 300px; /* Change the width to your desired size */
-  height: 40px; /* Change the height to your desired size */
-}
+    .form-control {
+        width: 300px;
+        /* Change the width to your desired size */
+        height: 40px;
+        /* Change the height to your desired size */
+    }
 
-.btn-outline-success {
-  height: 40px; /* Change the height to your desired size */
-  font-size: 16px; /* Change the font size to your desired size */
-  color: #343335; /* Change the font color to your desired color */
-  background-color: transparent; /* Remove the background color */
-  border-color: #343335; /* Change the border color to your desired color */
-}
-.btn-outline-success:focus {
-  color: #fff !important;
-  background-color: #343335 !important;
-  border-color: #343335 !important;
-}
+    .btn-outline-success {
+        height: 40px;
+        /* Change the height to your desired size */
+        font-size: 16px;
+        /* Change the font size to your desired size */
+        color: #343335;
+        /* Change the font color to your desired color */
+        background-color: transparent;
+        /* Remove the background color */
+        border-color: #343335;
+        /* Change the border color to your desired color */
+    }
 
-.btn-outline-success:hover {
-  color: #ffffff !important;
-  background-color: #343335 !important;
-  border-color: #343335 !important;
-}
+    .btn-outline-success:focus {
+        color: #fff !important;
+        background-color: #343335 !important;
+        border-color: #343335 !important;
+    }
 
-
-.filter-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.filter-container select,
-.filter-container input {
-  margin-left: 10px;
-}
+    .btn-outline-success:hover {
+        color: #ffffff !important;
+        background-color: #343335 !important;
+        border-color: #343335 !important;
+    }
 
 
+    .filter-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
 
+    .filter-container select,
+    .filter-container input {
+        margin-left: 10px;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 
 
-    <div class="container my-4">
-        <h2 style="text-align:left;color: black">Community Projects</h2>
-    
-        <br>
-        
-        <div class="d-flex justify-content-between">
-            <form class="d-flex">
-                <label for="search-input" class="visually-hidden">Search</label>
-                <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" community-search>
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-              
-          
-            <div class="filter-container">
-            
-              <label for="category" >Category:</label>
-              <select style="margin-right: 20px;height:25px" id="category" name="category" aria-label="Browse" community-filter>
+<div class="container my-4">
+    <h2 style="text-align:left;color: black">Community Projects</h2>
+
+    <br>
+
+    <div class="d-flex justify-content-between">
+        <form class="d-flex">
+            <label for="search-input" class="visually-hidden">Search</label>
+            <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                community-search>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+
+        <div class="filter-container">
+
+            <label for="category">Category:</label>
+            <select style="margin-right: 20px;height:25px" id="category" name="category" aria-label="Browse"
+                community-filter>
                 <option value="">Select...</option>
                 <option value="Video">Video</option>
                 <option value="Gestures">Gestures</option>
                 <option value="audio">Audio</option>
-              </select>
-              
-              <button class="btn btn-outline-success" type="submit">Filter</button>
-            </div>
-          </div>
-        <br>
-          
-        <!-- <div id="ProjectsSearch" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            </select>
+
+            <button class="btn btn-outline-success" type="submit" id="filter-button">Filter</button>
+        </div>
+    </div>
+    <br>
+
+    <!-- <div id="ProjectsSearch" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <div class="col">
                 <div class="card h-100" >
                     <div class="card-body">
@@ -207,8 +214,8 @@
 
         <br> -->
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="public_project_list">
-            <!-- <div class="col">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="public_project_list">
+        <!-- <div class="col">
                 <div class="card h-100" >
                     <div class="card-body">
                         <h3 class="card-title" >Project #1</h3>
@@ -267,28 +274,29 @@
                 </div>
               </div> -->
 
-        </div>
-
-        <br>
-        <h6 style="text-align:center;color: #343335">Powered by Computer and Telematics Engineering Students at University of Aveiro</h6>
-    
-        <br>
-       
-        
-
-       
-
-        <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
-
-
-        <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
-
-    
-
     </div>
-     <footer>
+
+    <br>
+    <h6 style="text-align:center;color: #343335">Powered by Computer and Telematics Engineering Students at University
+        of Aveiro</h6>
+
+    <br>
+
+
+
+
+
+    <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
+
+
+    <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
+
+
+
+</div>
+<footer>
     <p>&copy; 2023 MFDA. All Rights Reserved.</p>
-  </footer>
+</footer>
 
 </div>
 {% endblock %}
