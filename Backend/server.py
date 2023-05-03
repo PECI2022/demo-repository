@@ -25,10 +25,11 @@ class Operations:
         description = json.loads(request.form['description'])
         print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
+        data = {"name": description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "tags": description['tags'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
         print(data)
-        mongo_cli.insert_data(data,_id,"info")
+        mongo_cli.insert_data(data, _id, "info")
         return {"result": str(_id)}
+
     
     def delete_project(self, project_id):
         project = mongo_cli.find_project(project_id)

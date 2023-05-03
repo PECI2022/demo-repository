@@ -1,5 +1,6 @@
 const projectList = document.querySelector("#project_list");
 let category = "Gestures";
+let tags = [];
 var project_id = localStorage.getItem("project_id");
 
 function newProjectGo(pid) {
@@ -23,6 +24,7 @@ const create_project = async () => {
       subject: document.querySelector("#description").value,
       model: document.querySelector("#model").value,
       category: category,
+      tags: tags,
     })
   );
   console.log(document.querySelector("#Category").value);
@@ -40,9 +42,7 @@ const load_project = async (pid) => {
   console.log("HERE");
 };
 
-function get_category(val) {
-  category = val;
-}
+
 const delete_project = async (project_id) => {
     let data = new FormData()
     // send project id
@@ -59,6 +59,7 @@ const delete_project = async (project_id) => {
 
 window.onload = function () {
     category = "Gestures";
+    addTag();
     load_content();
 };
 
