@@ -1,5 +1,6 @@
 const projectList = document.querySelector("#project_list");
 let category = "Gestures";
+
 let tags = [];
 var project_id = localStorage.getItem("project_id");
 
@@ -17,6 +18,8 @@ function newProjectGo(pid) {
 const create_project = async () => {
   let data = new FormData();
   console.log(category);
+  addTag();
+  console.log("tags: " + tags);
   data.append(
     "description",
     JSON.stringify({
@@ -24,8 +27,8 @@ const create_project = async () => {
       subject: document.querySelector("#description").value,
       model: document.querySelector("#model").value,
       category: category,
-      tags: tags,
-    })
+      tags: tags
+    }),
   );
   console.log(document.querySelector("#Category").value);
   let response = await fetch("http://127.0.0.1:5001/new_project", {
@@ -93,10 +96,16 @@ const load_content = async () => {
 
   function addTag() {
     var tagInput = document.getElementById("newTagInput");
-    var tags = document.getElementById("tags");
+    var tagsListed = document.getElementById("tags");
+  
     var tag = tagInput.value;
-    if (tag) {
-      tags.innerHTML += "#" + tag + "<br>";
+    if (tag !== "") {
+      tags.push(tag);
+      localStorage.setItem("tags", JSON.stringify(tags));
+      tagsListed.innerHTML += "#" + tag + "<br>";
       tagInput.value = "";
     }
+
   }
+  
+  

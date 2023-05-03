@@ -7,7 +7,31 @@ window.addEventListener('load', () => {
   const urlParams2 = new URLSearchParams(queryString2);
   const projectID2 = urlParams2.get('id');
   load_info(projectID2);
+
+  let data = new FormData();
+    data.append(
+      "description",
+      JSON.stringify({
+        pid: project_id,
+        tags: tags
+      }),
+    );
+
+  fetch('http://127.0.0.1:5001/load_info', {
+    method: 'POST',
+    body: data
+  })
+  .then(response => response.json())
+  .then(data => {
+    localStorage.setItem("tags", JSON.stringify(data.tags));
+    const tagsListed = document.getElementById("tags");
+    tagsListed.innerHTML = "";
+    for (let tag of data.tags) {
+      tagsListed.innerHTML += "#" + tag + "<br>";
+    }
+  });
 });
+
 
 const load_info = async () => {
   console.log("EOEOEO");
@@ -25,27 +49,66 @@ const load_info = async () => {
   projectDescription.innerHTML = info["description"];
 };
 
-let tagsArray = JSON.parse(localStorage.getItem("tags")) || [];
 
-function addTag(event) {
-  event.preventDefault();
+// function updateTags() {
+//   let tags = JSON.parse(localStorage.getItem("tags"));
+//   console.log(tags);
+//   var tagInput = document.getElementById("newTagInput");
+//   var tagsListed = document.getElementById("tags");
+//   var tag = tagInput.value;
+  
+//   // check if the tag already exists in the list
+//   if (tags.indexOf(tag) === -1 && tag) {
+//     // add the new tag to the list and update localStorage
+//     tags.push(tag);
+//     localStorage.setItem("tags", JSON.stringify(tags));
+    
+//     // update the tags list on the page
+//     tagsListed.innerHTML += "#" + tag + "<br>";
+//     tagInput.value = "";
 
-  // Display the tags
-  var tagsEl = document.getElementById("tags");
-  tagsArray.forEach(function(tag) {
-    tagsEl.innerHTML += "#" + tag + "<br>";
-  });
+//     // send the updated tags to the server
+//     let data = new FormData();
+//     data.append(
+//       "description",
+//       JSON.stringify({
+//         pid: project_id,
+//         tags: tags
+//       }),
+//     );
 
-  var tagInput = document.getElementById("newTagInput");
-  var tags = document.getElementById("tags");
-  var tag = tagInput.value;
-  if (tag) {
-    tags.innerHTML += "#" + tag + "<br>";
-    tagsArray.push(tag); // Add the new tag to the array
-    localStorage.setItem("tags", JSON.stringify(tagsArray)); // Save the updated array to localStorage
-    tagInput.value = "";
-  }
-}
+//     fetch('http://127.0.0.1:5001/update_tags', {
+//       method: 'POST',
+//       body: data
+//     })
+//     .then(response => {
+//       if (response.ok) {
+//         console.log('Tags updated successfully!');
+//         // fetch updated tags from server and update localStorage and tagsListed
+//         fetch('http://127.0.0.1:5001/load_info', {
+//           method: 'POST',
+//           body: data
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//           localStorage.setItem("tags", JSON.stringify(data.tags));
+//           tagsListed.innerHTML = "";
+//           for (let tag of data.tags) {
+//             tagsListed.innerHTML += "#" + tag + "<br>";
+//           }
+//         })
+
+//       } else {
+//         console.error('Error updating tags:', response.status);
+//       }
+//     })
+
+//     console.table(tags);
+
+//   }
+// }
+
+
 
 
 var project_id = localStorage.getItem("project_id");
