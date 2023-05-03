@@ -63,7 +63,7 @@ function newProjectGo(pid) {
 }
 
 
-function createCard(projects){
+function createCard(projects) {
   for (let project of projects) {
     let list = `<div class="col" id="project_${project._id}">
                       <div class="card h-100" >
@@ -89,18 +89,28 @@ const list_projects = async () => {
   const response = await fetch("http://127.0.0.1:5001/get_public_projects");
   let projects = await response.json()
 
-  createCard(projects)
-
   const searchInput = document.querySelector('[community-search]');
+
+  let filter = document.querySelector('#category').value;
+
+  let filterProjects = "";
+  if (filter != "") {
+    filterProjects = projects.filter(proj => proj.category.toLowerCase() == filter.toLowerCase())
+  } else {
+    filterProjects = projects
+  }
+
+  projectList.innerHTML = "";
+  createCard(filterProjects)
 
   searchInput.addEventListener('input', e => {
     inputValue = e.target.value.toLowerCase(); // assign the value inside the listener
     projectList.innerHTML = "";
-    
+
     let searchProject = []
-    projects.forEach(proj => {
+    filterProjects.forEach(proj => {
       if (inputValue == "") {
-        searchProject = projects;
+        searchProject = filterProjects;
       } else if (proj.name.toLowerCase().includes(inputValue) || proj.subject.toLowerCase().includes(inputValue)) {
         searchProject.push(proj)
       }
