@@ -381,6 +381,8 @@ const fetchFeature = async (id) => {
 const previewVideo = document.getElementById("previewVideo");
 let newVideoID = "video";
 
+
+
 function togglePreviewVideo(video_id) {
     const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
     const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
@@ -389,21 +391,22 @@ function togglePreviewVideo(video_id) {
     previewVideo.style.top = acquisitionTableNameRect.top + 'px';
     previewVideo.style.left = acquisitionTableNameRect.left + 'px';
 
+    document.addEventListener('click', (e) => {
+        let visible = false;
 
-    console.log("OKKKK",previewVideo.style.display)
-    
-    if (previewVideo.style.display === "none") {
-        previewVideo.style.display = "block";
-        const video = document.querySelector(newVideoID);
-        video.setAttribute("id", "video" + video_id);
-        tableLoadvideo(video_id)
-        newVideoID = "#video" + video_id;
+        if (e.target.parentElement == acquisitionTableName && !visible) {
+            previewVideo.style.display = "block";
+            const video = document.querySelector(newVideoID);
+            video.setAttribute("id", "video" + video_id);
+            tableLoadvideo(video_id)
+            newVideoID = "#video" + video_id;
+            visible = true;
 
-    } else {
-
-        previewVideo.style.display = "none";
-
-    }
+        } else{
+            previewVideo.style.display = "none";
+            visible = false;
+        }
+    });
 };
 
 const tableLoadvideo = async (id) => {
