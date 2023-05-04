@@ -71,8 +71,13 @@ body {
 
 /* Set the height of the carousel images */
 .carousel-item img {
-  height: 500px;
-  object-fit: contain; /* Ensure images maintain aspect ratio */
+  height: 600px;
+  object-fit: contain; 
+}
+
+.carousel-item video {
+  height: 600px;
+  object-fit: contain; 
 }
 
 
@@ -380,7 +385,7 @@ section {
 
 
 .section-one {
-  margin: 6rem 1rem 0;
+  margin: 3rem 1rem 0;
 }
 
 .header {
