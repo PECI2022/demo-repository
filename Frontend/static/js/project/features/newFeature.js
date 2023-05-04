@@ -169,8 +169,7 @@ const list_videos_fetch = async () => {
                         <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                         <span class="previewNameList">${i.name}</span>
                         </td> -->
-                        <td class="acquisitionTableName">${i.name}</td>
-                        <td class="acquisitionTableClass">${i.video_class}</td>
+                        <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}')">${i.name}</td>                        <td class="acquisitionTableClass">${i.video_class}</td>
                         <td class="acquisitionTableDuration">${i.length}</td>
                         <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
                     </tr>`
@@ -185,14 +184,14 @@ const list_videos_fetch = async () => {
                     <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                     <span class="previewNameList">${i.name}</span>
                     </td> -->
-                    <td class="acquisitionTableName">${i.name}</td>
+                    <td class="acquisitionTableName" onclick="togglePreviewVideo()">${i.name}</td>
                     <td class="acquisitionTableClass">${i.video_class}</td>
                     <td class="acquisitionTableDuration">${i.length}</td>
                     <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
                 </tr>`
-                newElem.onclick = () => fetchFeature(i._id)
+            newElem.onclick = () => fetchFeature(i._id)
         }
-        
+
         newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
         newElem.style.cursor = 'pointer'
@@ -203,7 +202,7 @@ const list_videos_fetch = async () => {
         // newElem2.colSpan = "4"
         // let empty = document.createElement('tr');
         // empty.innerHTML = ""
-        
+
         video_table.appendChild(newElem);
         // video_table.appendChild(empty);
         // video_table.appendChild(newElem2)
@@ -306,10 +305,10 @@ downloadBtn.addEventListener('click', () => {
     // TODO, download features from the backend
 });
 
-const lines = [[0,1],[1,2],[2,3],[3,4],[0,5],[0,17],[5,6],[5,9],[6,7],[7,8],[9,10],[9,13],[10,11],[11,12],[13,14],[13,17],[14,15],[15,16],[17,18],[18,19],[19,20]]
+const lines = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [0, 17], [5, 6], [5, 9], [6, 7], [7, 8], [9, 10], [9, 13], [10, 11], [11, 12], [13, 14], [13, 17], [14, 15], [15, 16], [17, 18], [18, 19], [19, 20]]
 const fetchFeature = async (id) => {
     console.log("HERE")
-    featuresModalTitle.innerText = document.querySelector("#acquisitionTR"+id).querySelector('.acquisitionTableName').innerText;
+    featuresModalTitle.innerText = document.querySelector("#acquisitionTR" + id).querySelector('.acquisitionTableName').innerText;
 
     // get landmarks
     let data = new FormData()
@@ -336,38 +335,38 @@ const fetchFeature = async (id) => {
 
     let ctx = featuresVideoSnapshot.getContext('2d');
     let ctx_handpoints = featuresDrawHand.getContext('2d');
-    let i=0;
+    let i = 0;
 
 
 
-    let interval = setInterval(()=>{
-        ctx.drawImage(featuresVideo, 0, 0, featuresVideoSnapshot.width,featuresVideoSnapshot.height);
-        
+    let interval = setInterval(() => {
+        ctx.drawImage(featuresVideo, 0, 0, featuresVideoSnapshot.width, featuresVideoSnapshot.height);
+
         ctx_handpoints.fillStyle = "red";
-        ctx_handpoints.clearRect(0,0,640,480);
+        ctx_handpoints.clearRect(0, 0, 640, 480);
 
-        let currentFrame = Math.floor((featuresVideo.currentTime/featuresVideo.duration)*landmarks.length);
-        if( currentFrame<0 || currentFrame>=landmarks.length ) return;
+        let currentFrame = Math.floor((featuresVideo.currentTime / featuresVideo.duration) * landmarks.length);
+        if (currentFrame < 0 || currentFrame >= landmarks.length) return;
 
         let currentLandmarks = landmarks[currentFrame];
-        if( currentLandmarks.length==0 ) return;
+        if (currentLandmarks.length == 0) return;
 
-        for(let mark of currentLandmarks) {
+        for (let mark of currentLandmarks) {
             ctx_handpoints.beginPath();
-            ctx_handpoints.arc(mark.x*640, mark.y*480, 5, 0, 2 * Math.PI);
+            ctx_handpoints.arc(mark.x * 640, mark.y * 480, 5, 0, 2 * Math.PI);
             ctx_handpoints.fill();
         }
-        
-        for( let line of lines ) {
-            console.log(currentLandmarks[line[0]].x,currentLandmarks[line[0]].y)
+
+        for (let line of lines) {
+            console.log(currentLandmarks[line[0]].x, currentLandmarks[line[0]].y)
             ctx_handpoints.beginPath();
-            ctx_handpoints.moveTo(currentLandmarks[line[0]].x*640,currentLandmarks[line[0]].y*480);
-            ctx_handpoints.lineTo(currentLandmarks[line[1]].x*640,currentLandmarks[line[1]].y*480);
+            ctx_handpoints.moveTo(currentLandmarks[line[0]].x * 640, currentLandmarks[line[0]].y * 480);
+            ctx_handpoints.lineTo(currentLandmarks[line[1]].x * 640, currentLandmarks[line[1]].y * 480);
             ctx_handpoints.stroke();
         }
 
 
-    }, 1000/60);
+    }, 1000 / 60);
 
     let modal = new bootstrap.Modal(featuresVideoModal)
     featuresVideoModal.addEventListener('hidden.bs.modal', (event) => {
@@ -377,3 +376,44 @@ const fetchFeature = async (id) => {
     modal.show()
 
 }
+
+
+const previewVideo = document.getElementById("previewVideo");
+
+function togglePreviewVideo(video_id) {
+    const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
+    const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
+
+    const previewVideo = document.getElementById('previewVideo');
+    previewVideo.style.top = acquisitionTableNameRect.top + 'px';
+    previewVideo.style.left = acquisitionTableNameRect.left + 'px';
+
+
+    if (previewVideo.style.display === "none") {
+        previewVideo.style.display = "block";
+        const video = document.querySelector("#video");
+        video.setAttribute("id", "video" + video_id);
+        tableLoadvideo(video_id)
+        video.setAttribute("id", "video");
+    } else {
+
+        previewVideo.style.display = "none";
+
+    }
+};
+
+const tableLoadvideo = async (id) => {
+    let v = document.querySelector("#video" + id);
+    if (v.src == "") {
+        let data = new FormData();
+        data.append('_id', id);
+        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
+        // console.log("responded")
+        let blob = await response.blob();
+        // video_url = URL.createObjectURL(blob);
+        v.src = URL.createObjectURL(blob)
+    } else {
+        v.removeAttribute('src')
+    }
+}
+
