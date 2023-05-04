@@ -379,6 +379,7 @@ const fetchFeature = async (id) => {
 
 
 const previewVideo = document.getElementById("previewVideo");
+let newVideoID = "video";
 
 function togglePreviewVideo(video_id) {
     const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
@@ -389,12 +390,15 @@ function togglePreviewVideo(video_id) {
     previewVideo.style.left = acquisitionTableNameRect.left + 'px';
 
 
+    console.log("OKKKK",previewVideo.style.display)
+    
     if (previewVideo.style.display === "none") {
         previewVideo.style.display = "block";
-        const video = document.querySelector("#video");
+        const video = document.querySelector(newVideoID);
         video.setAttribute("id", "video" + video_id);
         tableLoadvideo(video_id)
-        video.setAttribute("id", "video");
+        newVideoID = "#video" + video_id;
+
     } else {
 
         previewVideo.style.display = "none";
