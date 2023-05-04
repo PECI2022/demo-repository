@@ -155,7 +155,7 @@ const list_videos_fetch = async () => {
             i.name.match(new RegExp(acquisitionSearch.value))==null &&
             i.video_class.match(new RegExp(acquisitionSearch.value))==null
         ) continue;
-        let s = `<tr>
+        let  s = `<tr>
                     <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)" style="cursor:pointer;display:${tableSorting[2]};">
                         <span class="material-icons checkbox" style="line-height:40px";>
                             check_box_outline_blank
@@ -165,7 +165,8 @@ const list_videos_fetch = async () => {
                     <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                     <span class="previewNameList">${i.name}</span>
                     </td> -->
-                    <td class="acquisitionTableName">${i.name}</td>
+                    <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}')">${i.name}</td>
+
                     <td class="acquisitionTableClass">${i.video_class}</td>
                     <td class="acquisitionTableDuration">${i.length}</td>
                     <td class="acquisitionTableDate">${new Date( i.update ).toLocaleDateString("en-GB")}</td>
@@ -175,7 +176,7 @@ const list_videos_fetch = async () => {
         newElem.id = `acquisitionTR${i._id}`
         // newElem.onclick = () => 
         let newElem2 = document.createElement('tr');
-        newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="640" height="480" autoplay controls/></td>`
+        newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="360px" height="300px" autoplay controls/></td>`
         newElem2.classList.add("collapse")
         newElem2.id = `collapse${i._id}`
         newElem2.colSpan = "4"
@@ -199,7 +200,48 @@ const list_videos_fetch = async () => {
         video_table.appendChild(newElem2)
     }
 }; list_videos_fetch()
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+// const previewVideo = document.getElementById("previewVideo");
+
+// function togglePreviewVideo(video_id) {
+//     const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
+//     const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
+
+//     const previewVideo = document.getElementById('previewVideo');
+//     previewVideo.style.top = acquisitionTableNameRect.top + 'px';
+//     previewVideo.style.left = acquisitionTableNameRect.left + 'px';
+
+
+//     if (previewVideo.style.display === "none") {
+//         previewVideo.style.display = "block";
+//         const video = document.querySelector("#video");
+//         video.setAttribute("id", "video" + video_id);
+//         tableLoadvideo(video_id)
+//         video.setAttribute("id", "video");
+//     } else {
+
+//         previewVideo.style.display = "none";
+
+//     }
+// };;
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const tableLoadvideo = async (id) => {
+    let v = document.querySelector("#video" + id);
+    if (v.src == "") {
+        console.log(id)
+        let data = new FormData();
+        data.append('_id',id);
+        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
+        // console.log("responded")
+        let blob = await response.blob();
+        // video_url = URL.createObjectURL(blob);
+        v.src = URL.createObjectURL(blob)
+    } else {
+        v.removeAttribute('src')
+    }
+}
 
 const edit_video = async (id) => {
     const row = document.querySelector(`tr[data-id="${id}"]`);
@@ -272,7 +314,7 @@ const list_classes_fetch = async () => {
 const storeCurrentBlobs = async (blobs) => {
     for (let blob of blobs) {
         let data = new FormData();
-        data.append('file', blob.blob);
+        data.append('file',blob.blob);
 
         data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID }))
 
@@ -373,22 +415,7 @@ const launchDataPreview = (videoBlobs) => {
 // window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
 
 
-const tableLoadvideo = async (id) => {
-    let v = document.querySelector("#video" + id);
-    console.log(v.src)
-    if (v.src == "") {
-        console.log(id)
-        let data = new FormData();
-        data.append('_id', id);
-        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
-        // console.log("responded")
-        let blob = await response.blob();
-        // video_url = URL.createObjectURL(blob);
-        v.src = URL.createObjectURL(blob)
-    } else {
-        v.removeAttribute('src')
-    }
-}
+
 
 // input upload
 document.getElementById("file-button").addEventListener("click", function () {
