@@ -3,6 +3,8 @@
 {% block title %} Project Home {% endblock %}
 
 {% block projectContent %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
+
 <div class="container" onload="load_info()">
   <div class="w-100" style="margin:auto;">
     <div class="mt-3" style="width:100%;margin:auto">
@@ -13,7 +15,8 @@
             <div class="col-md-12 col-sm-6">
               <div class="card mt-0">
                 <div class="card-body">
-                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">info</span> Description</h5>
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons"
+                      style="font-size: 30px;">info</span> Description</h5>
                   <p id="projectDescription" class="card-text"></p>
                 </div>
               </div>
@@ -24,9 +27,11 @@
             <div class="col-md-12 col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">category</span> Category</h5>
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons"
+                      style="font-size: 30px;">category</span> Category</h5>
                   <p class="card-text">
-                    <select id="category" name="category" style="height: 40px;background-color: #f2f2f2; border: none; color: black;padding: 10px 16px;font-size: 16px;border-radius: 10px;">
+                    <select id="category" name="category"
+                      style="height: 40px;background-color: #f2f2f2; border: none; color: black;padding: 10px 16px;font-size: 16px;border-radius: 10px;">
                       <option value="video">Video</option>
                       <option value="audio">Audio</option>
                     </select>
@@ -40,10 +45,11 @@
             <div class="col-md-12 col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">sell</span> Tags</h5>
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons"
+                      style="font-size: 30px;">sell</span> Tags</h5>
                   <p id="tags" class="card-text">
                     #HandGesture <br>
-                    #HandMovements <br> 
+                    #HandMovements <br>
                   </p>
                   <div>
                     <input type="text" id="newTagInput" placeholder="Enter new tag">
@@ -58,7 +64,8 @@
             <div class="col-md-12 col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">new_releases</span> Features</h5>
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons"
+                      style="font-size: 30px;">new_releases</span> Features</h5>
                   <p class="card-text">No feature calculated for now</p>
                 </div>
               </div>
@@ -69,45 +76,51 @@
             <div class="col-md-12 col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">new_releases</span> Characteristics</h5>
-                  <p class="card-text">No feature calculated for now</p>
+                  <h5 class="card-title" style="display: flex; align-items: center;"><span
+                      class="material-symbols-outlined">tune</span> Characteristics</h5>
+                  <!-- <p class="card-text">Show more...</p> -->
+                  <div id="tableCharacteristics">
+                 
+                  </div>
                 </div>
               </div>
             </div>
 
           </div>
         </div>
-     
- 
-      <div class="mb-3" style="text-align: center;">
-          <button class="btn btn-dark" style="color: #e0e2d7; margin-right: 20px; width: 190px;" >Extend Project</button>
-          <button class="btn btn-primary" style="color: #e0e2d7; margin-right: 20px; width: 190px;" >Save Project Changes</button>
-          <button class="btn btn-danger" style="background-color: #ff3333;width: 190px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Project</button>
-      
+
+
+        <div class="mb-3" style="text-align: center;">
+          <button class="btn btn-dark" style="color: #e0e2d7; margin-right: 20px; width: 190px;">Extend Project</button>
+          <button class="btn btn-primary" style="color: #e0e2d7; margin-right: 20px; width: 190px;">Save Project
+            Changes</button>
+          <button class="btn btn-danger" style="background-color: #ff3333;width: 190px;" data-bs-toggle="modal"
+            data-bs-target="#deleteModal">Delete Project</button>
+
           <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Delete Project</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete your project permanently?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" onclick="delete_project()">Delete</button>
-                    </div>
-                  </div>
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Delete Project</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to delete your project permanently?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-danger" onclick="delete_project()">Delete</button>
+                </div>
               </div>
+            </div>
           </div>
-      </div>
-    </section>
-</div>
+        </div>
+      </section>
+    </div>
 
 
-<script src="{{ url_for('static', filename='js/project/about/projectHome.js') }}"></script>
-  
-{% block acquisitionScript %} {% endblock %}
+    <script src="{{ url_for('static', filename='js/project/about/projectHome.js') }}"></script>
 
-{% endblock %}
+    {% block acquisitionScript %} {% endblock %}
+
+    {% endblock %}

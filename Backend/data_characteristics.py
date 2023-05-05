@@ -138,27 +138,27 @@ def separeteAudio(video):
 
 
 def getVideoCharacteristics(video):
-    if getFileExtension(video) != ".mp4":
-        return getVideoCharacteristics(tomp4(video))       # send to mp4 to be uniform
-    else:
-        contrast = float(getContrast(video))
-        brightness = float(getBrightness(video))
-        sharpness = float(getSharpness(video))
-        saturation = float(getSaturation(video))
-        hue = float(getHue(video))
-        resolution = list(getResolution(video))
-        duration = float(getDuration(video))
+    # if getFileExtension(video) != ".mp4":
+    #     return getVideoCharacteristics(tomp4(video))       # send to mp4 to be uniform
+    # else:
+    contrast = float(getContrast(video))
+    brightness = float(getBrightness(video))
+    sharpness = float(getSharpness(video))
+    saturation = float(getSaturation(video))
+    hue = float(getHue(video))
+    resolution = list(getResolution(video))
+    duration = float(getDuration(video))
 
-        video_chars = {
-            "contrast": contrast,
-            "brightness": brightness,
-            "sharpness": sharpness,
-            "saturation": saturation,
-            "hue": hue,
-            "resolution": resolution,
-            "duration": duration
-        }
-        return json.dumps(video_chars)
+    video_chars = {
+        "contrast": contrast,
+        "brightness": brightness,
+        "sharpness": sharpness,
+        "saturation": saturation,
+        "hue": hue,
+        "resolution": resolution,
+        "duration": duration
+    }
+    return json.dumps(video_chars)
 
 
 def main():
@@ -174,7 +174,6 @@ def main():
     # print(getSaturation(tomp4(file)))
     # print(getHue(tomp4(file)))
     print(getVideoCharacteristics(file))
-    
 
 
 if __name__ == "__main__":
