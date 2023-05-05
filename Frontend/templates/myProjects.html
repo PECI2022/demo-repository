@@ -4,6 +4,9 @@
 
 {% block aditionalHead %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+
 <style>
 
   .modal-content {
@@ -27,9 +30,9 @@
             <div href="newProject" id="projectsHere" style="display:flex;">
                 <h1 class="mtext-white" style="color:black">My Projects</h1>
                        <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-light" style="margin-left: auto;background-color: white; border-color: grey;" data-bs-toggle="modal" data-bs-target="#newProject">
-                    New Project
-                  </button>
+                    <button type="button" class="btn btn-light" style="margin-left: auto;background-color: white; border-color: grey;" data-bs-toggle="modal" data-bs-target="#newProject">
+                      <i class="fas fa-plus"></i> New Project
+                    </button>
 
                  <div class="modal fade" id="newProject" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     
@@ -37,8 +40,8 @@
                       <div class="modal-content">
                         <div class="overlay"></div>
                         <div class="modal-header">
-                          <h5 class="modal-title">New Project</h5>
-                          <button type="button" class="close" data-bs-dismiss="modal"  onclick="window.location.href='myProjects'" aria-label="Close">
+                          <h5 class="modal-title">New Project <i class="fas fa-plus"></i></h5>
+                          <button type="button" class="close" data-bs-dismiss="modal" onclick="window.location.href='myProjects'" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>

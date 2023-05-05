@@ -1,6 +1,9 @@
 {% extends 'project/visualize/visualizeBase.html' %}
 
 {% block acquisitionOptions %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+
 <div class="input-group">
     <label class="input-group-text" for="inputGroupSelect01">Model</label>
     <select class="form-select h-100" id="inputGroupSelect01">
@@ -20,8 +23,9 @@
 
 {% block acquisitionDisplay %}
 <div id="startDisplayButtonBack" style="width: 640px;height:480px;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
-    <button class="btn button btn-light" id="start-camera" style="">Start Camera</button>
+    <button class="btn button btn-light" id="start-camera" style=""><i class="fas fa-play"></i></button>
 </div>
+  
 
 <video id="video" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
 <video id="video_loader" width="640" height="480" autoplay style="background-color: #111;margin:5px auto; display: none;"></video>
