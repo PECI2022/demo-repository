@@ -2,8 +2,10 @@
 
 {% block additionalHeadProjectBaseAcquisition %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/project/acquisition/video.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  integrity="sha512-..." crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-..."
+  crossorigin="anonymous"></script>
 
 
 {% endblock %}
@@ -15,12 +17,14 @@
 <div class="jumbotron">
   <ul class="nav nav-tabs w-100" id="myTab" role="tablist">
     <li class="nav-item1 w-100">
-      <button class="nav-link active w-100" id="tab-Record" data-bs-toggle="pill" data-bs-target="#pills-Record"type="button" role="tab" aria-controls="pills-Record" aria-selected="true" style="color: #61554d;">
+      <button class="nav-link active w-100" id="tab-Record" data-bs-toggle="pill" data-bs-target="#pills-Record"
+        type="button" role="tab" aria-controls="pills-Record" aria-selected="true" style="color: #61554d;">
         <i class="fas fa-circle fa-xs" style="margin-right: 8px;"></i> Acquisition By Record
       </button>
     </li>
     <li class="nav-item w-100">
-      <button class="nav-link w-100" id="tab-upload" data-bs-toggle="pill" data-bs-target="#pills-upload" type="button" role="tab" aria-controls="pills-upload" aria-selected="false" style="color: #61554d">
+      <button class="nav-link w-100" id="tab-upload" data-bs-toggle="pill" data-bs-target="#pills-upload" type="button"
+        role="tab" aria-controls="pills-upload" aria-selected="false" style="color: #61554d">
         <i class="fas fa-upload"></i> Acquisition By Upload
       </button>
     </li>
@@ -29,6 +33,13 @@
   <!-- !!!!! -->
 
   <div class="tab-content" id="myTabContent">
+    <!-- Preview Video-->
+    <div id="previewVideo">
+      <video id="video" width="320" height="240" autoplay controls />
+    </div>
+    <!-- End Preview Video-->
+
+    
     <div class="tab-pane show active" id="pills-Record" role="tabpanel" aria-labelledby="pills-Record">
       <!-- <label  style="margin-top: 20px;max-width: 210px;">For acquisition you can record your own Videos!</label> -->
       <div class="btn-group w-100" style="margin-top:30px">
@@ -221,10 +232,10 @@
 <div id="recording-message" style="display:none">Recording...</div>
 
 
-  <div id="startDisplayButtonBack"
-    style="width: 100%;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
-    <button class="btn button btn-light" id="start-camera"><i class="fas fa-play"></i> </button>
-  </div>
+<div id="startDisplayButtonBack"
+  style="width: 100%;background-color: #111;margin:5px auto;display: flex;justify-content: center;align-items: center;">
+  <button class="btn button btn-light" id="start-camera"><i class="fas fa-play"></i> </button>
+</div>
 
 <video id="video" width="640" height="480" autoplay
   style="background-color: #111;margin:5px auto; display: none;"></video>

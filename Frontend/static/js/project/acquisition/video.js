@@ -130,8 +130,6 @@ record_button.addEventListener('click', async () => {
 
 });
 const list_videos_fetch = async () => {
-    // console.log(class_adition.innerHTML)
-    // console.log(video_table)
     let data = new FormData()
     data.append("id", JSON.stringify({ 'id': projectID }))
     const response = await fetch('http://127.0.0.1:5001/list_videos', {
@@ -141,9 +139,7 @@ const list_videos_fetch = async () => {
     let list = await response.json()
     if (!list) return;
 
-    // console.log(list)
     list.sort((a, b) => {
-        // // console.log("sorting", a, tableSorting)
         if (tableSorting[0] == 1) return a[tableSorting[1]].localeCompare(b[tableSorting[1]])
         else return b[tableSorting[1]].localeCompare(a[tableSorting[1]])
     }); // Sort table
@@ -155,16 +151,12 @@ const list_videos_fetch = async () => {
             i.name.match(new RegExp(acquisitionSearch.value))==null &&
             i.video_class.match(new RegExp(acquisitionSearch.value))==null
         ) continue;
-        let  s = `<tr>
+        let s = `<tr>
                     <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)" style="cursor:pointer;display:${tableSorting[2]};">
                         <span class="material-icons checkbox" style="line-height:40px";>
                             check_box_outline_blank
                         </span>
                     </td>
-                    <!-- <td>
-                    <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-                    <span class="previewNameList">${i.name}</span>
-                    </td> -->
                     <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}')">${i.name}</td>
 
                     <td class="acquisitionTableClass">${i.video_class}</td>
@@ -174,12 +166,6 @@ const list_videos_fetch = async () => {
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
-        // newElem.onclick = () => 
-        let newElem2 = document.createElement('tr');
-        newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="360px" height="300px" autoplay controls/></td>`
-        newElem2.classList.add("collapse")
-        newElem2.id = `collapse${i._id}`
-        newElem2.colSpan = "4"
         let empty = document.createElement('tr');
         empty.innerHTML = ""
         const ff = () => {
@@ -187,8 +173,6 @@ const list_videos_fetch = async () => {
                 if( i.id.startsWith('collapse') && !i.classList.contains('collapse') ) i.classList.add('collapse');
             }
             tableLoadvideo(i._id);
-            newElem2.classList.remove('collapse');
-            
             newElem.onclick = () => {
                 newElem2.classList.add('collapse');
                 newElem.onclick = ff;
@@ -197,9 +181,10 @@ const list_videos_fetch = async () => {
         newElem.onclick = ff;
         video_table.appendChild(newElem);
         video_table.appendChild(empty);
-        video_table.appendChild(newElem2)
     }
-}; list_videos_fetch()
+}; 
+list_videos_fetch();
+
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // const previewVideo = document.getElementById("previewVideo");
@@ -627,3 +612,34 @@ const preview_edit = (elem) => {
     }
 }
 
+
+const previewVideo = document.getElementById("previewVideo");
+let newVideoID = "video";
+
+
+
+function togglePreviewVideo(video_id) {
+    const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
+    const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
+
+    const previewVideo = document.getElementById('previewVideo');
+    previewVideo.style.top = acquisitionTableNameRect.top + 'px';
+    previewVideo.style.left = acquisitionTableNameRect.left + 'px';
+
+    document.addEventListener('click', (e) => {
+        let visible = false;
+
+        if (e.target.parentElement == acquisitionTableName && !visible) {
+            previewVideo.style.display = "block";
+            const video = document.querySelector(newVideoID);
+            video.setAttribute("id", "video" + video_id);
+            tableLoadvideo(video_id)
+            newVideoID = "#video" + video_id;
+            visible = true;
+
+        } else{
+            previewVideo.style.display = "none";
+            visible = false;
+        }
+    });
+};
