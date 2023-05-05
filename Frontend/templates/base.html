@@ -27,31 +27,27 @@
     <nav id="topNavBar" class="navbar navbar-expand-sm mbg-dark">
         <div class="container-fluid">
             <a id="navbarTitle" class="nav-link fw-bold {% if request.path == '/' %}active{% endif %}" href="/">
-                <i class="fas fa-home"></i> <bold>MDFF</bold>
+                <i class="material-icons">home</i> <bold>MDFF</bold>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
     
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav.item ml-auto" ></li>
-                    
+                    <li class="nav.item ml-auto"></li>
                     <li class="nav-item">
                         <a class="nav-link" href="/browse">
-                            <i class="fas fa-users"></i> Community
+                            <i class="material-icons">group</i> Community
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/myProjects">
-                            <i class="fas fa-user"></i> My Projects
+                            <i class="material-icons">person</i> My Projects
                         </a>
                     </li>
-                
                 </ul>
-
             </div>
         </div>
     </nav>
@@ -71,6 +67,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
     <!-- <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script> -->
     {% block baseScript %} {% endblock %}

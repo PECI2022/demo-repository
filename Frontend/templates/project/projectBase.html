@@ -7,7 +7,7 @@
 {% endblock %}
 {% endblock %}
 
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 {% block content %}
 <!-- <nav class="navbar navbar-expand-lg mbg-black" style="background-color: black;">
     <div class="container-fluid">
@@ -47,17 +47,23 @@
                 <ul class="w-100 p-0" style="list-style-type: none;">
                     <li class="nav-item">
                         <a class="m-0" id="AcquisitionLink" href="/project/acquisition/video">
-                            <i class="fas fa-video"></i> Acquisition
+                                <span class="material-symbols-outlined">
+                                videocam
+                                </span> Acquisition
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="m-0" id="FeatureLink" href="/project/features/features">
-                        <i class="fas fa-star"></i> Features
+                            <span class="material-symbols-outlined">
+                                new_releases
+                                </span> Features
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="m-0" id="FeatureLink" href="/project/about/projectAbout">
-                        <i class="fas fa-star"></i> Settings
+                            <span class="material-symbols-outlined">
+                                settings
+                                </span> Settings
                         </a>
                     </li>
                 </ul>
@@ -65,6 +71,9 @@
                 <ul class="w-100 p-0 mt-5" style="list-style-type: none;">
                     <li class="nav-item">
                         <a class="m-0 active">
+                            <span class="material-symbols-outlined">
+                                ios_share
+                                </span>
                             Export Project
                         </a>
                     </li>

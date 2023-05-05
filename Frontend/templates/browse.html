@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
 
+
+
+
 <style>
     .form-control {
         width: 300px;
@@ -57,6 +60,7 @@
 {% block content %}
 
 
+
 <div class="container my-4">
     <h2 style="text-align:left;color: black">Community Projects</h2>
 
@@ -67,7 +71,9 @@
             <label for="search-input" class="visually-hidden"></label>
             <input id="search-input" class="form-control me-2" type="search" placeholder="" aria-label="Search"
                 community-search>
-            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+            <button class="btn btn-outline-success" type="submit"><span class="material-symbols-outlined">
+                search
+                </span></button>
         </form>
 
 
@@ -80,7 +86,9 @@
                 <option value="audio">Audio</option>
             </select>
 
-            <button class="btn btn-outline-success" type="submit" onclick="list_projects()"><i class="fas fa-filter"></i> </button>
+            <button class="btn btn-outline-success" type="submit" onclick="list_projects()"><span class="material-icons-outlined material-icons-outlined-filled">
+                filter_alt
+            </span> </button>
 
         </div>
     </div>
@@ -282,6 +290,8 @@
 
 
     <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 
 

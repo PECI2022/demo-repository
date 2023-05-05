@@ -45,3 +45,29 @@
 .search-icon i {
     font-size: 20px;
 }
+
+#record-video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#start-camera{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#tab-upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#tab-Record{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#record-video{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
