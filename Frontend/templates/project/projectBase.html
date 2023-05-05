@@ -38,33 +38,38 @@
 
 <div class="container-fluid h-100">
     <div class="row h-100">
-        <div class="col-sm-3 col-md-2">
-            <ul id="nav2" class="w-100 text-center" style="margin: 0;position: relative; top: 50%;-ms-transform: translateY(-50%);transform: translateY(-50%);">
-                <li class="nav-item" id="list2">
-                    <a class="m-0" id="projectAboutLink" href="/project/about/projectAbout">
-                        <i class="fas fa-home"></i>Home Project</a>
-                </li>
-                <li class="nav-item" id="list2">
-                    <a class="m-0" id="AcquisitionLink" href="/project/acquisition/video">
-                        <i class="fas fa-video"></i> Acquisition
-                    </a>
-                </li>
-                <li class="nav-item" id="list2">
-                    <a class="m-0" id="FeatureLink" href="/project/features/features">
-                      <i class="fas fa-star"></i> Features
-                    </a>
-                </li>
-                <li class="nav-item" id="list2">
-                    <a class="m-0" id="TrainLink" href="/project/train/train">
-                        <i class="fas fa-dumbbell"></i> Train
-                    </a>
-                </li>
-                <li class="nav-item" id="list2">
-                    <a class="m-0" id="VisualizeLink" href="/project/visualize/video">
-                        <i class="fas fa-eye"></i> Visualize
-                    </a>
-                </li>
-            </ul>
+        <div id="sidebarNav" class="col-sm-3 col-md-2 py-5 mbg-secondary">
+            <div id="nav2" class="text-center w-100" style="">
+                <div class="h-100 p-3 text-center">
+                    <h3>Project Title</h3>
+                    <p></p>
+                </div>
+                <ul class="w-100 p-0" style="list-style-type: none;">
+                    <li class="nav-item">
+                        <a class="m-0" id="AcquisitionLink" href="/project/acquisition/video">
+                            <i class="fas fa-video"></i> Acquisition
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="m-0" id="FeatureLink" href="/project/features/features">
+                        <i class="fas fa-star"></i> Features
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="m-0" id="FeatureLink" href="/project/about/projectAbout">
+                        <i class="fas fa-star"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="w-100 p-0 mt-5" style="list-style-type: none;">
+                    <li class="nav-item">
+                        <a class="m-0 active">
+                            Export Project
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="col-sm-9 col-md-10 p-0">
             <div id="divProjectContent" class="p-3" style="overflow: auto;">

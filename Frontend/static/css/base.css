@@ -1,14 +1,32 @@
 /* base */
 
 body {
-  background-color: #e0e2d7;
+  background-color: #eeede7;
+  /* color: black; */
+  width: 100%;
+  max-width: 1500;
+  margin: 0 auto;
 }
 
 .mbg-black {
-  background-color: #e0e2d7;
-  /* #76b5c5 */
+  background-color: black !important;
+}
+.mbg-primary {
+  background-color: #e7d2cc !important;
+}
+.mbg-secondary {
+  background-color: #b9b7bd !important;
+}
+.mbg-dark {
+  background-color: #868b8e !important;
+}
+.mbg-light {
+  background-color: #eeede7 !important;
 }
 
+/* ======================
+---- PROJECT SECTION-----
+=======================*/
 
 #nav2 {
   list-style-type: none;
@@ -17,23 +35,72 @@ body {
   width: 180px;
 }
 
-#list2 a {
+#topNavBar {
+  height: 50px;
+}
+
+#topNavBar a {
+  color: black;
+  cursor: pointer;
+  margin: 8px 10px;
+}
+
+#sidebarNav a {
   display: block;
   color: black;
   padding: 8px 16px;
   text-decoration: none;
+  border-radius: 5px;
 }
 
-#list2 a.active {
-  background-color: black;
-  color: white;
+#sidebarNav a.active {
+  background-color: #868b8e;
+  /* color: white; */
 }
 
-#list2 a:hover:not(.active) {
-  background-color: white;
-  opacity: 0.8;
+#sidebarNav a:hover:not(.active) {
+  background-color: #eeede7;
+}
+
+/* ==========================
+- VIDEO ACQUISITION SECTION -
+===========================*/
+
+#myTab button {
+  background-color: #b9b7bd;
   color: black;
+  border-radius: 5px;
+  border: 0;
 }
+
+#myTab button.active {
+  background-color: #868b8e;
+}
+
+#pills-Record button {
+  background-color: #868b8e;
+  margin: 10px 0px;
+  border: 0;
+  border-radius: 5px;
+}
+#pills-Record .input-group-text {
+  background-color: #868b8e;
+  margin: 2px 0;
+  border: 0;
+  border-radius: 5px;
+}
+#pills-Record .form-control {
+  background-color: #b9b7bd;
+  margin: 2px 0;
+  border: 0;
+  border-radius: 5px;
+}
+/* #pills-Record .input-group .input-group-text {
+  background-color: #b9b7bd;
+  border: 0;
+  border-radius: 5px;
+} */
+
 
 /* ======================
 ---- SECOND SECTION------
@@ -87,48 +154,18 @@ body {
 }
 
 .mbg-black #navbarTitle {
-  color: #343335;
+  /* color: #343335; */
 }
 
 .mbg-black #navbarTitle.active {
-  color: black;
+  /* color: black;
   /* make text bold */
-  font-weight: bold;
+  /* font-weight: bold; */ 
 }
 
 .card-container {
   display: flex;
   flex-wrap: wrap;
-}
-
-.content {
-  max-width: 500px;
-  margin: auto;
-}
-
-.navbar {
-  height: 50px;
-}
-
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-h6 {
-  font-size: 1.05em;
-  font-weight: 500;
-  color: black;
-}
-
-.content {
-  max-width: 500px;
-  margin: auto;
-}
-
-.navbar-nav .nav-link.active {
-  color: #e0e2d7;
 }
 
 #msg {
@@ -139,12 +176,6 @@ h6 {
   font-family: Verdana;
 }
 
-button {
-  padding: 5px 10px;
-  border: 1px solid grey;
-  font-size: 18px;
-  background: white;
-}
 
 .audio-controls {
   display: flex;
@@ -158,38 +189,17 @@ button {
   margin: 0px 15px;
 }
 
-canvas {
-  margin-top: 10px;
-  background-color: black;
-}
 
-select {
-  height: 20px;
-  margin: 0px 5px;
-}
-
-a {
-  margin-left: 20px;
-}
 
 .app {
   text-align: center;
   padding-top: 10px;
 }
 
-.navbar {
-  height: 50px;
-}
-
 
 .card-container {
   display: flex;
   flex-wrap: wrap;
-}
-
-.content {
-  max-width: 500px;
-  margin: auto;
 }
 
 /* Get Started Button*/
@@ -364,26 +374,6 @@ a {
 *::after {
   box-sizing: border-box;
   margin: 0;
-}
-
-img {
-  display: block;
-  width: 100%;
-  max-width: 1500px;
-}
-
-
-
-body {
-  background: #e0e2d7;
-  color: black;
-  width: 100%;
-  max-width: 1500;
-  margin: 0 auto;
-}
-
-section {
-  margin: 5rem 2rem;
 }
 
 /* Section One */

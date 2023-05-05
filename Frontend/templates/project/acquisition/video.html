@@ -12,21 +12,19 @@
 {% block acquisitionOptions %}
 <!--Jumbatron-->
 
-<div class="jumbotron">
+<div class="jumbotron mt-3">
   <ul class="nav nav-tabs w-100" id="myTab" role="tablist">
-    <li class="nav-item1 w-100">
-      <button class="nav-link active w-100" id="tab-Record" data-bs-toggle="pill" data-bs-target="#pills-Record"type="button" role="tab" aria-controls="pills-Record" aria-selected="true" style="color: #61554d;">
+    <li class="nav-item w-100">
+      <button class="nav-link active w-100" id="tab-Record" data-bs-toggle="pill" data-bs-target="#pills-Record"type="button" role="tab" aria-controls="pills-Record" aria-selected="true">
         <i class="fas fa-circle fa-xs" style="margin-right: 8px;"></i> Acquisition By Record
       </button>
     </li>
     <li class="nav-item w-100">
-      <button class="nav-link w-100" id="tab-upload" data-bs-toggle="pill" data-bs-target="#pills-upload" type="button" role="tab" aria-controls="pills-upload" aria-selected="false" style="color: #61554d">
+      <button class="nav-link w-100" id="tab-upload" data-bs-toggle="pill" data-bs-target="#pills-upload" type="button" role="tab" aria-controls="pills-upload" aria-selected="false">
         <i class="fas fa-upload"></i> Acquisition By Upload
       </button>
     </li>
   </ul>
-  <!-- !!! -->
-  <!-- !!!!! -->
 
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane show active" id="pills-Record" role="tabpanel" aria-labelledby="pills-Record">
@@ -43,21 +41,18 @@
               onclick="document.querySelector('#classDropdown').innerHTML='Peace'">Peace</button></li>
         </ul>
 
-        <button id="addClass" onclick="addProjectClass()">+</button>
+        <button id="addClass" class="mbg-secondary" style="padding-left: 20px;padding-right: 20px;" onclick="addProjectClass()">+</button>
       </div>
       <div class="input-group w-100">
-        <span class="input-group-text"><i class="fas fa-stopwatch"></i></span>
         <span class="input-group-text" style="width:70%;">Countdown</span>
         <input id="video-countdown" type="number" aria-label="First name" class="form-control" value="3">
       </div>
       <div class="input-group w-100">
-        <span class="input-group-text"><i class="fas fa-clock"></i></span>
         <span class="input-group-text" style="width:70%;">Duration</span>
         <input id="video-duration" type="number" aria-label="First name" class="form-control" value="3">
       </div>
       <div class="input-group w-100">
-        <span class="input-group-text"><i class="fas fa-redo-alt"></i></span>
-        <span class="input-group-text" style="width:70%;">Number of recordings</span>
+        <span class="input-group-text" style="width:70%;">Repetitions</span>
         <input id="numberOfRecordingsInput" type="number" aria-label="First name" class="form-control" value="1">
       </div>
 
