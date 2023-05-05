@@ -68,15 +68,15 @@ async function updateCharacteristics() {
   table.innerHTML = "";
 
   let i = {
-    "contrast": 0,
-    "brightness": 0,
-    "sharpness": 0,
-    "saturation": 0,
-    "hue": 0,
+    "contrast": 101,
+    "brightness": 124,
+    "sharpness": 47,
+    "saturation": 155,
+    "hue": 23,
   };
 
+  const row = document.createElement("tr");
   let s = `
-  <tr>
     <td class="characteristicName">Contrast:</td>
     <td>${i.contrast}</td>
     <td class="characteristicName">Brightness:</td>
@@ -86,9 +86,9 @@ async function updateCharacteristics() {
     <td class="characteristicName">Saturation:</td>
     <td>${i.saturation}</td>
     <td class="characteristicName">Hue:</td>
-    <td>${i.hue}</td>
-  </tr>   
+    <td>${i.hue}</td> 
   `
-  table.innerHTML = s;
+  row.innerHTML = s;
+  table.appendChild(row);
 }
 updateCharacteristics();

@@ -516,3 +516,12 @@ section {
 .acquisitionTableName:hover {
   text-decoration: underline;
 }
+
+
+.characteristicName {
+  font-weight: bold;
+}
+
+td {
+  padding-left: 5px;
+}
