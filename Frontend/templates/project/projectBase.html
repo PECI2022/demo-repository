@@ -59,7 +59,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="m-0" id="FeatureLink" href="/project/about/projectAbout">
+                        <a class="m-0" id="SettingsLink" href="/project/about/projectAbout">
                             <span class="material-symbols-outlined">
                                 settings
                                 </span> Settings
@@ -90,18 +90,9 @@
 
 {% block baseScript %}
 <script>
-    var project_id = localStorage.getItem("project_id");
-    var projectAboutLink = document.getElementById("projectAboutLink");
-    var AcquisitionLink = document.getElementById("AcquisitionLink");
-    var FeatureLink = document.getElementById("FeatureLink");
-    var TrainLink = document.getElementById("TrainLink");
-    var VisualizeLink = document.getElementById("VisualizeLink");
-
-    projectAboutLink.href = "/project/about/projectAbout?id=" + project_id;
     AcquisitionLink.href = "/project/acquisition/video?id=" + project_id;
     FeatureLink.href = "/project/features/features?id=" + project_id;
-    TrainLink.href = "/project/train/train?id=" + project_id;
-    VisualizeLink.href = "/project/visualize/video?id=" + project_id;
+    SettingsLink.href = "/project/about/projectAbout?id=" + project_id;
 </script>
 <script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
 {% block projectBaseScript %} {% endblock %}
