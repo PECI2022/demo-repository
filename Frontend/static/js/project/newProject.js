@@ -77,8 +77,10 @@ const load_content = async () => {
                         <small class="text-muted">Last updated: ${
                           project.update
                         }</td>
-                        <button type="button" onclick="delete_project('${project._id}')" class="btn btn-danger btn-sm float-end">
-                          Delete
+                        <button type="button" onclick="delete_project('${project._id}')" class="btn btn-danger btn-sm float-end d-flex align-items-center">
+                        <span class="material-symbols-outlined">
+                          delete
+                        </span>
                         </button>
                       </div>
                     </div>
