@@ -45,21 +45,21 @@
                 </div>
                 <ul class="w-100 p-0" style="list-style-type: none;">
                     <li class="nav-item">
-                        <a class="m-0" id="AcquisitionLink" href="/project/acquisition/video">
+                        <a class="m-0" id="AcquisitionLink">
                                 <span class="material-symbols-outlined">
                                 videocam
                                 </span> Acquisition
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="m-0" id="FeatureLink" href="/project/features/features">
+                        <a class="m-0" id="FeatureLink">
                             <span class="material-symbols-outlined">
                                 new_releases
                                 </span> Features
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="m-0" id="SettingsLink" href="/project/about/projectAbout">
+                        <a class="m-0" id="SettingsLink">
                             <span class="material-symbols-outlined">
                                 settings
                                 </span> Settings
@@ -90,9 +90,6 @@
 
 {% block baseScript %}
 <script>
-    AcquisitionLink.href = "/project/acquisition/video?id=" + project_id;
-    FeatureLink.href = "/project/features/features?id=" + project_id;
-    SettingsLink.href = "/project/about/projectAbout?id=" + project_id;
 </script>
 <script src="{{ url_for('static', filename='js/project/projectBase.js') }}"></script>
 {% block projectBaseScript %} {% endblock %}

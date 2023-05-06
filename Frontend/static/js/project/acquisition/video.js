@@ -1,8 +1,3 @@
-const queryString = window.location.search
-const urlParams = new URLSearchParams(queryString)
-const projectID = urlParams.get('id')
-// console.log(projectID)
-
 const camera_button_back = document.querySelector("#startDisplayButtonBack")
 const camera_button = document.querySelector("#start-camera");
 const record_button = document.querySelector("#record-video");

@@ -1,7 +1,3 @@
-const queryString = window.location.search
-const urlParams = new URLSearchParams(queryString)
-const projectID = urlParams.get('id')
-
 window.addEventListener('load', () => {
     const queryString2 = window.location.search
     const urlParams2 = new URLSearchParams(queryString2)

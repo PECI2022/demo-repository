@@ -1,7 +1,6 @@
 const featuresList = document.querySelector("#features_list")
 let category = "Feature"
 // var project_id = localStorage.getItem("project_id");
-let projectID = (new URLSearchParams(window.location.search)).get('id')
 
 let checkedVideos = []
 let currentFeature
@@ -73,6 +72,8 @@ const createFeature = async () => {
 const list_features = async () => {
 
     let data = new FormData()
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectID = urlParams.get('id');
     data.append('description', JSON.stringify({ pid: projectID }))
     const response = await fetch('http://127.0.0.1:5001/list_features', {
         method: "POST",

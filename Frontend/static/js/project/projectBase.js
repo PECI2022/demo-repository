@@ -1,4 +1,12 @@
 // console.log("ProjectBase")
+
+const urlParams = new URLSearchParams(window.location.search);
+const projectID = urlParams.get('id');
+
+AcquisitionLink.href = "/project/acquisition/video?id=" + projectID;
+FeatureLink.href = "/project/features/features?id=" + projectID;
+SettingsLink.href = "/project/about/projectAbout?id=" + projectID;
+
 document.querySelector('#divProjectContent').style.height = (window.innerHeight-50) + 'px';
 window.addEventListener('resize', function(event) {
     document.querySelector('#divProjectContent').style.height = (window.innerHeight-50) + 'px';
