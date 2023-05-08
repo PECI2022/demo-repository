@@ -25,7 +25,7 @@
         <br>
         <div class="container my-5">
             <div href="newProject" id="projectsHere" style="display:flex;">
-                <h1 class="mtext-white" style="color:black">My Projects</h1>
+                <h1 >My Projects</h1>
                        <!-- Button trigger modal -->
                   <button type="button" class="btn btn-light" style="margin-left: auto;background-color: white; border-color: grey;" data-bs-toggle="modal" data-bs-target="#newProject">
                     New Project
@@ -34,7 +34,7 @@
                  <div class="modal fade" id="newProject" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     
                     <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
+                      <div class="modal-content" style="color: black">
                         <div class="overlay"></div>
                         <div class="modal-header">
                           <h5 class="modal-title">New Project</h5>
@@ -60,6 +60,51 @@
                                 <option>Logistic regression model</option>
                               </select>
                             </div>
+                             <div class="row" style="margin-top: 10px;">
+                                <div class="col">
+                                  <div class="form-group" id="Category" value="Gestures">
+                                    <label for="option">Category</label>
+                                    <div class="form-check" onclick="get_category('Video')">
+                                      <input class="form-check-input" type="radio" name="category_option" id="gestures" value="video">
+                                      <label class="form-check-label" for="gestures">
+                                        Video
+                                      </label>
+                                    </div>
+                                    <div class="form-check" onclick="get_category('Audio')">
+                                      <input class="form-check-input" type="radio" name="category_option" id="audio" value="audio">
+                                      <label class="form-check-label" for="audio">
+                                        Audio
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="form-group" id="Privacy" value="Public">
+                                    <label for="option">Privacy</label>
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="radio" onclick="get_privacy('Public')" name="privacy_option" value="public" checked>
+                                      <label class="form-check-label" for="public">
+                                        Public
+                                      </label>
+                                    </div>
+                                    <div class="form-check" onclick="get_privacy('Private')">
+                                      <input class="form-check-input" type="radio" name="privacy_option" id="private" value="private">
+                                      <label class="form-check-label" for="private">
+                                        Private
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                            <div>
+                              <label for="tags">Tags</label>
+                               <p id="tags"></p>
+                              <input type="text" id="newTagInput" placeholder="Enter new tag">
+                              <button type="button" onclick="addTag()" class="btn btn-primary">Add tag</button>
+                            </div>
+
                             <div class="row" style="margin-top: 10px;">
                                   <div class="col">
                                     <div class="form-group" id="Category" value="Gestures">
@@ -114,12 +159,13 @@
                 </div>
                 
 
+
                 
             </div>
      </div>
             <hr class="mbg-white border-3 opacity-100" style="border-color: #eee;">
         
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="project_list">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="project_list" style="color:black">
                   
                   
                       
@@ -130,29 +176,7 @@
         <br>
         <br>
 
-        <div class="container my-5">
-            <div style="display:flex;">
-                <h1 class="mtext-white" style="color:black">DataBase</h1>
-                
-            </div>
-            <hr class="mbg-white border-3 opacity-100" style="border-color: #eee;">
-        
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" >
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body" style="cursor: pointer;">
-                            <h3 class="card-title" >DataBase</h5>
-                            <p class="card-text">Here you can find, download, use dataSets from our DB</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 24 hours ago</small>
-                        </div>
-                        <a onclick="location.href='browse'">
-                            <span class="span-link"></span>
-                        </a>
-                    </div>
-                </div>
-        </div>
+       
         <br>
         <br>
         <br>

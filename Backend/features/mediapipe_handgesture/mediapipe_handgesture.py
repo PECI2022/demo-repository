@@ -22,7 +22,10 @@ class Mediapipe_handgesture:
         # Create a hand landmarker instance with the video mode:
         self.options = HandLandmarkerOptions(
             base_options=BaseOptions(model_asset_path=model_path),
-            running_mode=VisionRunningMode.VIDEO)
+            running_mode=VisionRunningMode.VIDEO,
+            min_hand_detection_confidence=0.1,
+            min_hand_presence_confidence=0.1,
+            min_tracking_confidence=0.1,)
         
     def getLandMarks(self, videoPath) -> list:
         with self.HandLandmarker.create_from_options(self.options) as landmarker:
@@ -41,18 +44,22 @@ class Mediapipe_handgesture:
 
                 timestamp = int(cap.get(cv2.CAP_PROP_POS_MSEC))
 
-                hand_landmarker_result.append(landmarker.detect_for_video(mp_image, timestamp))
-                # print("THIs")
-                # print(hand_landmarker_result)
+                landmark = landmarker.detect_for_video(mp_image, timestamp)
+                if len(landmark.hand_landmarks) != 0:
+                    hand_landmarker_result.append([{'x':i.x,'y':i.y,'z':i.z} for i in landmark.hand_landmarks[0]])
+                else:
+                    hand_landmarker_result.append([])
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
             
             cap.release()
             cv2.destroyAllWindows()
+
         return hand_landmarker_result
 
 
 if __name__=='__main__':
     featureClass = Mediapipe_handgesture()
-    # print(featureClass.getLandMarks('yeye.webm'))
+    result = featureClass.getLandMarks('yeye.webm')
+    print(result)

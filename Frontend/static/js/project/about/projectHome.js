@@ -73,6 +73,8 @@ const load_info = async () => {
 function updateTags() {
   let tags = JSON.parse(localStorage.getItem("tags"));
   console.log(tags);
+function addTag(event) {
+  event.preventDefault();
   var tagInput = document.getElementById("newTagInput");
   var tagsListed = document.getElementById("tags");
   var tag = tagInput.value;
