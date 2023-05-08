@@ -8,11 +8,11 @@ import os
 from Mongo_cli import MongoCli
 from bson.objectid import ObjectId
 from datetime import datetime
-from features.mediapipe_handgesture.mediapipe_handgesture import Mediapipe_handgesture
+# from features.mediapipe_handgesture.mediapipe_handgesture import Mediapipe_handgesture
 
 app = Flask(__name__)
 mongo_cli = MongoCli()
-pipe = Mediapipe_handgesture()
+# pipe = Mediapipe_handgesture()
 fs = GridFS(mongo_cli.db)
 CORS(app)
 
@@ -145,26 +145,26 @@ class Operations:
         return mongo_cli.list_features(description['pid'])
 
     def extract_features(self):
-        description = json.loads(request.form['description'])
-        project = mongo_cli.find_project(description['pid'])
-        videos_id = description['videos']
-        feature = mongo_cli.find_feature(description['feature'])
-        vid = project['content']
-        for video_id in videos_id:
-            video = mongo_cli.find_video(video_id,description['pid'])
+        # description = json.loads(request.form['description'])
+        # project = mongo_cli.find_project(description['pid'])
+        # videos_id = description['videos']
+        # feature = mongo_cli.find_feature(description['feature'])
+        # vid = project['content']
+        # for video_id in videos_id:
+        #     video = mongo_cli.find_video(video_id,description['pid'])
 
-            if video['_id'] not in feature['data']:
-                vid.remove(video)
-                video_name = mongo_cli.download_media_file(video['_id'])
-                f = pipe.getLandMarks(video_name)
-                os.remove(video_name)
-                content = {"video_id": video['_id'], "feature": f}
-                mongo_cli.insert_in_feature(feature['_id'],content)
-                video[feature['class']] = feature['_id']
-                vid.append(video)
+        #     if video['_id'] not in feature['data']:
+        #         vid.remove(video)
+        #         video_name = mongo_cli.download_media_file(video['_id'])
+        #         f = pipe.getLandMarks(video_name)
+        #         os.remove(video_name)
+        #         content = {"video_id": video['_id'], "feature": f}
+        #         mongo_cli.insert_in_feature(feature['_id'],content)
+        #         video[feature['class']] = feature['_id']
+        #         vid.append(video)
 
-        project['content'] = vid
-        mongo_cli.insert_data(project,project['_id'],"info")
+        # project['content'] = vid
+        # mongo_cli.insert_data(project,project['_id'],"info")
         return "done"
 
     def get_features(self):
