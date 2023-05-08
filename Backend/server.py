@@ -52,7 +52,7 @@ class Operations:
         _id = mongo_cli.generate_unique_id()
         video_class = description.get('class')
         video_length = description.get('length')
-        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now(), "MediaPipeHand": 0}
+        data = {"name":description['name'], "video_class":video_class, "length": video_length, "_id":str(_id), "update": datetime.now(), "MediaPipeHand": 0, "Characteristics": {}}
         # mongo_cli.insert_data(data,_id,"info")
         mongo_cli.insert_media_file(_id,info)
         os.remove(info)
@@ -75,7 +75,7 @@ class Operations:
         return "done"
 
     def upload_video(self, name, _id, pid, video_class, video_length, location):
-        data = {"name":name, "video_class":"video_class", "length": "video_length", "_id":str(_id), "update": datetime.now(), "MediaPipeHand": 0}
+        data = {"name":name, "video_class":"video_class", "length": "video_length", "_id":str(_id), "update": datetime.now(), "MediaPipeHand": 0, "Characteristics": {}}
         mongo_cli.insert_media_file(ObjectId(_id),location)
         os.remove(location)
         return mongo_cli.insert_in_project(pid, data)
