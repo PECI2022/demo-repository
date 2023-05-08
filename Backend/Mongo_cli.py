@@ -8,9 +8,11 @@ class MongoCli(object):
         self.db = self.client['context_user']
         self.collection = self.db['context_user']
         self.features = self.db['features'] 
-    
+        self.exportFeatures = self.db['exportFeatures']
+        self.export = self.db['export']
+        self.f = ['MediaPipeHand']
+        
     def insert_data(self, data, _id, topic):
-        print(id)
         if not self.find_project(_id):
             try:
                 doc = self.collection.insert_one({'_id': ObjectId(_id), topic: data})
@@ -32,7 +34,6 @@ class MongoCli(object):
                 print('\n[!] ADD NEW VALUES [!]')
 
     def insert_feature(self, data, _id, topic):
-        print(id)
         if not self.find_feature(_id):
             try:
                 doc = self.features.insert_one({'_id': ObjectId(_id), topic: data})
@@ -53,35 +54,54 @@ class MongoCli(object):
             else:
                 print('\n[!] ADD NEW VALUES [!]')
 
+    def export_project(self, data):
+        self.export.drop()
+        self.exportFeatures.drop()
+        try:
+            doc = self.export.insert_one({'_id': ObjectId(data['_id']), "info": data})
+        except Exception as e:
+            print(f'\n[x] ERROR - INSERTED [x]: {e}')
+        else:
+            print('\n[!] INSERTED [!]')
+        
+        fids = self.export.find_one()
+
+        for fid in fids['info']['features']:
+            feature = self.find_feature(fid)
+            try:
+                doc = self.exportFeatures.insert_one({'_id': ObjectId(fid), "info": feature})
+            except Exception as e:
+                print(f'\n[x] ERROR - INSERTED [x]: {e}')
+            else:
+                print('\n[!] INSERTED [!]')
+        return "DONE"            
+
     def find_project(self, _id):
         projects = self.collection.find()
         for project in projects:
             if project['info']['_id'] == _id:
                 return project['info']
-        return False
+        return None
     
     def find_feature(self, _id):
         features = self.features.find()
-        print(features)
         for feature in features:
-            if feature["info"]['_id'] == _id:
+            if feature["info"]['_id'] == str(_id):
                 return feature['info']
-        return False
+        return None
     
     def find_video(self, video_id, project_id):
         project = self.find_project(project_id)
         for video in project['content']:
             if video['_id'] == video_id:
                 return video
-        return False
+        return None
     
     def insert_in_project(self, project_id, data):
         project = self.find_project(project_id)
-        print(data)
         if self.check_existing_name(project["content"], data["name"]):
             return {"result": "Error"}
         project["content"].append(data)
-        print(project)
         self.insert_data(project,project['_id'],"info")
         return {"result": "Correct"}
     
@@ -96,11 +116,22 @@ class MongoCli(object):
         content = []
         for video in project['content']:
             if video['_id'] in videos_id:
+                for feature in self.f:
+                    self.delete_video_from_feature(video[feature], video['_id'])
                 self.delete_from_db(video['_id'])
             else:
                 content.append(video)
         project["content"] = content
         self.insert_data(project,project['_id'],"info")
+
+    def delete_video_from_feature(self, fid, vid):
+        feature = self.find_feature(fid)
+        content = []
+        for video in feature['data']:
+            if video['video_id'] != vid:
+                content.append(video)
+        feature['data'] = content
+        self.insert_feature(feature, fid, "info")
 
     # def edit_class(self, project_id, video_id, new_class):
     #     project = self.find_project(project_id)
@@ -163,6 +194,7 @@ class MongoCli(object):
         return videos
     
     def list_features(self, project_id):
+        print(project_id)
         project = self.find_project(project_id)
         features = []
         for feature in project['features']:
@@ -195,8 +227,6 @@ class MongoCli(object):
         name = file_location
         file_data = open(name, "rb")
         data = file_data.read()
-        print("catch")
-        print(file_data)
         fs = gridfs.GridFS(self.db)
         fs.put(data, filename=name, _id=_id)
         print("Inserted Media File: ", _id)
@@ -215,8 +245,11 @@ class MongoCli(object):
         fs = gridfs.GridFS(self.db)
         fs.delete(ObjectId(_id))
   
-    
+    def delete_feature_db(self,_id):
+        self.features.delete_one({'_id': ObjectId(_id)})        
+
     def generate_from_db(self,_id):
+        print(_id)
         fs = gridfs.GridFS(self.db)
         f = fs.find_one({'_id': _id})
         # print(f.filename)
