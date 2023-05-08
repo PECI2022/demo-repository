@@ -23,12 +23,11 @@ class Operations:
 
     def new_project(self):
         description = json.loads(request.form['description'])
-        print("CATCH")
         _id = mongo_cli.generate_unique_id()
-        data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
-        print(data)
-        mongo_cli.insert_data(data,_id,"info")
+        data = {"name": description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "tags": description['tags'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
+        mongo_cli.insert_data(data, _id, "info")
         return {"result": str(_id)}
+
     
     def delete_project(self, project_id):
         project = mongo_cli.find_project(project_id)
@@ -138,11 +137,23 @@ class Operations:
     def load_info(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
-        tags = []
-        for video in project['content']:
-                tags.append(video['video_class'])
-        return {"name": project["name"], "description": project['subject'], "tags": tags, "category": project['category']}
+        # tags = []
+        # for video in project['content']:
+        #         tags.append(video['video_class'])
+        return {"name": project["name"], "description": project['subject'], "tags": project['tags'], "category": project['category']}
     
+    def update_tags(self):
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        print(description['tags'])
+        project['tags'] += description['tags']
+        mongo_cli.insert_data(project, project['_id'], "info")
+    
+        return "done"
+
+
+
+
     # def edit_class(self):
     #     description = json.loads(request.form['description'])
     #     video_class = description.get('class')
@@ -227,6 +238,11 @@ def default():
 def new_project():
     print("NEW PROJECT")
     return operation.new_project()
+
+@app.route('/update_tags', methods=['POST'])
+def update_tags():
+    print("UPDATE TAGS")
+    return operation.update_tags()
 
 @app.route('/delete_project/<project_id>', methods=['POST'])
 def delete_project(project_id):
