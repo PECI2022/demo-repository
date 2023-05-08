@@ -124,8 +124,10 @@ class Operations:
     def update_tags(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
+        print(description['tags'])
         project['tags'] += description['tags']
         mongo_cli.insert_data(project, project['_id'], "info")
+    
         return "done"
 
 
