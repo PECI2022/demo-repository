@@ -32,7 +32,8 @@ class Mediapipe_facedetection:
                 result = face_detection.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
                 box = result.detections[0].location_data.relative_bounding_box
-                results.append({"xmin": box.xmin, "ymin": box.ymin, "width": box.width, "height": box.height})
+                relative_keypoints = [{'x':i.x, 'y':i.y} for i in list(result.detections[0].location_data.relative_keypoints)]
+                results.append({"xmin": box.xmin, "ymin": box.ymin, "width": box.width, "height": box.height, 'relative_keypoints': relative_keypoints})
                 
         return results
 
@@ -44,4 +45,4 @@ class Mediapipe_facedetection:
 if __name__=='__main__':
     featureClass = Mediapipe_facedetection()
     result = featureClass.getLandMarks('yeye.webm')
-    print(result)
+    # print(result)
