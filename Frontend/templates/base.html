@@ -24,7 +24,7 @@
 
 <body style="position:relative; height:  100vh;">
 
-    <nav id class="navbar navbar-expand-sm mbg-black">
+    <nav  class="navbar navbar-expand-sm mbg-black ">
         <div class="container-fluid">
             <a id="navbarTitle" class="nav-link{% if request.path == '/' %} active{% endif %}" href="/">Home</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -37,11 +37,12 @@
                     <li class="nav.item ml-auto" ></li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="/browse">Community</a>
+                        <a class="nav-link{% if request.path == '/browse' %} active{% endif %}" href="/browse">Community</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/myProjects">My Projects</a>
+
+                    <li class="nav-item">           
+                         <a class="nav-link{% if request.path == '/myProjects' %} active{% endif %}" href="/myProjects">My Projects</a>
                     </li>
 
                 

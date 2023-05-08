@@ -562,7 +562,7 @@ for (var i = 0; i < tabLinks.length; i++) {
         for (var j = 0; j < tabLinks.length; j++) {
             tabLinks[j].classList.remove('active');
             // Set the color to the previous color
-            tabLinks[j].style.color = '#61554d';
+            tabLinks[j].style.color = 'white';
         }
         // Add 'active' class to the clicked tab link
         this.classList.add('active');

@@ -3,7 +3,6 @@
 {% block title %} Browse {% endblock %}
 
 {% block aditionalHead %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 <style>
     .form-control {
         width: 300px;
@@ -54,8 +53,12 @@
 {% block content %}
 
 
-<div class="container my-4">
-    <h2 style="text-align:left;color: black">Community Projects</h2>
+<div class="container my-1">
+    <br>
+    <br>
+    <div class="container my-5">
+    <h1 style="text-align:left;">Community Projects</h1>
+    
 
     <br>
 
@@ -212,7 +215,7 @@
 
         <br> -->
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="public_project_list">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="public_project_list" style="color:black">
         <!-- <div class="col">
                 <div class="card h-100" >
                     <div class="card-body">
@@ -278,7 +281,7 @@
 
 
     <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
-
+    </div>
 
 
 </div>
