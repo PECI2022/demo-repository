@@ -23,16 +23,20 @@ class Operations:
 
     def new_project(self):
         description = json.loads(request.form['description'])
-        print("CATCH")
         _id = mongo_cli.generate_unique_id()
         data = {"name":description['name'], "subject": description['subject'], "model": description['model'], "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
-        print(data)
         mongo_cli.insert_data(data,_id,"info")
         return {"result": str(_id)}
     
     def delete_project(self, project_id):
         project = mongo_cli.find_project(project_id)
         if project:
+            for feature in project['features']:
+                mongo_cli.delete_feature_db(feature)
+            videos = []
+            for video in project['content']:
+                videos.append(video['_id'])
+            mongo_cli.delete_videos(project_id,videos)
             mongo_cli.delete_from_db(project_id)
             return {"result": "Project deleted successfully"}
         else:
@@ -56,6 +60,72 @@ class Operations:
         # self.insert_into_project(str(_id),description['project_id'])
         # self.insert_in_project(description['id'],data)
 
+    def update(self):
+        description = json.loads(request.form['description'])
+        pid = description['pid']
+        project = mongo_cli.find_project(pid)
+        for fid in project['features']:
+            feature = mongo_cli.find_feature(fid)
+            for vid in feature['data']:
+                print(vid)
+                video = mongo_cli.find_video(vid['video_id'],pid)
+                if video[feature['class']] == 0:
+                    d = {'id': pid, 'edit': feature['class'], 'video_id': vid['video_id'], 'new_elem': fid}
+                    mongo_cli.edit(d)
+        return "done"
+
+    def upload_video(self, name, _id, pid, video_class, video_length, location):
+        data = {"name":name, "video_class":"video_class", "length": "video_length", "_id":str(_id), "update": datetime.now(), "MediaPipeHand": 0}
+        mongo_cli.insert_media_file(ObjectId(_id),location)
+        os.remove(location)
+        return mongo_cli.insert_in_project(pid, data)
+    
+    def upload_folder(self):
+        file = request.files['file']
+        description = json.loads(request.form['description'])
+        _id = description['vid']
+        # _id = mongo_cli.generate_unique_id()
+        name = description['name']
+        pid = description['pid']
+        location = './' + name
+        file.save(location)
+        print(name)
+        project = mongo_cli.find_project(pid)
+
+        if name.endswith("webm"):
+            return self.upload_video(name, _id, pid, "description['video_class']", "description['video_length']", location)
+        elif name == "features.json":
+            print("FEATURES IMPORTED")
+            os.system("mongoimport --db=context_user --collection=features --file=features.json")
+            for feature in mongo_cli.features.find():
+                if feature['info']['_id'] not in project['features']:
+                    project['features'].append(str(feature['_id']))
+            mongo_cli.insert_data(project,pid,"info")
+            os.remove(location)
+            return "DONE"
+        elif name == "context_user.json":
+            print("FILES IMPORTED")
+            os.system("mongoimport --db=context_user --collection=context_user --file=context_user.json")
+            os.remove(location)
+            return "DONE"
+        
+    def export_project(self):
+        description = json.loads(request.form['description'])
+        pid = description['pid']
+        project = mongo_cli.find_project(pid)
+        mongo_cli.export_project(project)
+
+        for video in project['content']:
+            mongo_cli.download_media_file(video['_id'])
+
+        os.system("mongoexport --collection=export --db=context_user --out=context_user.json")
+        os.system("mongoexport --collection=exportFeatures --db=context_user --out=features.json")
+        mongo_cli.exportFeatures.drop()
+        mongo_cli.export.drop()
+
+        return "DONE"
+
+
     def new_feature(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
@@ -77,7 +147,6 @@ class Operations:
     def extract_features(self):
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
-        print(description)
         videos_id = description['videos']
         feature = mongo_cli.find_feature(description['feature'])
         vid = project['content']
@@ -237,6 +306,21 @@ def delete_project(project_id):
 def upload():
     print("UPLOAD")
     return operation.upload()
+
+@app.route('/upload_folder', methods=['POST'])
+def upload_folder():
+    print("UPLOAD FOLDER")
+    return operation.upload_folder()
+
+@app.route('/export_project', methods=['POST'])
+def export_project():
+    print("EXPORTING")
+    return operation.export_project()
+
+@app.route('/update', methods=['POST'])
+def update():
+    print("UPDATED")
+    return operation.update()
 
 @app.route('/edit', methods=['POST'])
 def edit():

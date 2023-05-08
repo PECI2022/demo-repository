@@ -70,7 +70,6 @@ const createFeature = async () => {
 
 
 const list_features = async () => {
-
     let data = new FormData()
     const urlParams = new URLSearchParams(window.location.search);
     const projectID = urlParams.get('id');
@@ -84,7 +83,7 @@ const list_features = async () => {
 
     features_list.innerHTML = ""
     for (let i of list) {
-        // console.log(i)
+        console.log(i)
         // let d = JSON.stringify(i)
         // console.log(d)
         let input = `<div class="col-12" id="${i._id}">
@@ -157,7 +156,7 @@ const list_videos_fetch = async () => {
     video_table.innerHTML = ""
     for (let i of list) {
         let s
-        // console.log(i[currentFeature] == 0)
+        console.log(i[currentFeature['class']])
         let newElem = document.createElement('tr');
         if (i[currentFeature['class']] == 0) {
             s = `<tr>
