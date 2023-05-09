@@ -1,7 +1,7 @@
 /* base */
 
 body {
-  background-color: #eeede7;
+  background-color: gray;
   /* color: black; */
   width: 100%;
   max-width: 1500;
@@ -18,7 +18,7 @@ body {
   background-color: #b9b7bd !important;
 }
 .mbg-dark {
-  background-color: #868b8e !important;
+  background-color: black!important;
 }
 .mbg-light {
   background-color: #eeede7 !important;
@@ -40,7 +40,7 @@ body {
 }
 
 #topNavBar a {
-  color: black;
+  color: whitesmoke;
   cursor: pointer;
   margin: 8px 10px;
 }
@@ -54,7 +54,7 @@ body {
 }
 
 #sidebarNav a.active {
-  background-color: #868b8e;
+  background-color:#868b8e;
   /* color: white; */
 }
 
@@ -131,14 +131,14 @@ body {
   font-size: 16px;
   color: black;
 }
-
+/* 
 #carouselExampleIndicators {
   max-width: 1050px;
   margin: auto;
 }
 
 /* Set the height of the carousel images */
-.carousel-item img {
+/* .carousel-item img {
   height: 600px;
   object-fit: contain; 
 }
@@ -146,7 +146,7 @@ body {
 .carousel-item video {
   height: 600px;
   object-fit: contain; 
-}
+} */ */
 
 
 .mtext-white {

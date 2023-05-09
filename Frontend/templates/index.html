@@ -6,25 +6,35 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 {% endblock %}
 
+{% block additionalHeadBase %}
+{% endblock %}
+
 {% block content %}
-<!--
-<div class="container my-6" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+
+<!-- <div class="container"> -->
+
+<!-- Section One -->
+
+<section class="section-one"
+    style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <h3 data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!" class="header">Modular Framework
+        for Data Acquisition and </br> Annotation to Support Interaction Scenarios</h3>
+    <!--<p class="section-one-paragraph" style="text-align: center;" data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!"> A place where you can explore Non Verbal DataSets... </p> -->
+    <button class="cssbuttons-io-button" style="margin-top: 70px;" onclick="window.location.href='#section-three'">
+        Get started
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path fill="currentColor"
+                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
+            </svg>
+        </div>
+    </button>
     
+</section>
 
-    
-
-
-    <h1 style="text-align:center;color: #61554d;margin-top: 60px;">Modular Framework for Data Acquisition and Annotation  <br>to Support Interaction Scenarios</h1>
-
-    <br>
-
-    <h5 style="text-align:center;color: #343335;margin-top: 60px;" data-toggle="modal" data-target="#info" title="For more info, click!">
-        A place where you can explore Non Verbal DataSets<span class="dots"  data-bs-toggle="modal" data-bs-target="#info">...</span>
-    </h5>
-    
-  
-    <div class="modal fade" id="info" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="info" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">MFDAA - More Info</h5>
@@ -44,231 +54,83 @@
     </div>
   </div>
 
-    <button class="cssbuttons-io-button" style="margin-top: 60px;" onclick="window.location.href='#MFDA'"> Get started
-        <div class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
-        </div>
-    </button>
-
-    
-    
-</div>
-
-
-
-
-<div class="container my-5" id="MFDA">
-    <hr class="mbg-white border-3 opacity-100" style="border-color: #61554d;margin-top: 100px;">
-    <br>
-
-    <div href="newProject" id="projectsHere" style="display:flex;">
-        <h2 class="mtext-white">What MFDA can offer?</h2>
-        
-        <button class="btn btn-light" style="margin-left: auto;" type="button" onclick="window.location.href='myProjects'" >New Project</button>
-    </div>
-    <br>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <div class="col">
-            <div class="card h-100" >
-                <div class="card-body">
-                    <h3 class="card-title">Consult our DataBase</h5>
-                    <p class="card-text">Here you can find and see all datasets created until now.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 13 hours ago</small>
-                </div>
-                <a href='browse'>
-                    <span class="span-link"></span>
-                </a>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h3 class="card-title">Train and test ML Models</h5>
-                    <p class="card-text">Video recordings, Demo only. <br> To Train and Test you must be Logged in!</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 3 days ago</small>
-                </div>
-                <a href='project/train/trainBase'>
-                    <span class="span-link"></span>
-                </a>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h3 class="card-title">Expand and Use our Database by training your own models</h5>
-                    <p class="card-text">You must be Logged in!</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Last updated 1 month ago</small>
-                </div>
-                <a href=editor?project=facial-expressions>
-                    <span class="span-link"></span>
-                </a>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body"  >
-                    <h3 class="card-title">Create your own Project</h5>
-                        <p class="card-text">Data acquisition, Annotation, Train & Visualize </p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Click here</small>
-                </div>
-                <a href='myProjects'>
-                    <span class="span-link"></span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <br>
-   
-
-    <button onclick="topFunction()" id="scrollBtn" title="Go to top"></button>
-
- 
-
-
-    <script>
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
-
-        function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("scrollBtn").style.display = "block";
-        } else {
-            document.getElementById("scrollBtn").style.display = "none";
-        }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-        }
-    </script>
-
-
-
-</div> -->
-
-<!-- <div class="container"> -->
-
-<!-- Section One -->
-
-<section class="section-one"
-    style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <h3 data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!" class="header">Modular Framework
-        for Data Acquisition and </br> Annotation to Support Interaction Scenarios</h3>
-    <!--<p class="section-one-paragraph" style="text-align: center;" data-bs-toggle="modal" data-bs-target="#info" title="For more info, click!"> A place where you can explore Non Verbal DataSets... </p> -->
-    <button class="cssbuttons-io-button" style="margin-top: 70px;" onclick="window.location.href='#section-three'">
-        Explore
-        <div class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="none" d="M0 0h24v24H0z"></path>
-                <path fill="currentColor"
-                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
-            </svg>
-        </div>
-    </button>
-    
-</section>
-
 <!-- Section Two -->
 <section class="section=two" style="display: flex;justify-content: center; align-items: center;">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          
-          <div class="carousel-item active">
-            <img src="{{ url_for('static', filename='imgs/hand.png') }}" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="{{ url_for('static', filename='imgs/thumbsU.png') }}" class="d-block w-100" alt="...">
-          </div>
-       
-
-            <div class="carousel-item">
-                <video src="{{ url_for('static', filename='imgs/demo.mp4') }}" class="d-block w-100" controls></video>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+    <div class="col-7" style="height:500px;background-image: linear-gradient(#0A0A0A, #22376c);"></div>
 </section>
 <div id="whiteSection">
 
     <div class="container">
 
         <!-- Section Three -->
-        <section class="section-three" id="section-three">
+        <!-- <section class="section-three" id="section-three">
             <h3>Our Mission</h3><br>
             <h4>Unleash insights hidden in Non-Verbal Communications!</h4>
+        </section> -->
+
+
+        <!-- Section Three -->
+        <section class="section=three" style="display: flex;justify-content: center; align-items: center;">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+
+                <div class="carousel-item active">
+                    <div style="background-color: white; height: 130vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
+                        <img src="{{ url_for('static', filename='imgs/database.png') }}" class="d-block w-100" alt="...">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <h2 style="color: white;">Consult our community projects</h2>
+                            <p style="color: white;">Here you can find and see all of the Non-Verbal DataSets created until today, including yours!</p>
+                            <a href="myProjects" class="learn-more-btn section-three-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div style="background-color: white; height: 150vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
+                        <img src="{{ url_for('static', filename='imgs/acquisition.jpg') }}" class="d-block w-100" alt="...">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <h2 style="color: white;">Create your own projects</h2>
+                            <p style="color: white;">Where you can record or upload your own video(s) to create your own DataSet, and use it to calculate and extract features using MediaPipe (Gestures, Face, Pose Detection)!</p>
+                            <a href="myProjects" class="learn-more-btn section-three-btn">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div style="background-color: white; height: 150vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
+                        <img src="{{ url_for('static', filename='imgs/annotation.jpg') }}" class="d-block w-100" alt="...">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <h2 style="color: white;">Video Annotation</h2>
+                            <p style="color: white;">At the video acquisition the user can label and annotate his own video(s) at his free will!</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
         </section>
 
 
-        <!-- Section Four -->
+        
         <section class="section-four">
-            <div class="flex-group">
-                <div>
-                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/database.png') }}">
-                </div>
-                <div class="content-container">
-                    <h3>Consult our Community projects</h3>
-                    <p>Here you can find and see all of the Non-Verbal DataSets created until today, including yoursx   !</p>
-                    <a href="/browse" class="learn-more-btn section-four-btn">Learn More</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Five -->
-        <section class="section-five">
-            <div class="flex-group section-five-flex-group">
-                <div>
-                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/acquisition.jpg') }}">
-                </div>
-                <div class="content-container">
-                    <h3>Create your own projects</h3>
-                    <p>Where you can record or upload your own video(s) to create your own DataSet, and use it to calculate and extract features using MediaPipe (Gestures, Face, Pose Detection)</p>
-                    <a href="myProjects" class="learn-more-btn section-four-btn">Read More</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section six -->
-        <section class="section-six">
-            <div class="flex-group">
-                <div>
-                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/annotation.jpg') }}"">
-      </div>
-      <div class=" content-container">
-                    <h3>Video Annotation</h3>
-                    <p>At the video acquisition the user can label and annotate his own video(s) at his free will!</p>
-
-                </div>
-            </div>
+            <h3>MFDAA - Usage Example</h3>
+            <video src="{{ url_for('static', filename='imgs/demo.mp4') }}" class="d-block w-100" controls></video>
+            
         </section>
     </div>
 </div>
 
-<section class="section-three">
-    <h3>Our Team</h3>
-    <div style="text-align:center;margin-top: 100px;" class="container">
+<section class="section-five" >
+    <div style="text-align:center;margin-top: 100px;color: #0A0A0A !important" class="container">
+        <h3>About Us</h3>
         <div class="row">
             <div class="col-sm">
                 <div class="card" style="width: 13rem;">
@@ -358,7 +220,7 @@
     <br>
 
     <div class="container">
-        <div class="row justify-content-center" style="margin-left: 270px;margin-top: 50px;">
+        <div class="row justify-content-center" style="margin-left: 270px;margin-top: 50px;text-align:center;color: #0A0A0A !important">
             <div class="col-sm-6 col-md-4">
                 <div class="card" style="width: 13rem;">
                     <img src="{{ url_for('static', filename='imgs/samuel.jpg') }}" class="card-img-top" alt="...">
