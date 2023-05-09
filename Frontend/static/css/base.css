@@ -1,7 +1,7 @@
 /* base */
 
 body {
-  background-color: #121212 !important;
+  background-color: #292929 !important;
   color: white !important;
   /* color: black; */
   width: 100%;
@@ -10,7 +10,7 @@ body {
 }
 
 .mbg-black {
-  background-color: #121212 !important;
+  background-color: #292929 !important;
 }
 .mbg-primary {
   background-color: white !important;
@@ -392,6 +392,8 @@ img {
   display: block;
   width: 100%;
   max-width: 1500px;
+  /* rounded corners */
+  border-radius: 10px;
 }
 
 
@@ -444,7 +446,7 @@ section {
 
 /* Section Two */
 #whiteSection {
-  background-color: #1a1a1a;
+  background-color: #383838;
   padding: 20px;
   margin: 0 auto;
   width: 100%;
@@ -498,10 +500,25 @@ section {
 }
 
 /* Section Seven */
+.section-seven {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
 .section-seven p {
   margin-bottom: 2rem;
 }
+
+.section-seven video {
+  margin-top: 2rem;
+  width: 80%;
+  max-width: 60%;
+  height: auto;
+}
+
+
 /* Flex Group Mobile */
 
 @media (max-width: 800px) {
