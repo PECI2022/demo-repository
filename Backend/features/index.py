@@ -22,13 +22,21 @@ def mediapipe_hand(videoPath, **user_options):
             if not ret: break
 
             result = hands.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            if not result.multi_hand_landmarks: continue
+
             landmarks = result.multi_hand_landmarks[0].landmark
             results.append({
                 'vertices': [{'x':i.x, 'y': i.y, 'z': i.z} for i in landmarks],
                 'edges': [[0,1],[1,2],[2,3],[3,4],[0,5],[0,17],[5,6],[5,9],[6,7],[7,8],[9,10],[9,13],[10,11],[11,12],[13,14],[13,17],[14,15],[15,16],[17,18],[18,19],[19,20]]
             })
     
-    return results
+    resp = {
+        'name': 'mediapipe_hands',
+        'type': 'points',
+        'points': results
+    }
+
+    return resp
 
 def mediapipe_facedetection(videoPath, **user_options):
     options = {'model_selection':1, 'min_detection_confidence':0.5}
@@ -46,6 +54,8 @@ def mediapipe_facedetection(videoPath, **user_options):
             if not ret: break
 
             result = face_detection.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            if not result.detections: continue
+
             vertices = []
             edges = []
             for face in result.detections:
@@ -66,7 +76,13 @@ def mediapipe_facedetection(videoPath, **user_options):
                 'edges': edges
             })
     
-    return results
+    resp = {
+        'name': 'mediapipe_facedetection',
+        'type': 'points',
+        'points': results
+    }
+
+    return resp
 
 
 
@@ -86,6 +102,7 @@ def mediapipe_facemesh(videoPath, **user_options):
             if not ret: break
 
             result = face_mesh.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            if not result.multi_face_landmarks: continue
 
             vertices = []
             for face in result.multi_face_landmarks:
@@ -97,14 +114,22 @@ def mediapipe_facemesh(videoPath, **user_options):
                 'edges': []
             })
     
-    return results
+    resp = {
+        'name': 'mediapipe_facemesh',
+        'type': 'points',
+        'points': results
+    }
 
+    return resp
+
+available = ['mediapipe_hand', 'mediapipe_facedetection', 'mediapipe_facemesh']
 
 if __name__ == '__main__':
+    pass
     # hand = mediapipe_hand(videoPath="./yeye.webm")
 
     # facedetection = mediapipe_facedetection(videoPath="./yeye.webm")
 
-    facemesh = mediapipe_facemesh(videoPath='./yeye.webm')
+    # facemesh = mediapipe_facemesh(videoPath='./yeye.webm')
 
-    print(facemesh)
+    # print(facemesh)

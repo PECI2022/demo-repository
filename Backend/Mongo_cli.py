@@ -83,6 +83,12 @@ class MongoCli(object):
                 return project['info']
         return None
     
+    def update_project(self, project):
+        project_id = project['_id']
+        self.insert_data(project, project_id, "info")
+        return "DONE"
+
+
     def find_feature(self, _id):
         features = self.features.find()
         for feature in features:
@@ -94,6 +100,13 @@ class MongoCli(object):
         project = self.find_project(project_id)
         for video in project['content']:
             if video['_id'] == video_id:
+                return video
+        return None
+    
+    def find_old_video(self, video_id, project_id):
+        project = self.find_project(project_id)
+        for video in project['content']:
+            if video['old_id'] == video_id:
                 return video
         return None
     
@@ -117,6 +130,7 @@ class MongoCli(object):
         for video in project['content']:
             if video['_id'] in videos_id:
                 for feature in self.f:
+                    print(video)
                     self.delete_video_from_feature(video[feature], video['_id'])
                 self.delete_from_db(video['_id'])
             else:
@@ -126,12 +140,13 @@ class MongoCli(object):
 
     def delete_video_from_feature(self, fid, vid):
         feature = self.find_feature(fid)
-        content = []
-        for video in feature['data']:
-            if video['video_id'] != vid:
-                content.append(video)
-        feature['data'] = content
-        self.insert_feature(feature, fid, "info")
+        if feature != None:
+            content = []
+            for video in feature['data']:
+                if video['video_id'] != vid:
+                    content.append(video)
+            feature['data'] = content
+            self.insert_feature(feature, fid, "info")
 
     # def edit_class(self, project_id, video_id, new_class):
     #     project = self.find_project(project_id)
@@ -212,9 +227,9 @@ class MongoCli(object):
         features = self.find_feature(feature_id)
         for feature in features['data']:
             if feature['video_id'] == video_id:
-                return {'landmarks': feature['feature']}
+                return feature
             
-        return {'landmarks': None}
+        return {}
     
     def check_existing_name(self, videos, name):
         for video in videos:
@@ -274,6 +289,9 @@ class MongoCli(object):
             if self.collection.find_one(_id) == None:
                 return False
             return True
+    
+    def list_feature_videos(self, projectID, featureID):
+        return self.find_feature(featureID)['data']
 
     
 

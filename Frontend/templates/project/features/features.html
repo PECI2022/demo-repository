@@ -17,18 +17,18 @@
       <!-- End Preview Video-->
 
       <div href="newFeature" id="featuresHere" style="display:flex; align-items: center;">
-        <h1 class="mtext-white" style="color:black">Features</h1>
+        <h1 class="mtext-white">Features</h1>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-light"
           style="margin-left: auto;background-color: white; border-color: grey;" data-bs-toggle="modal"
-          data-bs-target="#newFeature">
+          data-bs-target="#newFeature" onclick="getNewFeatureModalData()">
           New Feature
         </button>
 
         <div class="modal fade" id="newFeature" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
 
           <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="color: #292929">
               <div class="overlay"></div>
               <div class="modal-header">
                 <h5 class="modal-title">New Feature</h5>
@@ -46,9 +46,9 @@
 
                   <div class="row" style="margin-top: 10px;">
                     <div class="col">
-                      <div class="form-group" id="Category" value="MediaPipe">
-                        <label for="option">Media Pipe Feature Calculator</label>
-                        <div class="form-check" onclick="get_category('MediaPipeHand')">
+                      <div class="form-group" id="featuresModalCategory" value="MediaPipe">
+                        <label for="option">Feature:</label>
+                        <!-- <div class="form-check" onclick="get_category('MediaPipeHand')">
                           <input class="form-check-input"  type="checkbox" id="Gesture" value="Gesture">
                           <label class="form-check-label" for="Gesture">
                             Gesture recognition
@@ -71,7 +71,7 @@
                           <label class="form-check-label" for="Holistic">
                             Holistic Detection
                           </label>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -95,7 +95,7 @@
 
 
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="features_list">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="features_list" style="color: #292929">
         <div class="col-6">
           <div class="card h-100">
             <div class="card-body">
@@ -141,7 +141,7 @@
       <p id="showText" class="mt-5 mbg-black" style="display:none;text-align: center;width:100%;font-size:200%;">
         Calculating features...</p>
       <div class="progress mt-5 mbg-white" id="progress-bar" style="display:none;">
-        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0"
+        <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0"
           aria-valuemax="100">
           <span id="progress-text">0%</span>
         </div>
