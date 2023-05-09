@@ -91,8 +91,9 @@ class Operations:
         file.save(location)
         print(name)
         project = mongo_cli.find_project(pid)
+        print("ERRTYRES")
 
-        if name.endswith("webm"):
+        if name.endswith("webm") or name.endswith("mp4"):
             return self.upload_video(name, _id, pid, "description['video_class']", "description['video_length']", location)
         elif name == "features.json":
             print("FEATURES IMPORTED")

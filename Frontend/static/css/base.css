@@ -1,7 +1,8 @@
 /* base */
 
 body {
-  background-color: #eeede7;
+  background-color: #292929 !important;
+  color: white !important;
   /* color: black; */
   width: 100%;
   max-width: 1500;
@@ -9,19 +10,27 @@ body {
 }
 
 .mbg-black {
-  background-color: black !important;
+  background-color: #292929 !important;
 }
 .mbg-primary {
-  background-color: #e7d2cc !important;
+  background-color: white !important;
 }
 .mbg-secondary {
-  background-color: #b9b7bd !important;
+  background-color: #383838 !important;
 }
 .mbg-dark {
-  background-color: #868b8e !important;
+  background-color: #292929 !important;
 }
 .mbg-light {
   background-color: #eeede7 !important;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: white !important;
 }
 
 /* ======================
@@ -40,26 +49,45 @@ body {
 }
 
 #topNavBar a {
-  color: black;
+  color: white;
   cursor: pointer;
   margin: 8px 10px;
 }
 
+#topNavBar .navbar-nav {
+  position: relative;
+}
+
+#topNavBar .nav-link {
+  display: flex;
+  align-items: center;
+}
+
+#topNavBar .nav-link i.material-icons {
+  margin-right: 0.5rem;
+}
+
+#topNavBar .nav-link span {
+  position: relative;
+  top: -2px; /* Adjust this value to change the upward position */
+}
+
+
 #sidebarNav a {
   display: block;
-  color: black;
+  color: white;
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 5px;
 }
 
 #sidebarNav a.active {
-  background-color: #868b8e;
-  /* color: white; */
+  background-color: #292929;
+  color: white;
 }
 
 #sidebarNav a:hover:not(.active) {
-  background-color: #eeede7;
+  background-color: #585858;
 }
 
 /* ==========================
@@ -67,14 +95,14 @@ body {
 ===========================*/
 
 #myTab button {
-  background-color: #b9b7bd;
-  color: black;
+  color: white;
   border-radius: 5px;
   border: 0;
 }
 
 #myTab button.active {
-  background-color: #868b8e;
+  background-color: #585858;
+  color: white !important;
 }
 
 #pills-Record button {
@@ -150,22 +178,50 @@ body {
 
 
 .mtext-white {
-  color: #61554d;
+  color: white;
 }
 
 .mbg-black #navbarTitle {
-  /* color: #343335; */
+  color:white;
 }
 
-.mbg-black #navbarTitle.active {
-  /* color: black;
-  /* make text bold */
-  /* font-weight: bold; */ 
+.mbg-black .active {
+  color: white;
 }
 
 .card-container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.content {
+  max-width: 500px;
+  margin: auto;
+}
+
+  .navbar {
+    height: 50px;
+}
+
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h6 {
+    font-size: 1.05em;
+    font-weight: 500;
+    color: black;
+}
+
+.content {
+    max-width: 500px;
+    margin: auto;
+}
+
+.navbar-nav .nav-link.active {
+    color: #e0e2d7;
 }
 
 #msg {
@@ -175,7 +231,12 @@ body {
   font-size: 22px;
   font-family: Verdana;
 }
-
+button {
+  padding: 5px 10px;
+  border: 1px solid grey;
+  font-size: 18px;
+  background: white;
+}
 
 .audio-controls {
   display: flex;
@@ -184,13 +245,21 @@ body {
   justify-content: center;
 
 }
-
 .audio-controls button {
   margin: 0px 15px;
 }
+canvas {
+  margin-top: 10px;
+  background-color: black;
+}
 
-
-
+select {
+  height: 20px;
+  margin: 0px 5px;
+}
+a {
+  margin-left: 20px;
+}
 .app {
   text-align: center;
   padding-top: 10px;
@@ -200,6 +269,11 @@ body {
 .card-container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.content {
+  max-width: 500px;
+  margin: auto;
 }
 
 /* Get Started Button*/
@@ -376,6 +450,28 @@ body {
   margin: 0;
 }
 
+img {
+  display: block;
+  width: 100%;
+  max-width: 1500px;
+  /* rounded corners */
+  border-radius: 10px;
+}
+
+
+
+body {
+  background: #e0e2d7;
+  color: black;
+  width: 100%;
+  max-width: 1500;
+  margin: 0 auto;
+}
+
+section {
+  margin: 5rem 2rem;
+}
+
 /* Section One */
 
 
@@ -412,8 +508,7 @@ body {
 
 /* Section Two */
 #whiteSection {
-  background-color: white;
-
+  background-color: #383838;
   padding: 20px;
   margin: 0 auto;
   width: 100%;
@@ -465,6 +560,26 @@ body {
 .section-six p {
   margin-bottom: 2rem;
 }
+
+/* Section Seven */
+.section-seven {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.section-seven p {
+  margin-bottom: 2rem;
+}
+
+.section-seven video {
+  margin-top: 2rem;
+  width: 80%;
+  max-width: 60%;
+  height: auto;
+}
+
 
 /* Flex Group Mobile */
 
