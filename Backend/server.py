@@ -223,15 +223,16 @@ class Operations:
             tags = []
         return {"name": project["name"], "description": project['subject'], "tags": tags, "category": project.get('category', '')}
 
-    
     def update_tags(self):
+        print("UPDATE TAGS")
         description = json.loads(request.form['description'])
         project = mongo_cli.find_project(description['pid'])
-        print(description['tags'])
-        project['tags'] += description['tags']
-        mongo_cli.insert_data(project, project['_id'], "info")
-    
+        project['tags'] = description['tags']  # Update the 'tags' field with the new tags
+        mongo_cli.update_project(project)  # Save the updated project
+        
         return "done"
+
+
     
     # def edit_class(self):
     #     description = json.loads(request.form['description'])
