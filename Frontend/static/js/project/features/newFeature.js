@@ -122,7 +122,7 @@ const calculate_features = async () => {
     })
 
     list_videos_fetch()
-    alert("All Calculated!")
+    // alert("All Calculated!")
 }
 
 const download_features = async () => {
@@ -295,13 +295,30 @@ extractBtn.addEventListener('click', () => {
     CalculatingFeatureText.style.display = 'block';
 
     let progress = 0;
+    let initial = 0;
+    let final = -1;
+    for(let box of document.querySelectorAll('.checkbox')) {
+        if(box.innerText=='check_box') final++;
+    }
 
-    const interval = setInterval(() => {
-        progress += 5;
+    const interval = setInterval( async () => {
+        let data = new FormData()
+        data.append("description", JSON.stringify({'projectID':projectID, 'featureID':currentFeature['_id']}))
+        const response = await fetch('http://127.0.0.1:5001/list_feature_videos', {
+            method: "POST",
+            body: data
+        });
+        let featureList = await response.json()
+        console.log("fLL", featureList)
+        let n = featureList.length
+        if( initial==0 ) initial = n;
+
+        console.log("BAH", initial, final, n)
+        progress = ((n - initial) / (final - initial)) * 100;
         progressBar.firstElementChild.style.width = `${progress}%`;
         progressText.innerText = `${progress}%`;
 
-        if (progress === 100) {
+        if (progress >= 100) {
             clearInterval(interval);
             setTimeout(() => {
                 extractBtn.style.display = 'block';
@@ -311,7 +328,7 @@ extractBtn.addEventListener('click', () => {
                 // alert("Features Calculated! You can download the features now!");
             }, 500);
         }
-    }, 100);
+    }, 1000);
 });
 
 downloadBtn.addEventListener('click', () => {
