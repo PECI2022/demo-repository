@@ -6,9 +6,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 {% endblock %}
 
-{% block additionalHeadBase %}
-{% endblock %}
-
 {% block content %}
 
 <!-- <div class="container"> -->
@@ -63,64 +60,55 @@
     <div class="container">
 
         <!-- Section Three -->
-        <!-- <section class="section-three" id="section-three">
+        <section class="section-three" id="section-three">
             <h3>Our Mission</h3><br>
             <h4>Unleash insights hidden in Non-Verbal Communications!</h4>
-        </section> -->
-
-
-        <!-- Section Three -->
-        <section class="section=three" style="display: flex;justify-content: center; align-items: center;">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-
-                <div class="carousel-item active">
-                    <div style="background-color: white; height: 130vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
-                        <img src="{{ url_for('static', filename='imgs/database.png') }}" class="d-block w-100" alt="...">
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <h2 style="color: white;">Consult our community projects</h2>
-                            <p style="color: white;">Here you can find and see all of the Non-Verbal DataSets created until today, including yours!</p>
-                            <a href="myProjects" class="learn-more-btn section-three-btn">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div style="background-color: white; height: 150vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
-                        <img src="{{ url_for('static', filename='imgs/acquisition.jpg') }}" class="d-block w-100" alt="...">
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <h2 style="color: white;">Create your own projects</h2>
-                            <p style="color: white;">Where you can record or upload your own video(s) to create your own DataSet, and use it to calculate and extract features using MediaPipe (Gestures, Face, Pose Detection)!</p>
-                            <a href="myProjects" class="learn-more-btn section-three-btn">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div style="background-color: white; height: 150vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
-                        <img src="{{ url_for('static', filename='imgs/annotation.jpg') }}" class="d-block w-100" alt="...">
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <h2 style="color: white;">Video Annotation</h2>
-                            <p style="color: white;">At the video acquisition the user can label and annotate his own video(s) at his free will!</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
         </section>
 
 
-        
+        <!-- Section Four -->
         <section class="section-four">
+            <div class="flex-group">
+                <div>
+                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/database.png') }}">
+                </div>
+                <div class="content-container">
+                    <h3>Consult our Community projects</h3>
+                    <p>Here you can find and see all of the Non-Verbal DataSets created until today, including yoursx   !</p>
+                    <a href="/browse" class="learn-more-btn section-four-btn">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Five -->
+        <section class="section-five">
+            <div class="flex-group section-five-flex-group">
+                <div>
+                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/acquisition.jpg') }}">
+                </div>
+                <div class="content-container">
+                    <h3>Create your own projects</h3>
+                    <p>Where you can record or upload your own video(s) to create your own DataSet, and use it to calculate and extract features using MediaPipe (Gestures, Face, Pose Detection)</p>
+                    <a href="myProjects" class="learn-more-btn section-four-btn">Read More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section six -->
+        <section class="section-six">
+            <div class="flex-group">
+                <div>
+                    <img style="width: 650px;" src="{{ url_for('static', filename='imgs/annotation.jpg') }}"">
+      </div>
+      <div class=" content-container">
+                    <h3>Video Annotation</h3>
+                    <p>At the video acquisition the user can label and annotate his own video(s) at his free will!</p>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section-seven">
             <h3>MFDAA - Usage Example</h3>
             <video src="{{ url_for('static', filename='imgs/demo.mp4') }}" class="d-block w-100" controls></video>
             
@@ -128,9 +116,9 @@
     </div>
 </div>
 
-<section class="section-five" >
+<section class="section-three" >
+    <h3>About Us</h3>
     <div style="text-align:center;margin-top: 100px;color: #0A0A0A !important" class="container">
-        <h3>About Us</h3>
         <div class="row">
             <div class="col-sm">
                 <div class="card" style="width: 13rem;">

@@ -7,7 +7,7 @@
   <div class="w-100" style="margin:auto;">
     <div class="mt-3" style="width:100%;margin:auto">
       <h1 style="text-align: center;" id="project_title"> </h1>
-      <section class="second-section2">
+      <section class="second-section2" style="color: #292929">
         <div class="container">
           <div class="row mb-3">
             <div class="col-md-12 col-sm-6">
@@ -42,8 +42,7 @@
                 <div class="card-body">
                   <h5 class="card-title" style="display: flex; align-items: center;"><span class="material-icons" style="font-size: 30px;">sell</span> Tags</h5>
                   <p id="tags" class="card-text">
-                    #HandGesture <br>
-                    #HandMovements <br> 
+                   
                   </p>
                   <div>
                     <input type="text" id="newTagInput" placeholder="Enter new tag">
@@ -68,25 +67,37 @@
         </div>
      
  
-      <div class="mb-3" style="text-align: center;">
-          <button class="btn btn-dark" style="color: #e0e2d7; margin-right: 20px; width: 190px;" >Extend Project</button>
-          <button class="btn btn-primary" style="color: #e0e2d7; margin-right: 20px; width: 190px;" >Save Project Changes</button>
-          <button class="btn btn-danger" style="background-color: #ff3333;width: 190px;" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Project</button>
-      
+        <div class="mb-3" style="text-align: center;">
+          <button type="button" class="btn button btn-light position-relative" id="folder-button">
+            <span class="material-symbols-outlined">folder_open</span> Extend Project
+          </button>
+          
+          <button class="btn btn-primary button" onclick="export_project()">
+            <span class="material-symbols-outlined">save</span> Save Project Changes
+          </button>
+          
+          <button class="btn btn-danger button" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            <span class="material-symbols-outlined">delete</span> Delete Project
+          </button>
+          
+          <span id="folder-name" style="margin-top: 30px; text-align: center !important;"></span>
+
+          <input type="file" id="folder-upload" name="folder-upload" style="display: none;" webkitdirectory mozdirectory msdirectory odirectory directory multiple>
+
           <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="deleteModalLabel">Delete Project <i class="fas fa-trash-alt"></i></h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>                                        
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete your project permanently?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" onclick="delete_project()">Delete</button>
-                    </div>
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel">Delete Project <i class="fas fa-trash-alt"></i></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <p>Are you sure you want to delete your project permanently?</p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="button" class="btn btn-danger" onclick="delete_project()">Delete</button>
+                      </div>
                   </div>
               </div>
           </div>
