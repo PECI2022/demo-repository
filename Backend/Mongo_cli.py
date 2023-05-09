@@ -83,6 +83,12 @@ class MongoCli(object):
                 return project['info']
         return None
     
+    def update_project(self, project):
+        project_id = project['_id']
+        self.insert_data(project, project_id, "info")
+        return "DONE"
+
+
     def find_feature(self, _id):
         features = self.features.find()
         for feature in features:

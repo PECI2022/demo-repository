@@ -1,5 +1,6 @@
 const projectList = document.querySelector("#project_list");
 let category = "Gestures";
+let tags = [];
 var project_id = localStorage.getItem("project_id");
 
 function newProjectGo(pid) {
@@ -16,6 +17,8 @@ function newProjectGo(pid) {
 const create_project = async () => {
   let data = new FormData();
   console.log(category);
+  addTag();
+  console.log("tags: " + tags);
   data.append(
     "description",
     JSON.stringify({
@@ -23,7 +26,8 @@ const create_project = async () => {
       subject: document.querySelector("#description").value,
       model: document.querySelector("#model").value,
       category: category,
-    })
+      tags: tags
+    }),
   );
   console.log(document.querySelector("#Category").value);
   let response = await fetch("http://127.0.0.1:5001/new_project", {
@@ -59,6 +63,7 @@ const delete_project = async (project_id) => {
 
 window.onload = function () {
     category = "Gestures";
+    addTag();
     load_content();
 };
 
@@ -92,12 +97,35 @@ const load_content = async () => {
     }
   };
 
-function addTag() {
+  function addTag() {
     var tagInput = document.getElementById("newTagInput");
-    var tags = document.getElementById("tags");
+    var tagsListed = document.getElementById("tags");
+  
     var tag = tagInput.value;
-    if (tag) {
-        tags.innerHTML += "#" + tag + "<br>";
-        tagInput.value = "";
+    if (tag !== "") {
+      tags.push(tag);
+      localStorage.setItem("tags", JSON.stringify(tags));
+      var tagElement = document.createElement("span");
+      tagElement.innerHTML = "#" + tag + " ";
+      var deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "x";
+      deleteButton.style.marginLeft = "5px";
+      deleteButton.style.fontSize = "12px";
+      deleteButton.style.color = "red";
+      deleteButton.addEventListener("click", function() {
+        var index = tags.indexOf(tag);
+        if (index !== -1) {
+          tags.splice(index, 1);
+          localStorage.setItem("tags", JSON.stringify(tags));
+          tagsListed.removeChild(tagElement);
+        }
+      });
+      tagElement.appendChild(deleteButton);
+      tagElement.style.display = "inline-block";
+      tagElement.style.marginRight = "5px";
+  
+      tagsListed.appendChild(tagElement);
+      tagInput.value = "";
     }
-}
+  
+  }

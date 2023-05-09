@@ -38,7 +38,21 @@ window.addEventListener('load', () => {
           data.tags.splice(index, 1);
           localStorage.setItem("tags", JSON.stringify(data.tags));
           tagsListed.removeChild(tagElement);
-          updateTags();
+          // update tags array in backend
+          let data2 = new FormData();
+          data2.append(
+            "description",
+            JSON.stringify({
+              pid: project_id,
+              tags: data.tags
+            }),
+          );
+          fetch('http://127.0.0.1:5001/update_tags', {
+            method: 'POST',
+            body: data2
+          })
+
+          
         }
       });
       tagElement.appendChild(deleteButton);
@@ -47,8 +61,8 @@ window.addEventListener('load', () => {
       tagsListed.appendChild(tagElement);
     }
   });
-
 });
+
 
 const load_info = async () => {
 console.log("EOEOEO")
