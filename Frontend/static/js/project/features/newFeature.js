@@ -49,7 +49,6 @@ function get_category(val) {
 // }
 
 const createFeature = async () => {
-    console.log(projectID)
     let featureName = document.querySelector("#name").value.trim()
     if (featureName === '') {
         const checkedCheckbox = document.querySelector('input[type="checkbox"]:checked');
@@ -57,6 +56,7 @@ const createFeature = async () => {
             featureName = checkedCheckbox.parentElement.querySelector('label').innerText;
         }
     }
+    var category = document.querySelectorAll('input[name=mycheckboxes]:checked')[0].value;
     let data = new FormData()
     data.append('description', JSON.stringify({ pid: projectID, feature: category, name: featureName }))
     let response = await fetch('http://127.0.0.1:5001/new_feature', {
@@ -146,6 +146,16 @@ const list_videos_fetch = async () => {
     let list = await response.json()
     if (!list) return;
 
+    let data2 = new FormData()
+    console.log("cf,",currentFeature)
+    data2.append("description", JSON.stringify({'projectID':projectID, 'featureID':currentFeature['_id']}))
+    const response2 = await fetch('http://127.0.0.1:5001/list_feature_videos', {
+        method: "POST",
+        body: data2
+    });
+    let featureList = await response2.json()
+    console.log("fl",featureList)
+
     // console.log(list)
     // list.sort((a, b) => {
     //     // // console.log("sorting", a, tableSorting)
@@ -155,44 +165,42 @@ const list_videos_fetch = async () => {
 
     video_table.innerHTML = ""
     for (let i of list) {
-        let s
-        console.log(i[currentFeature['class']])
         let newElem = document.createElement('tr');
-        if (i[currentFeature['class']] == 0) {
-            s = `<tr>
-                        <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)">
-                            <span class="material-icons checkbox" style="line-height:40px";>
-                                check_box_outline_blank
-                            </span>
-                        </td>
-                        <!-- <td>
-                        <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-                        <span class="previewNameList">${i.name}</span>
-                        </td> -->
-                        <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}')">${i.name}</td>                        <td class="acquisitionTableClass">${i.video_class}</td>
-                        <td class="acquisitionTableDuration">${i.length}</td>
-                        <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
-                    </tr>`
-        } else {
-            s = `<tr>
-                    <td class="p-0 text-center">
-                        <span class="material-icons checkbox" style="line-height:40px";>
-                            check_box
-                        </span>
-                    </td>
-                    <!-- <td>
-                    <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
-                    <span class="previewNameList">${i.name}</span>
-                    </td> -->
-                    <td class="acquisitionTableName" onclick="togglePreviewVideo()">${i.name}</td>
-                    <td class="acquisitionTableClass">${i.video_class}</td>
-                    <td class="acquisitionTableDuration">${i.length}</td>
-                    <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
-                </tr>`
-            newElem.onclick = () => fetchFeature(i._id)
-        }
+        console.log(i)
+        newElem.innerHTML = `
+            <tr>
+                <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)">
+                    <span id="featuresListBox${i._id}" class="material-icons checkbox" style="line-height:40px";>
+                        check_box_outline_blank
+                    </span>
+                </td>
+                <!-- <td>
+                <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
+                <span class="previewNameList">${i.name}</span>
+                </td> -->
+                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}')">${i.name}</td>                        <td class="acquisitionTableClass">${i.video_class}</td>
+                <td class="acquisitionTableDuration">${i.length}</td>
+                <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
+            </tr>`
+        // } else {
+        //     s = `<tr>
+        //             <td class="p-0 text-center">
+        //                 <span class="material-icons checkbox" style="line-height:40px";>
+        //                     check_box
+        //                 </span>
+        //             </td>
+        //             <!-- <td>
+        //             <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
+        //             <span class="previewNameList">${i.name}</span>
+        //             </td> -->
+        //             <td class="acquisitionTableName" onclick="togglePreviewVideo()">${i.name}</td>
+        //             <td class="acquisitionTableClass">${i.video_class}</td>
+        //             <td class="acquisitionTableDuration">${i.length}</td>
+        //             <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
+        //         </tr>`
+        //     newElem.onclick = () => fetchFeature(i._id)
+        // }
 
-        newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
         newElem.style.cursor = 'pointer'
         // let newElem2 = document.createElement('tr');
@@ -206,6 +214,11 @@ const list_videos_fetch = async () => {
         video_table.appendChild(newElem);
         // video_table.appendChild(empty);
         // video_table.appendChild(newElem2)
+    }
+
+    for(let v of featureList) {
+        document.querySelector("#featuresListBox"+v['video_id']).innerText = 'check_box'
+        document.querySelector("#acquisitionTR"+v['video_id']).onclick = () => fetchFeature(v['video_id'])
     }
 };
 
@@ -305,7 +318,6 @@ downloadBtn.addEventListener('click', () => {
     // TODO, download features from the backend
 });
 
-const lines = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [0, 17], [5, 6], [5, 9], [6, 7], [7, 8], [9, 10], [9, 13], [10, 11], [11, 12], [13, 14], [13, 17], [14, 15], [15, 16], [17, 18], [18, 19], [19, 20]]
 const fetchFeature = async (id) => {
     console.log("HERE")
     featuresModalTitle.innerText = document.querySelector("#acquisitionTR" + id).querySelector('.acquisitionTableName').innerText;
@@ -321,8 +333,7 @@ const fetchFeature = async (id) => {
         method: "POST",
         body: data
     });
-    let landmarks = (await response.json())['landmarks']
-    // console.log(landmarks)
+    let feature = await response.json()
 
     // get video
     data = new FormData();
@@ -338,32 +349,31 @@ const fetchFeature = async (id) => {
     let i = 0;
 
 
-
     let interval = setInterval(() => {
         ctx.drawImage(featuresVideo, 0, 0, featuresVideoSnapshot.width, featuresVideoSnapshot.height);
 
         ctx_handpoints.fillStyle = "red";
         ctx_handpoints.clearRect(0, 0, 640, 480);
 
-        let currentFrame = Math.floor((featuresVideo.currentTime / featuresVideo.duration) * landmarks.length);
-        if (currentFrame < 0 || currentFrame >= landmarks.length) return;
+        let currentFrame = Math.floor((featuresVideo.currentTime / featuresVideo.duration) * feature.points.length);
+        if (currentFrame < 0 || currentFrame >= feature.points.length) return;
 
-        let currentLandmarks = landmarks[currentFrame];
-        if (currentLandmarks.length == 0) return;
+        let framePoints = feature.points[currentFrame];
 
-        for (let mark of currentLandmarks) {
+        for( let vertice of framePoints.vertices ) {
             ctx_handpoints.beginPath();
-            ctx_handpoints.arc(mark.x * 640, mark.y * 480, 5, 0, 2 * Math.PI);
+            ctx_handpoints.arc(vertice.x * 640, vertice.y * 480, 5, 0, 2 * Math.PI);
             ctx_handpoints.fill();
         }
-
-        for (let line of lines) {
-            console.log(currentLandmarks[line[0]].x, currentLandmarks[line[0]].y)
+        for (let edge of framePoints.edges) {
             ctx_handpoints.beginPath();
-            ctx_handpoints.moveTo(currentLandmarks[line[0]].x * 640, currentLandmarks[line[0]].y * 480);
-            ctx_handpoints.lineTo(currentLandmarks[line[1]].x * 640, currentLandmarks[line[1]].y * 480);
+            ctx_handpoints.moveTo(framePoints.vertices[edge[0]].x * 640, framePoints.vertices[edge[0]].y * 480);
+            ctx_handpoints.lineTo(framePoints.vertices[edge[1]].x * 640, framePoints.vertices[edge[1]].y * 480);
             ctx_handpoints.stroke();
         }
+        return
+
+
 
 
     }, 1000 / 60);
@@ -424,3 +434,25 @@ const tableLoadvideo = async (id) => {
     }
 }
 
+
+const getNewFeatureModalData = async () => {
+    let data = new FormData();
+    data.append('projectID', projectID);
+    const response = await fetch('http://127.0.0.1:5001/get_available_features', {method: 'POST', body: data });
+    let features = await response.json();
+
+    featuresModalCategory.innerHTML = `<label for="option">Feature:</label>`
+    for(let feature of features) {
+        let elem = document.createElement('div');
+        elem.classList = "form-check";
+        elem.innerHTML = `
+            <div>
+                <input class="form-check-input" name="mycheckboxes" type="checkbox" id="featuresModalFeature${feature}" value="${feature}">
+                <label class="form-check-label" for="${feature}">
+                ${feature}
+                </label>
+            </div>`
+        featuresModalCategory.appendChild(elem);
+    }
+    
+}

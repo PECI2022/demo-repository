@@ -8,6 +8,9 @@ import os
 from Mongo_cli import MongoCli
 from bson.objectid import ObjectId
 from datetime import datetime
+import inspect
+
+import features.index as featuresIndex
 # from features.mediapipe_handgesture.mediapipe_handgesture import Mediapipe_handgesture
 
 app = Flask(__name__)
@@ -145,23 +148,26 @@ class Operations:
         return mongo_cli.list_features(description['pid'])
 
     def extract_features(self):
-        # description = json.loads(request.form['description'])
-        # project = mongo_cli.find_project(description['pid'])
-        # videos_id = description['videos']
-        # feature = mongo_cli.find_feature(description['feature'])
-        # vid = project['content']
-        # for video_id in videos_id:
-        #     video = mongo_cli.find_video(video_id,description['pid'])
+        description = json.loads(request.form['description'])
+        project = mongo_cli.find_project(description['pid'])
+        videos_id = description['videos']
+        feature = mongo_cli.find_feature(description['feature'])
+        vid = project['content']
 
-        #     if video['_id'] not in feature['data']:
-        #         vid.remove(video)
-        #         video_name = mongo_cli.download_media_file(video['_id'])
-        #         f = pipe.getLandMarks(video_name)
-        #         os.remove(video_name)
-        #         content = {"video_id": video['_id'], "feature": f}
-        #         mongo_cli.insert_in_feature(feature['_id'],content)
-        #         video[feature['class']] = feature['_id']
-        #         vid.append(video)
+        for video_id in videos_id:
+            video = mongo_cli.find_video(video_id,description['pid'])
+
+            # if video['_id'] not in feature['data']:
+            vid.remove(video)
+            video_name = mongo_cli.download_media_file(video['_id'])
+            print(feature['class'])
+            featureFunc = getattr(featuresIndex, feature['class'])
+            f = featureFunc(video_name)
+            os.remove(video_name)
+            f['video_id'] = video['_id']
+            if f['type'] in ['points']:
+                mongo_cli.insert_in_feature(feature['_id'],f)
+            vid.append(video)
 
         # project['content'] = vid
         # mongo_cli.insert_data(project,project['_id'],"info")
@@ -273,6 +279,12 @@ class Operations:
         # mongo_cli.delete_from_db(description['_id'])
         mongo_cli.delete_videos(description['project_id'], description['video_id'])
         return "done"
+    
+    def list_feature_videos(self):
+        description = json.loads(request.form['description'])
+        project_id = description['projectID']
+        feature_id = description['featureID']
+        return mongo_cli.list_feature_videos(project_id, feature_id)
 
     # def check_existing_name(self,name):
     #     for i in mongo_cli.collection.find():
@@ -408,6 +420,14 @@ def download_audio():
 def list_audio():
     print("LIST AUDIO")
     return [i for i in os.listdir('.') if i.endswith('.mp3')]
+
+@app.route('/get_available_features', methods=['POST'])
+def get_available_features():
+    return featuresIndex.available
+
+@app.route('/list_feature_videos', methods=['POST'])
+def list_feature_videos():
+    return operation.list_feature_videos()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

@@ -21,7 +21,7 @@
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-light"
           style="margin-left: auto;background-color: white; border-color: grey;" data-bs-toggle="modal"
-          data-bs-target="#newFeature">
+          data-bs-target="#newFeature" onclick="getNewFeatureModalData()">
           New Feature
         </button>
 
@@ -46,9 +46,9 @@
 
                   <div class="row" style="margin-top: 10px;">
                     <div class="col">
-                      <div class="form-group" id="Category" value="MediaPipe">
-                        <label for="option">Media Pipe Feature Calculator</label>
-                        <div class="form-check" onclick="get_category('MediaPipeHand')">
+                      <div class="form-group" id="featuresModalCategory" value="MediaPipe">
+                        <label for="option">Feature:</label>
+                        <!-- <div class="form-check" onclick="get_category('MediaPipeHand')">
                           <input class="form-check-input"  type="checkbox" id="Gesture" value="Gesture">
                           <label class="form-check-label" for="Gesture">
                             Gesture recognition
@@ -71,7 +71,7 @@
                           <label class="form-check-label" for="Holistic">
                             Holistic Detection
                           </label>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
