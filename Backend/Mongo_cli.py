@@ -124,6 +124,7 @@ class MongoCli(object):
         for video in project['content']:
             if video['_id'] in videos_id:
                 for feature in self.f:
+                    print(video)
                     self.delete_video_from_feature(video[feature], video['_id'])
                 self.delete_from_db(video['_id'])
             else:
@@ -133,12 +134,13 @@ class MongoCli(object):
 
     def delete_video_from_feature(self, fid, vid):
         feature = self.find_feature(fid)
-        content = []
-        for video in feature['data']:
-            if video['video_id'] != vid:
-                content.append(video)
-        feature['data'] = content
-        self.insert_feature(feature, fid, "info")
+        if feature != None:
+            content = []
+            for video in feature['data']:
+                if video['video_id'] != vid:
+                    content.append(video)
+            feature['data'] = content
+            self.insert_feature(feature, fid, "info")
 
     # def edit_class(self, project_id, video_id, new_class):
     #     project = self.find_project(project_id)
