@@ -1,8 +1,12 @@
 /* base */
 
 body {
+<<<<<<< HEAD
+  background-color: gray;
+=======
   background-color: #292929 !important;
   color: white !important;
+>>>>>>> 6fbb3b9d713f7e794a88ae71aa0d43b2ad67a0b5
   /* color: black; */
   width: 100%;
   max-width: 1500;
@@ -19,7 +23,11 @@ body {
   background-color: #383838 !important;
 }
 .mbg-dark {
+<<<<<<< HEAD
+  background-color: black!important;
+=======
   background-color: #292929 !important;
+>>>>>>> 6fbb3b9d713f7e794a88ae71aa0d43b2ad67a0b5
 }
 .mbg-light {
   background-color: #eeede7 !important;
@@ -49,7 +57,11 @@ body {
 }
 
 #topNavBar a {
+<<<<<<< HEAD
+  color: whitesmoke;
+=======
   color: white;
+>>>>>>> 6fbb3b9d713f7e794a88ae71aa0d43b2ad67a0b5
   cursor: pointer;
   margin: 8px 10px;
 }
@@ -85,8 +97,13 @@ body {
 }
 
 #sidebarNav a.active {
+<<<<<<< HEAD
+  background-color:#868b8e;
+  /* color: white; */
+=======
   background-color: #292929;
   color: white;
+>>>>>>> 6fbb3b9d713f7e794a88ae71aa0d43b2ad67a0b5
 }
 
 #sidebarNav a:hover:not(.active) {
@@ -162,14 +179,14 @@ body {
   font-size: 16px;
   color: black;
 }
-
+/* 
 #carouselExampleIndicators {
   max-width: 1050px;
   margin: auto;
 }
 
 /* Set the height of the carousel images */
-.carousel-item img {
+/* .carousel-item img {
   height: 600px;
   object-fit: contain; 
 }
@@ -177,7 +194,7 @@ body {
 .carousel-item video {
   height: 600px;
   object-fit: contain; 
-}
+} */ */
 
 
 .mtext-white {
