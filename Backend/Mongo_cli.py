@@ -97,6 +97,13 @@ class MongoCli(object):
                 return video
         return None
     
+    def find_old_video(self, video_id, project_id):
+        project = self.find_project(project_id)
+        for video in project['content']:
+            if video['old_id'] == video_id:
+                return video
+        return None
+    
     def insert_in_project(self, project_id, data):
         project = self.find_project(project_id)
         if self.check_existing_name(project["content"], data["name"]):
