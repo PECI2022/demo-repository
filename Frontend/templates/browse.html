@@ -5,27 +5,18 @@
 {% block aditionalHead %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
-
-
 <style>
     .form-control {
         width: 300px;
-        /* Change the width to your desired size */
         height: 40px;
-        /* Change the height to your desired size */
     }
 
     .btn-outline-success {
         height: 40px;
-        /* Change the height to your desired size */
         font-size: 16px;
-        /* Change the font size to your desired size */
         color: #343335;
-        /* Change the font color to your desired color */
         background-color: transparent;
-        /* Remove the background color */
         border-color: #343335;
-        /* Change the border color to your desired color */
     }
 
     .btn-outline-success:focus {
@@ -39,7 +30,6 @@
         background-color: #343335 !important;
         border-color: #343335 !important;
     }
-
 
     .filter-container {
         display: flex;
@@ -55,63 +45,43 @@
 {% endblock %}
 
 {% block content %}
-
-
-
 <div class="container my-4">
     <br>
     <br>
     <div class="container my-5">
-    <h1 style="text-align:left;">Community Projects</h1>
-    
+        <h1 style="text-align:left;">Community Projects</h1>
 
-    <br>
+        <br>
 
-    <div class="d-flex justify-content-between">
-        <form class="d-flex">
-            <label for="search-input" class="visually-hidden"></label>
-            <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                community-search>
-            <button class="btn btn-outline-success" type="submit"><span class="material-symbols-outlined">
-                search
-                </span></button>
-        </form>
+        <div class="d-flex justify-content-between">
+            <form class="d-flex">
+                <label for="search-input" class="visually-hidden"></label>
+                <input id="search-input" class="form-control me-2" type="search" placeholder="Search"
+                    aria-label="Search" community-search>
+                <button class="btn btn-outline-success" type="submit"><span class="material-symbols-outlined">
+                    search
+                    </span></button>
+            </form>
 
-
-        <div class="filter-container">
-
-<<<<<<< HEAD
-            <select style="margin-right: 20px;height:25px" id="category" name="category" aria-label="Browse">
-                <option value="">All</option>
-=======
-            <select style="margin-right: 20px;height:25px" id="category" name="category" placeholder="Video" aria-label="Browse">
-                <option value=""></option>
->>>>>>> 6fbb3b9d713f7e794a88ae71aa0d43b2ad67a0b5
-                <option value="Video">Video</option>
-                <option value="Gestures">Gestures</option>
-                <option value="audio">Audio</option>
-            </select>
-
-            <button class="btn btn-outline-success" type="submit" onclick="list_projects()"><span class="material-icons-outlined material-icons-outlined-filled">
-                filter_alt
-            </span> </button>
-
+            <div class="filter-container">
+                <select style="margin-right: 20px;height:25px" id="category" name="category" aria-label="Browse">
+                    <option value="">All</option>
+                    <option value="Video">Video</option>
+                    <option value="Gestures">Gestures</option>
+                    <option value="audio">Audio</option>
+                </select>
+                <button class="btn btn-outline-success" type="submit" onclick="list_projects()">
+                    <span class="material-icons-outlined material-icons-outlined-filled">filter_alt</span>
+                </button>
+            </div>
         </div>
-    </div>
-    <br>
+        <br>
 
-    
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="public_project_list"
+            style="color: #292929">
+        </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="public_project_list" style="color: #292929">
-       
-
-    </div>
-
-
-
-
-    <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
-
+        <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
 
 </div>
 <footer style="text-align: center;">
