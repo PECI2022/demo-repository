@@ -306,15 +306,9 @@ class Operations:
     #     project['content'].append(video_id)
     #     print(project)
 
-    def video_characteristics(self):
-        description = json.loads(request.form['description'])
-        video_id = description['video_id']
-        project_id = description['project_id']
-
-        print(mongo_cli.video_characteristics(project_id, video_id))
-
     def average_characteristics(self):
-        pass
+        a = self.list_videos()
+        print(a)
 
 
 operation = Operations()
@@ -463,10 +457,10 @@ def list_audio():
     print("LIST AUDIO")
     return [i for i in os.listdir('.') if i.endswith('.mp3')]
 
-@app.route('/video_characteristics')
-def video_characteristics():
-    print("VIDEO CHARACTERISTICS")
-    return operation.video_characteristics()
+@app.route('/average_characteristics')
+def average_characteristics():
+    print("AVERAGE CHARACTERISTICS")
+    return operation.average_characteristics()
 
 
 if __name__ == '__main__':
