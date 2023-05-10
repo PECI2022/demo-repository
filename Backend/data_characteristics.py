@@ -128,6 +128,27 @@ def get_hue(info):
 
     return total_hue / frame_counter
 
+def average_characteristics_project(content):
+    if len(content) == 0:
+        return { "contrast": 0, "brightness": 0, "sharpness": 0, "saturation": 0, "hue": 0 }
+
+    contrast = 0
+    brightness = 0
+    sharpness = 0
+    saturation = 0
+    hue = 0
+
+    num_content = len(content)
+
+    for c in content:
+        contrast += c["Characteristics"]["contrast"]
+        brightness += c["Characteristics"]["brightness"]
+        sharpness += c["Characteristics"]["sharpness"]
+        saturation += c["Characteristics"]["saturation"]
+        hue += c["Characteristics"]["hue"]
+
+    return { "contrast": int(contrast / num_content), "brightness": int(brightness / num_content), "sharpness": int(sharpness / num_content), "saturation": int(saturation / num_content), "hue": int(hue / num_content) }
+
 
 
 

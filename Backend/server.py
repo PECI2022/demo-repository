@@ -240,12 +240,17 @@ class Operations:
 
     def load_info(self):
         description = json.loads(request.form['description'])
+        print("DES",description)
+
         project = mongo_cli.find_project(description['pid'])
+
+        avg_characteristics = average_characteristics_project(project['content'])
+
         if 'tags' in project:
             tags = project['tags']
         else:
             tags = []
-        return {"name": project["name"], "description": project['subject'], "tags": tags, "category": project.get('category', '')}
+        return {"name": project["name"], "description": project['subject'], "tags": tags, "category": project.get('category', ''), "characteristics": avg_characteristics}
 
     def update_tags(self):
         print("UPDATE TAGS")
@@ -336,10 +341,6 @@ class Operations:
     #     project = mongo_cli.collection.find_one({'_id':project_id})
     #     project['content'].append(video_id)
     #     print(project)
-
-    def average_characteristics(self):
-        a = self.list_videos()
-        print(a)
 
 
 operation = Operations()
@@ -499,11 +500,6 @@ def get_available_features():
 @app.route('/list_feature_videos', methods=['POST'])
 def list_feature_videos():
     return operation.list_feature_videos()
-
-@app.route('/average_characteristics')
-def average_characteristics():
-    print("AVERAGE CHARACTERISTICS")
-    return operation.average_characteristics()
 
 
 if __name__ == '__main__':
