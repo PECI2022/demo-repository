@@ -425,7 +425,7 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
         if (e.target.parentElement == acquisitionTableName && !visible) {
             charsText.innerHTML = ""
 
-            let chars = "B: " + Math.floor(brightness) + "    C: " + Math.floor(contrast) + "    S: " + Math.floor(sharpness) + "   Sa: " + Math.floor(saturation) + "    H: " + Math.floor(hue);
+            let chars = "Brightness: " + Math.floor(brightness) + "    Contrast: " + Math.floor(contrast) + "    Sharpness: " + Math.floor(sharpness) + "          Saturation: " + Math.floor(saturation) + "    Hue: " + Math.floor(hue);
 
             charsText.innerHTML = chars;
 

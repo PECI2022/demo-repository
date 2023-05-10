@@ -596,11 +596,16 @@ section {
 #previewVideo .card-body {
   color:#000;
   position: absolute;
-  top:43%;
+  top:8%;
   left: 0%;
-  transform: translate(10%, 170%);
+  transform: translate(0, 170%);
   z-index: 9999;
 
+}
+
+#previewVideo .card-body .card-text {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .acquisitionTableName:hover {
