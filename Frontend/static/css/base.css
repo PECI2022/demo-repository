@@ -107,46 +107,6 @@ body {
   background-color: #585858;
 }
 
-/* ==========================
-- VIDEO ACQUISITION SECTION -
-===========================*/
-
-#myTab button {
-  color: white;
-  border-radius: 5px;
-  border: 0;
-}
-
-#myTab button.active {
-  background-color: #585858;
-  color: white !important;
-}
-
-#pills-Record button {
-  background-color: #868b8e;
-  margin: 10px 0px;
-  border: 0;
-  border-radius: 5px;
-}
-#pills-Record .input-group-text {
-  background-color: #868b8e;
-  margin: 2px 0;
-  border: 0;
-  border-radius: 5px;
-}
-#pills-Record .form-control {
-  background-color: #b9b7bd;
-  margin: 2px 0;
-  border: 0;
-  border-radius: 5px;
-}
-/* #pills-Record .input-group .input-group-text {
-  background-color: #b9b7bd;
-  border: 0;
-  border-radius: 5px;
-} */
-
-
 /* ======================
 ---- SECOND SECTION------
 =======================*/
@@ -216,29 +176,29 @@ body {
   margin: auto;
 }
 
-  .navbar {
-    height: 50px;
+.navbar {
+  height: 50px;
 }
 
 
 .card-container {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 h6 {
-    font-size: 1.05em;
-    font-weight: 500;
-    color: black;
+  font-size: 1.05em;
+  font-weight: 500;
+  color: black;
 }
 
 .content {
-    max-width: 500px;
-    margin: auto;
+  max-width: 500px;
+  margin: auto;
 }
 
 .navbar-nav .nav-link.active {
-    color: #e0e2d7;
+  color: #e0e2d7;
 }
 
 #msg {
@@ -654,4 +614,9 @@ section {
 .nav-item:hover .sub-nav {
   opacity: 1;
   visibility: visible;
+}
+.characteristicName {
+  font-weight: bold;
+  padding-left: 4px;
+  padding-right: 4px;
 }
