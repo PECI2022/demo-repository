@@ -166,7 +166,6 @@ const list_videos_fetch = async () => {
     video_table.innerHTML = ""
     for (let i of list) {
         let newElem = document.createElement('tr');
-        console.log(i)
         newElem.innerHTML = `
             <tr>
                 <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)">
