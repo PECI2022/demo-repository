@@ -415,14 +415,15 @@ function togglePreviewVideo(video_id) {
     const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
 
     const previewVideo = document.getElementById('previewVideo');
-    previewVideo.style.top = acquisitionTableNameRect.top + 'px';
-    previewVideo.style.left = acquisitionTableNameRect.left + 'px';
+    previewVideo.style.top = acquisitionTableNameRect.top - 45 + 'px';
+    previewVideo.style.left = acquisitionTableNameRect.left + 200 + 'px';
 
     document.addEventListener('click', (e) => {
         let visible = false;
 
         if (e.target.parentElement == acquisitionTableName && !visible) {
             previewVideo.style.display = "block";
+
             const video = document.querySelector(newVideoID);
             video.setAttribute("id", "video" + video_id);
             tableLoadvideo(video_id)

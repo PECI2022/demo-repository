@@ -590,10 +590,17 @@ section {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -75%);
 }
 
+#previewVideo .card-body {
+  color:#000;
+  position: absolute;
+  left: 0%;
+  transform: translate(0%, 170%);
+  z-index: 9999;
 
+}
 
 .acquisitionTableName:hover {
   text-decoration: underline;
