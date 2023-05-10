@@ -596,8 +596,9 @@ section {
 #previewVideo .card-body {
   color:#000;
   position: absolute;
+  top:43%;
   left: 0%;
-  transform: translate(0%, 170%);
+  transform: translate(10%, 170%);
   z-index: 9999;
 
 }

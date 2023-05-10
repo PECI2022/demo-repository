@@ -178,7 +178,7 @@ const list_videos_fetch = async () => {
                 <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                 <span class="previewNameList">${i.name}</span>
                 </td> -->
-                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}')">${i.name}</td>                        <td class="acquisitionTableClass">${i.video_class}</td>
+                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>                        <td class="acquisitionTableClass">${i.video_class}</td>
                 <td class="acquisitionTableDuration">${i.length}</td>
                 <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
             </tr>`
@@ -410,7 +410,7 @@ let newVideoID = "video";
 
 
 
-function togglePreviewVideo(video_id) {
+function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hue) {
     const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
     const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
 
@@ -418,11 +418,17 @@ function togglePreviewVideo(video_id) {
     previewVideo.style.top = acquisitionTableNameRect.top - 45 + 'px';
     previewVideo.style.left = acquisitionTableNameRect.left + 200 + 'px';
 
+    const charsText = document.getElementById('chars-text');
+
     document.addEventListener('click', (e) => {
         let visible = false;
 
         if (e.target.parentElement == acquisitionTableName && !visible) {
-            previewVideo.style.display = "block";
+            charsText.innerHTML = ""
+
+            let chars = "B: " + Math.floor(brightness) + "    C: " + Math.floor(contrast) + "    S: " + Math.floor(sharpness) + "   Sa: " + Math.floor(saturation) + "    H: " + Math.floor(hue);
+
+            charsText.innerHTML = chars;
 
             const video = document.querySelector(newVideoID);
             video.setAttribute("id", "video" + video_id);
@@ -430,6 +436,7 @@ function togglePreviewVideo(video_id) {
             newVideoID = "#video" + video_id;
             visible = true;
 
+            previewVideo.style.display = "block";
         } else{
             previewVideo.style.display = "none";
             visible = false;
