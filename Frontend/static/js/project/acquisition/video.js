@@ -379,7 +379,7 @@ const launchDataPreview = (videoBlobs) => {
             ee.innerHTML = `
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                    <div class="input-group-text">class</div>
+                        <div class="input-group-text">class</div>
                     </div>
                     <select class="custom-select mr-sm-2 form-control h-100" id="inlineFormCustomSelect">
                         ${options}
@@ -387,11 +387,14 @@ const launchDataPreview = (videoBlobs) => {
                 </div>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                    <div class="input-group-text">duration</div>
+                        <div class="input-group-text" style="width: 100%;">
+                            <p>duration</p>
+                        </div>
+                            <form class="multi-range-field my-5 pb-5">
+                                <input id="multi25" class="multi-range" type="range" />
+                            </form>
+                        
                     </div>
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="00">
-                    <div class="input-group-text">:</div>
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="xx">
                 </div>
             `;
             e.after(ee);
