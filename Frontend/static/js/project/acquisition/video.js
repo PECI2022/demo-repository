@@ -146,8 +146,6 @@ const list_videos_fetch = async () => {
     video_table.innerHTML = ""
 
     for (let i of list) {
-        console.log("I", i)
-
         if (acquisitionSearch.value != "" &&
             i.name.match(new RegExp(acquisitionSearch.value)) == null &&
             i.video_class.match(new RegExp(acquisitionSearch.value)) == null
@@ -656,10 +654,13 @@ function togglePreviewVideo(video_id, brightness, contrast, sharpness, saturatio
             newElem.className = "list-group";
             charsText.appendChild(newElem);
 
-            const video = document.querySelector(newVideoID);
-            video.setAttribute("id", "video" + video_id);
-            tableLoadvideoPreview(video_id)
-            newVideoID = "#videoPreview" + video_id;
+            const video = document.querySelector("#"+newVideoID);
+
+            newVideoID = "videoPreview" + video_id;
+
+            video.setAttribute("id", newVideoID);
+            
+            tableLoadvideoPreview(video_id);
             visible = true;
 
             previewVideoTable.style.display = "block";
@@ -672,16 +673,17 @@ function togglePreviewVideo(video_id, brightness, contrast, sharpness, saturatio
 
 const tableLoadvideoPreview = async (id) => {
     let v = document.querySelector("#videoPreview" + id);
+
     if (v.src == "") {
-        console.log("tBVP", id);
         let data = new FormData();
-        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
+        data.append('_id', id);
+        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data });
         let blob = await response.blob();
-        v.src = URL.createObjectURL(blob)
+        v.src = URL.createObjectURL(blob);
     } else {
-        v.removeAttribute('src')
+        v.removeAttribute('src');
     }
-}
+};
 
 
 // const tableLoadvideo = async (id) => {
