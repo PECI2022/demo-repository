@@ -146,6 +146,8 @@ const list_videos_fetch = async () => {
     video_table.innerHTML = ""
 
     for (let i of list) {
+        console.log("I",i)
+
         if( acquisitionSearch.value!="" && 
             i.name.match(new RegExp(acquisitionSearch.value))==null &&
             i.video_class.match(new RegExp(acquisitionSearch.value))==null
@@ -160,8 +162,7 @@ const list_videos_fetch = async () => {
                     <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                     <span class="previewNameList">${i.name}</span>
                     </td> -->
-                    <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}')">${i.name}</td>
-
+                    <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>
                     <td class="acquisitionTableClass">${i.video_class}</td>
                     <td class="acquisitionTableDuration">${i.length}</td>
                     <td class="acquisitionTableDate">${new Date( i.update ).toLocaleDateString("en-GB")}</td>
@@ -170,29 +171,29 @@ const list_videos_fetch = async () => {
         newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
         // newElem.onclick = () => 
-        let newElem2 = document.createElement('tr');
-        newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="360px" height="300px" autoplay controls/></td>`
-        newElem2.classList.add("collapse")
-        newElem2.id = `collapse${i._id}`
-        newElem2.colSpan = "4"
-        let empty = document.createElement('tr');
-        empty.innerHTML = ""
-        const ff = () => {
-            for( let i of video_table.childNodes ) {
-                if( i.id.startsWith('collapse') && !i.classList.contains('collapse') ) i.classList.add('collapse');
-            }
-            tableLoadvideo(i._id);
-            newElem2.classList.remove('collapse');
+        // let newElem2 = document.createElement('tr');
+        // newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="360px" height="300px" autoplay controls/></td>`
+        // newElem2.classList.add("collapse")
+        // newElem2.id = `collapse${i._id}`
+        // newElem2.colSpan = "4"
+        // let empty = document.createElement('tr');
+        // empty.innerHTML = ""
+        // const ff = () => {
+        //     for( let i of video_table.childNodes ) {
+        //         if( i.id.startsWith('collapse') && !i.classList.contains('collapse') ) i.classList.add('collapse');
+        //     }
+        //     tableLoadvideo(i._id);
+        //     newElem2.classList.remove('collapse');
             
-            newElem.onclick = () => {
-                newElem2.classList.add('collapse');
-                newElem.onclick = ff;
-            }
-        }
-        newElem.onclick = ff;
+        //     newElem.onclick = () => {
+        //         newElem2.classList.add('collapse');
+        //         newElem.onclick = ff;
+        //     }
+        // }
+        //newElem.onclick = ff;
         video_table.appendChild(newElem);
-        video_table.appendChild(empty);
-        video_table.appendChild(newElem2)
+        // video_table.appendChild(empty);
+        // video_table.appendChild(newElem2)
     }
 }; list_videos_fetch()
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -622,3 +623,49 @@ const preview_edit = (elem) => {
     }
 }
 
+
+const previewVideoTable = document.getElementById("previewVideoTable");
+let newVideoID = "video";
+// Function to display preview of the data
+function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hue) {
+    const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
+    const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
+
+    const previewVideoTable = document.getElementById('previewVideoTable');
+    previewVideoTable.style.top = acquisitionTableNameRect.top - 45 + 'px';
+    previewVideoTable.style.left = acquisitionTableNameRect.left + 200 + 'px';
+
+    const charsText = document.getElementById('chars-text');
+
+    document.addEventListener('click', (e) => {
+        let visible = false;
+
+        if (e.target.parentElement == acquisitionTableName && !visible) {
+            charsText.innerHTML = ""
+
+            // let chars = "Brightness: " + Math.floor(brightness) + "    Contrast: " + Math.floor(contrast) + "    Sharpness: " + Math.floor(sharpness) + "          Saturation: " + Math.floor(saturation) + "    Hue: " + Math.floor(hue);
+            let chars = `
+                            <li class="list-group-item"><b>Brightness:</b> ${Math.floor(brightness)}</li>
+                            <li class="list-group-item"><b>Contrast:</b> ${Math.floor(contrast)}</li>
+                            <li class="list-group-item"><b>Sharpness:</b> ${Math.floor(sharpness)}</li>
+                            <li class="list-group-item"><b>Saturation:</b> ${Math.floor(saturation)}</li>
+                            <li class="list-group-item"><b>Hue:</b> ${Math.floor(hue)}</li>
+                        `
+            let newElem = document.createElement("ul");
+            newElem.innerHTML = chars;
+            newElem.className = "list-group";
+            charsText.appendChild(newElem);
+
+            const video = document.querySelector(newVideoID);
+            video.setAttribute("id", "video" + video_id);
+            tableLoadvideo(video_id)
+            newVideoID = "#video" + video_id;
+            visible = true;
+
+            previewVideoTable.style.display = "block";
+        } else{
+            previewVideoTable.style.display = "none";
+            visible = false;
+        }
+    });
+};

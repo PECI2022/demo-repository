@@ -177,7 +177,8 @@ const list_videos_fetch = async () => {
                 <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                 <span class="previewNameList">${i.name}</span>
                 </td> -->
-                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>                        <td class="acquisitionTableClass">${i.video_class}</td>
+                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>
+                <td class="acquisitionTableClass">${i.video_class}</td>
                 <td class="acquisitionTableDuration">${i.length}</td>
                 <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
             </tr>`
@@ -425,9 +426,18 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
         if (e.target.parentElement == acquisitionTableName && !visible) {
             charsText.innerHTML = ""
 
-            let chars = "Brightness: " + Math.floor(brightness) + "    Contrast: " + Math.floor(contrast) + "    Sharpness: " + Math.floor(sharpness) + "          Saturation: " + Math.floor(saturation) + "    Hue: " + Math.floor(hue);
-
-            charsText.innerHTML = chars;
+            // let chars = "Brightness: " + Math.floor(brightness) + "    Contrast: " + Math.floor(contrast) + "    Sharpness: " + Math.floor(sharpness) + "          Saturation: " + Math.floor(saturation) + "    Hue: " + Math.floor(hue);
+            let chars = `
+                            <li class="list-group-item"><b>Brightness:</b> ${Math.floor(brightness)}</li>
+                            <li class="list-group-item"><b>Contrast:</b> ${Math.floor(contrast)}</li>
+                            <li class="list-group-item"><b>Sharpness:</b> ${Math.floor(sharpness)}</li>
+                            <li class="list-group-item"><b>Saturation:</b> ${Math.floor(saturation)}</li>
+                            <li class="list-group-item"><b>Hue:</b> ${Math.floor(hue)}</li>
+                        `
+            let newElem = document.createElement("ul");
+            newElem.innerHTML = chars;
+            newElem.className = "list-group";
+            charsText.appendChild(newElem);
 
             const video = document.querySelector(newVideoID);
             video.setAttribute("id", "video" + video_id);
