@@ -11,7 +11,7 @@ from datetime import datetime
 import inspect
 
 import features.index as featuresIndex
-from data_characteristics import *
+from data_manipulation import *
 # from features.mediapipe_handgesture.mediapipe_handgesture import Mediapipe_handgesture
 
 app = Flask(__name__)
