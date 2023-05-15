@@ -94,7 +94,7 @@ record_button.addEventListener('click', async () => {
             blob: null,
             url: null,
             blob_recorded: [],
-            name: (document.querySelector('#video_table').childNodes.length/3 + blobs.length) + "_" + document.querySelector('#classDropdown').innerText,
+            name: (document.querySelector('#video_table').childNodes.length / 3 + blobs.length) + "_" + document.querySelector('#classDropdown').innerText,
             class: document.querySelector('#classDropdown').innerText,
             duration: duration_input.value,
         })
@@ -146,13 +146,13 @@ const list_videos_fetch = async () => {
     video_table.innerHTML = ""
 
     for (let i of list) {
-        console.log("I",i)
+        console.log("I", i)
 
-        if( acquisitionSearch.value!="" && 
-            i.name.match(new RegExp(acquisitionSearch.value))==null &&
-            i.video_class.match(new RegExp(acquisitionSearch.value))==null
+        if (acquisitionSearch.value != "" &&
+            i.name.match(new RegExp(acquisitionSearch.value)) == null &&
+            i.video_class.match(new RegExp(acquisitionSearch.value)) == null
         ) continue;
-        let  s = `<tr>
+        let s = `<tr>
                     <td class="p-0 text-center TdCheckBox" onclick="toogleCheckBox(this)" style="cursor:pointer;display:${tableSorting[2]};">
                         <span class="material-icons checkbox" style="line-height:40px";>
                             check_box_outline_blank
@@ -165,7 +165,7 @@ const list_videos_fetch = async () => {
                     <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>
                     <td class="acquisitionTableClass">${i.video_class}</td>
                     <td class="acquisitionTableDuration">${i.length}</td>
-                    <td class="acquisitionTableDate">${new Date( i.update ).toLocaleDateString("en-GB")}</td>
+                    <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
                 </tr>`
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
@@ -184,7 +184,7 @@ const list_videos_fetch = async () => {
         //     }
         //     tableLoadvideo(i._id);
         //     newElem2.classList.remove('collapse');
-            
+
         //     newElem.onclick = () => {
         //         newElem2.classList.add('collapse');
         //         newElem.onclick = ff;
@@ -228,7 +228,7 @@ const tableLoadvideo = async (id) => {
     if (v.src == "") {
         console.log(id)
         let data = new FormData();
-        data.append('_id',id);
+        data.append('_id', id);
         const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
         // console.log("responded")
         let blob = await response.blob();
@@ -289,7 +289,7 @@ const delete_video = async (_id) => {
         })
         list_videos_fetch()
     })
-} 
+}
 
 const list_classes_fetch = async () => {
     // TODO: get classes from a fetch to server
@@ -310,7 +310,7 @@ const list_classes_fetch = async () => {
 const storeCurrentBlobs = async (blobs) => {
     for (let blob of blobs) {
         let data = new FormData();
-        data.append('file',blob.blob);
+        data.append('file', blob.blob);
 
         data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID }))
 
@@ -494,9 +494,9 @@ folderInput.addEventListener("change", async () => {
                     class: "test",
                     duration: duration
                 });
-                if( blobs.length==files.length ) launchDataPreview(blobs)
+                if (blobs.length == files.length) launchDataPreview(blobs)
             }
-            
+
         }
     }
 });
@@ -534,7 +534,7 @@ fileInput.addEventListener("change", function () {
                 name: videoName,
                 class: "test",
                 duration: duration
-              }]);
+            }]);
         }
         // console.log("531 videoElement: ", videoElement);
     }
@@ -625,9 +625,9 @@ const preview_edit = (elem) => {
 
 
 const previewVideoTable = document.getElementById("previewVideoTable");
-let newVideoID = "video";
+let newVideoID = "videoPreview";
 // Function to display preview of the data
-function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hue) {
+function togglePreviewVideo(video_id, brightness, contrast, sharpness, saturation, hue) {
     const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
     const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
 
@@ -658,14 +658,42 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
 
             const video = document.querySelector(newVideoID);
             video.setAttribute("id", "video" + video_id);
-            tableLoadvideo(video_id)
-            newVideoID = "#video" + video_id;
+            tableLoadvideoPreview(video_id)
+            newVideoID = "#videoPreview" + video_id;
             visible = true;
 
             previewVideoTable.style.display = "block";
-        } else{
+        } else {
             previewVideoTable.style.display = "none";
             visible = false;
         }
     });
 };
+
+const tableLoadvideoPreview = async (id) => {
+    let v = document.querySelector("#videoPreview" + id);
+    if (v.src == "") {
+        console.log("tBVP", id);
+        let data = new FormData();
+        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
+        let blob = await response.blob();
+        v.src = URL.createObjectURL(blob)
+    } else {
+        v.removeAttribute('src')
+    }
+}
+
+
+// const tableLoadvideo = async (id) => {
+//     let v = document.querySelector("#video" + id);
+//     if (v.src == "") {
+//         console.log(id)
+//         let data = new FormData();
+//         data.append('_id',id);
+//         const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
+//         let blob = await response.blob();
+//         v.src = URL.createObjectURL(blob)
+//     } else {
+//         v.removeAttribute('src')
+//     }
+// }
