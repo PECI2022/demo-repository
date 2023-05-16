@@ -48,12 +48,24 @@ class Operations:
             return {"result": "Project not found"}
 
     def upload(self):
-        file = request.files['file']
+        file = request.files['file']        
         description = json.loads(request.form['description'])
         # if(self.check_existing_name(description['name'])):
         #         return {"result": "Error"}
         info = './' + description['name'] + '.webm'
         file.save(info)
+
+        startCrop = description.get('start')
+        endCrop = description.get('end')
+
+        if(startCrop != "" and endCrop!=""):
+            cropVideo(info,int(startCrop),int(endCrop))
+            video_length = endCrop - startCrop
+        else:
+            video_length = description.get('length')
+
+
+                
 
         contrast = get_contrast(info)
         brightness = get_brightness(info)
@@ -65,7 +77,6 @@ class Operations:
 
         _id = mongo_cli.generate_unique_id()
         video_class = description.get('class')
-        video_length = description.get('length')
         data = {"name": description['name'], "video_class": video_class, "length": video_length, "_id": str(
             _id), "update": datetime.now(), "MediaPipeHand": 0, "Characteristics": video_characteristics,"old_id":0}
             

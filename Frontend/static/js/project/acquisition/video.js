@@ -97,6 +97,8 @@ record_button.addEventListener('click', async () => {
             name: (document.querySelector('#video_table').childNodes.length / 3 + blobs.length) + "_" + document.querySelector('#classDropdown').innerText,
             class: document.querySelector('#classDropdown').innerText,
             duration: duration_input.value,
+            start: "",
+            end: ""
         })
 
         let t1 = setTimeout(() => { // countdown delay
@@ -310,7 +312,7 @@ const storeCurrentBlobs = async (blobs) => {
         let data = new FormData();
         data.append('file', blob.blob);
 
-        data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID }))
+        data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID,start:blob.start,end:blob.end }))
 
         $('#acquisitionVideoPreviewModal').modal('hide')
 
@@ -376,6 +378,8 @@ const launchDataPreview = (videoBlobs) => {
                 options += `<option class="eeClasses" value="${i}" ${c == videoBlobs[i].class ? "selected" : ""}>${c}</option>`
             }
 
+            console.log("I", videoBlobs[i])
+
             ee.innerHTML = `
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -387,15 +391,12 @@ const launchDataPreview = (videoBlobs) => {
                 </div>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                        <div class="input-group-text" style="width: 100%;">
-                            <p>duration</p>
-                        </div>
-                            <form class="multi-range-field my-5 pb-5">
-                                <input id="multi25" class="multi-range" type="range" />
-                            </form>
-                        
+                        <span class="input-group-text">Duration</span>
                     </div>
-                </div>
+                        <input id="start_number" type="number" class="form-control" placeholder="Start (seconds)">
+                        <input id="end_number" type="number" class="form-control" placeholder="End (seconds)">
+              </div>
+              <button id="button-crop" class="btn btn-primary">Crop it</button>
             `;
             e.after(ee);
 
@@ -404,10 +405,20 @@ const launchDataPreview = (videoBlobs) => {
                     videoBlobs[i].class = nn.innerText;
                 }
             }
+            const cropButton = document.getElementById("button-crop")
+            cropButton.onclick = () => {
+                videoBlobs[i].start = document.getElementById("start_number").value
+                videoBlobs[i].end = document.getElementById("end_number").value
+                console.log("HEY",videoBlobs[i])
+            }
+
+
         }
         if (i == 0) e.click();
 
+
     }
+
 }
 // window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
 
@@ -657,12 +668,12 @@ function togglePreviewVideo(video_id, brightness, contrast, sharpness, saturatio
             newElem.className = "list-group";
             charsText.appendChild(newElem);
 
-            const video = document.querySelector("#"+newVideoID);
+            const video = document.querySelector("#" + newVideoID);
 
             newVideoID = "videoPreview" + video_id;
 
             video.setAttribute("id", newVideoID);
-            
+
             tableLoadvideoPreview(video_id);
             visible = true;
 
@@ -687,18 +698,3 @@ const tableLoadvideoPreview = async (id) => {
         v.removeAttribute('src');
     }
 };
-
-
-// const tableLoadvideo = async (id) => {
-//     let v = document.querySelector("#video" + id);
-//     if (v.src == "") {
-//         console.log(id)
-//         let data = new FormData();
-//         data.append('_id',id);
-//         const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
-//         let blob = await response.blob();
-//         v.src = URL.createObjectURL(blob)
-//     } else {
-//         v.removeAttribute('src')
-//     }
-// }
