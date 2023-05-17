@@ -24,41 +24,27 @@ window.addEventListener('load', () => {
       localStorage.setItem("tags", JSON.stringify(data.tags));
       const tagsListed = document.getElementById("tags");
       tagsListed.innerHTML = "";
+      if (data.tags.length > 0) {
+        var tagsTitle = document.createElement("span");
+        tagsTitle.innerHTML = "Tags: ";
+        tagsListed.appendChild(tagsTitle);
+      }
+
       for (let tag of data.tags) {
         var tagElement = document.createElement("span");
-        tagElement.innerHTML = "#" + tag + " ";
-        var deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "x";
-        deleteButton.style.marginLeft = "5px";
-        deleteButton.style.fontSize = "10px";
-        deleteButton.style.color = "red";
-        deleteButton.addEventListener("click", function () {
-          var index = data.tags.indexOf(tag);
-          if (index !== -1) {
-            data.tags.splice(index, 1);
-            localStorage.setItem("tags", JSON.stringify(data.tags));
-            tagsListed.removeChild(tagElement);
-            // update tags array in backend
-            let data2 = new FormData();
-            data2.append(
-              "description",
-              JSON.stringify({
-                pid: project_id,
-                tags: data.tags
-              }),
-            );
-            fetch('http://127.0.0.1:5001/update_tags', {
-              method: 'POST',
-              body: data2
-            })
-
-
-          }
-        });
-        tagElement.appendChild(deleteButton);
-        tagElement.style.display = "inline-block";
-        tagElement.style.marginRight = "5px";
-        tagsListed.appendChild(tagElement);
+        if (tag == data.tags[data.tags.length - 1]) { // last tag
+          tagElement.innerHTML = "#" + tag + " ";
+      
+          tagElement.style.display = "inline-block";
+          tagElement.style.marginRight = "5px";
+          tagElement.style.color = "#eee";
+          tagsListed.appendChild(tagElement);
+        } else {
+          tagElement.innerHTML = "#" + tag + ", ";
+          tagElement.style.display = "inline-block";
+          tagElement.style.marginRight = "5px";
+          tagsListed.appendChild(tagElement);
+        }
       }
     });
 });
