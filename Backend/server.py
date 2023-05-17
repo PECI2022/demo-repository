@@ -28,7 +28,7 @@ class Operations:
     def new_project(self):
         description = json.loads(request.form['description'])
         _id = mongo_cli.generate_unique_id()
-        data = {"name": description['name'], "subject": description['subject'], "model": description['model'],
+        data = {"name": description['name'], "subject": description['subject'],
                 "category": description['category'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
         mongo_cli.insert_data(data, _id, "info")
         return {"result": str(_id)}

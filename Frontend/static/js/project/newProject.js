@@ -24,12 +24,10 @@ const create_project = async () => {
     JSON.stringify({
       name: document.querySelector("#name").value,
       subject: document.querySelector("#description").value,
-      model: document.querySelector("#model").value,
       category: category,
       tags: tags
     }),
   );
-  console.log(document.querySelector("#Category").value);
   let response = await fetch("http://127.0.0.1:5001/new_project", {
     method: "POST",
     body: data,
