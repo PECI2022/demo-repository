@@ -1,4 +1,5 @@
 let tags_selected = new Set();
+let existing_tags = new Set();
 
 const projectList = document.querySelector("#public_project_list");
 console.log("EK")
@@ -124,26 +125,32 @@ const list_projects = async () => {
   }
 
   const tagSelect = document.querySelector('#all-tags');
+  const checkboxes = tagSelect.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    existing_tags.add(checkbox.value)
+  });
 
   for (let tag of all_tags) {
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "tag";
-    checkbox.value = tag;
-    checkbox.id = tag;
-    checkbox.classList.add("form-check-input");
+    if (!existing_tags.has(tag)) {
+      let checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.name = "tag";
+      checkbox.value = tag;
+      checkbox.id = tag;
+      checkbox.classList.add("form-check-input");
 
-    let label = document.createElement("label");
-    label.htmlFor = tag;
-    label.appendChild(document.createTextNode(tag));
-    label.classList.add("form-check-label");
+      let label = document.createElement("label");
+      label.htmlFor = tag;
+      label.appendChild(document.createTextNode(tag));
+      label.classList.add("form-check-label");
 
-    let div = document.createElement("div");
-    div.classList.add("form-check");
-    div.appendChild(checkbox);
-    div.appendChild(label);
+      let div = document.createElement("div");
+      div.classList.add("form-check");
+      div.appendChild(checkbox);
+      div.appendChild(label);
 
-    tagSelect.appendChild(div);
+      tagSelect.appendChild(div);
+    }
   }
 
   const searchInput = document.querySelector('[community-search]');
@@ -195,7 +202,6 @@ function filterTags() {
   selectedTags.forEach((checkbox) => {
     tags_selected.add(checkbox.value);
   });
-  console.log(tags_selected);
   $('#myModal').modal('hide')
   list_projects()
 }
