@@ -61,9 +61,32 @@
                 <input id="search-input" class="form-control me-2" type="search" placeholder="Search"
                     aria-label="Search" community-search>
                 <button class="btn btn-outline-success" type="submit"><span class="material-symbols-outlined">
-                    search
+                        search
                     </span></button>
+
             </form>
+
+            <button type="button" class="btn text-white" data-toggle="modal" data-target="#myModal"
+                onclick="$('#myModal').modal('show')" id="search-tag">
+                Search by Tags
+            </button>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-dark" id="exampleModalLabel">Search By Tags:</h5>
+                        </div>
+                        <div class="modal-body text-dark" id="all-tags">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                onclick="$('#myModal').modal('hide')">Close</button>
+                            <button type="button" class="btn btn-primary" id="save-tags" onclick="filterTags()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
 
             <div class="filter-container">
                 <select style="margin-right: 20px;height:25px" id="category" name="category" aria-label="Browse">
@@ -84,10 +107,10 @@
 
         <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
 
-</div>
-<footer style="text-align: center;">
-    <p>&copy; 2023 MFDA. All Rights Reserved.</p>
-</footer>
+    </div>
+    <footer style="text-align: center;">
+        <p>&copy; 2023 MFDA. All Rights Reserved.</p>
+    </footer>
 
 </div>
 {% endblock %}

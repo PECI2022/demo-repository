@@ -1,3 +1,5 @@
+let tags_selected = new Set();
+
 const projectList = document.querySelector("#public_project_list");
 console.log("EK")
 // When the user scrolls down 20px from the top of the document, show the button
@@ -103,7 +105,7 @@ const list_projects = async () => {
       all_tags.add(tag)
     });
   }
-  
+
   const options = document.querySelectorAll('#category option');
   let all_options = new Set();
   options.forEach(option => {
@@ -121,6 +123,28 @@ const list_projects = async () => {
     }
   }
 
+  const tagSelect = document.querySelector('#all-tags');
+
+  for (let tag of all_tags) {
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "tag";
+    checkbox.value = tag;
+    checkbox.id = tag;
+    checkbox.classList.add("form-check-input");
+
+    let label = document.createElement("label");
+    label.htmlFor = tag;
+    label.appendChild(document.createTextNode(tag));
+    label.classList.add("form-check-label");
+
+    let div = document.createElement("div");
+    div.classList.add("form-check");
+    div.appendChild(checkbox);
+    div.appendChild(label);
+
+    tagSelect.appendChild(div);
+  }
 
   const searchInput = document.querySelector('[community-search]');
 
@@ -135,6 +159,14 @@ const list_projects = async () => {
     });
   } else {
     filterProjects = projects
+  }
+
+  if (tags_selected.size > 0) {
+    filterProjects = filterProjects.filter(proj => {
+      return proj.tags.some(tag => {
+        return tags_selected.has(tag);
+      });
+    });
   }
 
   projectList.innerHTML = "";
@@ -155,3 +187,15 @@ const list_projects = async () => {
     createCard(searchProject)
   });
 }; list_projects()
+
+
+function filterTags() {
+  const selectedTags = document.querySelectorAll('input[name="tag"]:checked');
+  tags_selected = new Set();
+  selectedTags.forEach((checkbox) => {
+    tags_selected.add(checkbox.value);
+  });
+  console.log(tags_selected);
+  $('#myModal').modal('hide')
+  list_projects()
+}
