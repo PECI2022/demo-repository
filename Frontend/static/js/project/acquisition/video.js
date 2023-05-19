@@ -97,6 +97,8 @@ record_button.addEventListener('click', async () => {
             name: (document.querySelector('#video_table').childNodes.length / 3 + blobs.length) + "_" + document.querySelector('#classDropdown').innerText,
             class: document.querySelector('#classDropdown').innerText,
             duration: duration_input.value,
+            start: "",
+            end: ""
         })
 
         let t1 = setTimeout(() => { // countdown delay
@@ -310,7 +312,7 @@ const storeCurrentBlobs = async (blobs) => {
         let data = new FormData();
         data.append('file', blob.blob);
 
-        data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID }))
+        data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID, start: blob.start, end: blob.end }))
 
         $('#acquisitionVideoPreviewModal').modal('hide')
 
@@ -376,23 +378,25 @@ const launchDataPreview = (videoBlobs) => {
                 options += `<option class="eeClasses" value="${i}" ${c == videoBlobs[i].class ? "selected" : ""}>${c}</option>`
             }
 
+            console.log("I", videoBlobs[i])
+
             ee.innerHTML = `
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                    <div class="input-group-text">class</div>
+                        <div class="input-group-text">class</div>
                     </div>
                     <select class="custom-select mr-sm-2 form-control h-100" id="inlineFormCustomSelect">
                         ${options}
                     </select>
                 </div>
                 <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text">duration</div>
+                    <div class="input-group-prepend mb-3">
+                        <span class="input-group-text">Interval to Trim</span>
                     </div>
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="00">
-                    <div class="input-group-text">:</div>
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="xx">
-                </div>
+                        <input type="range" class="form-range" min="0" max="${videoBlobs[i].duration}" step="0.1" id="start_number" value="0">
+                        <input type="range" class="form-range" min="0" max="${videoBlobs[i].duration}" step="0.1" id="end_number" value="${videoBlobs[i].duration}">
+              </div>
+              <button id="button-crop" class="btn btn-primary">Trim it</button>
             `;
             e.after(ee);
 
@@ -401,10 +405,60 @@ const launchDataPreview = (videoBlobs) => {
                     videoBlobs[i].class = nn.innerText;
                 }
             }
+
+            const videoControls = document.getElementById('acquisitionVideoPreviewModalVideo');
+            const startNumber = document.getElementById('start_number');
+            const endNumber = document.getElementById('end_number');
+                        
+            endNumber.addEventListener('input', () => {
+                if (parseFloat(endNumber.value) < parseFloat(startNumber.value)) {
+                  endNumber.value = startNumber.value;
+                }
+              });
+
+            startNumber.addEventListener('input', () => {
+              if (parseFloat(startNumber.value) > parseFloat(endNumber.value)) {
+                startNumber.value = endNumber.value;
+              }
+              videoControls.currentTime = startNumber.value;
+              videoControls.addEventListener('timeupdate', () => {
+                if (videoControls.currentTime < parseFloat(startNumber.value) || videoControls.currentTime > parseFloat(endNumber.value)) {
+                  videoControls.currentTime = startNumber.value;
+                }
+              });
+            });
+            
+            endNumber.addEventListener('input', () => {
+              if (parseFloat(endNumber.value) < parseFloat(startNumber.value)) {
+                endNumber.value = startNumber.value;
+              }
+            });
+            
+            // videoControls.addEventListener('timeupdate', () => {
+            //   if (videoControls.currentTime < parseFloat(startNumber.value) || videoControls.currentTime > parseFloat(endNumber.value)) {
+            //     videoControls.currentTime = startNumber.value;
+            //   }
+            // });
+            
+
+
+
+
+
+            const cropButton = document.getElementById("button-crop")
+            cropButton.onclick = () => {
+                videoBlobs[i].start = startNumber.value
+                videoBlobs[i].end = document.getElementById("end_number").value
+                console.log("HEY", videoBlobs[i])
+            }
+
+
         }
         if (i == 0) e.click();
 
+
     }
+
 }
 // window.onload = () => $('#acquisitionVideoPreviewModal').modal('show') // dev
 
@@ -654,12 +708,12 @@ function togglePreviewVideo(video_id, brightness, contrast, sharpness, saturatio
             newElem.className = "list-group";
             charsText.appendChild(newElem);
 
-            const video = document.querySelector("#"+newVideoID);
+            const video = document.querySelector("#" + newVideoID);
 
             newVideoID = "videoPreview" + video_id;
 
             video.setAttribute("id", newVideoID);
-            
+
             tableLoadvideoPreview(video_id);
             visible = true;
 
@@ -684,18 +738,3 @@ const tableLoadvideoPreview = async (id) => {
         v.removeAttribute('src');
     }
 };
-
-
-// const tableLoadvideo = async (id) => {
-//     let v = document.querySelector("#video" + id);
-//     if (v.src == "") {
-//         console.log(id)
-//         let data = new FormData();
-//         data.append('_id',id);
-//         const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
-//         let blob = await response.blob();
-//         v.src = URL.createObjectURL(blob)
-//     } else {
-//         v.removeAttribute('src')
-//     }
-// }
