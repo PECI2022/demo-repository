@@ -85,9 +85,42 @@ function createCard(projects) {
 
 console.log("WWW")
 const list_projects = async () => {
-  console.log("PROJECT LIST")
   const response = await fetch("http://127.0.0.1:5001/get_public_projects");
-  let projects = await response.json()
+  let projects = await response.json();
+
+  let all_categories = new Set();
+  let all_tags = new Set();
+  for (let project of projects) {
+    const contentArray = project.content;
+
+    contentArray.forEach(item => {
+      const videoClass = item.video_class;
+      all_categories.add(videoClass)
+    });
+
+    const tagsArray = project.tags;
+    tagsArray.forEach(tag => {
+      all_tags.add(tag)
+    });
+  }
+  
+  const options = document.querySelectorAll('#category option');
+  let all_options = new Set();
+  options.forEach(option => {
+    all_options.add(option.value)
+  });
+
+
+  const categorySelect = document.querySelector('#category');
+  for (let category of all_categories) {
+    if (!all_options.has(category)) {
+      let option = document.createElement("option");
+      option.value = category;
+      option.text = category;
+      categorySelect.add(option);
+    }
+  }
+
 
   const searchInput = document.querySelector('[community-search]');
 
@@ -95,7 +128,11 @@ const list_projects = async () => {
 
   let filterProjects = "";
   if (filter != "") {
-    filterProjects = projects.filter(proj => proj.category.toLowerCase() == filter.toLowerCase())
+    filterProjects = projects.filter(proj => {
+      return proj.content.some(item => {
+        return item.video_class == filter;
+      });
+    });
   } else {
     filterProjects = projects
   }
