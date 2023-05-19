@@ -1,3 +1,5 @@
+let visibleFeatures = false;
+
 const featuresList = document.querySelector("#features_list")
 let category = "Feature"
 // var project_id = localStorage.getItem("project_id");
@@ -83,7 +85,7 @@ const list_features = async () => {
 
     features_list.innerHTML = ""
     for (let i of list) {
-        console.log(i)
+        //console.log(i)
         // let d = JSON.stringify(i)
         // console.log(d)
         let input = `<div class="col-12" id="${i._id}">
@@ -147,14 +149,14 @@ const list_videos_fetch = async () => {
     if (!list) return;
 
     let data2 = new FormData()
-    console.log("cf,",currentFeature)
+    //console.log("cf,",currentFeature)
     data2.append("description", JSON.stringify({'projectID':projectID, 'featureID':currentFeature['_id']}))
     const response2 = await fetch('http://127.0.0.1:5001/list_feature_videos', {
         method: "POST",
         body: data2
     });
     let featureList = await response2.json()
-    console.log("fl",featureList)
+    //console.log("fl",featureList)
 
     // console.log(list)
     // list.sort((a, b) => {
@@ -177,7 +179,7 @@ const list_videos_fetch = async () => {
                 <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                 <span class="previewNameList">${i.name}</span>
                 </td> -->
-                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>
+                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}');click();">${i.name}</td>
                 <td class="acquisitionTableClass">${i.video_class}</td>
                 <td class="acquisitionTableDuration">${i.length}</td>
                 <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
@@ -223,6 +225,7 @@ const list_videos_fetch = async () => {
 };
 
 function pop_table(feature) {
+    visibleFeatures = true;
     table_popper.innerHTML = ""
     currentFeature = feature
     console.log(currentFeature)
@@ -405,25 +408,23 @@ const fetchFeature = async (id) => {
 }
 
 
-const previewVideo = document.getElementById("previewVideo");
-let newVideoID = "video";
-
-
-
-function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hue) {
+const previewVideoTable = document.getElementById("previewVideoTable");
+let newVideoID = "videoPreview";
+// Function to display preview of the data
+function togglePreviewVideo(video_id, brightness, contrast, sharpness, saturation, hue) {
     const acquisitionTableName = document.getElementById('acquisitionTR' + video_id);
     const acquisitionTableNameRect = acquisitionTableName.getBoundingClientRect();
 
-    const previewVideo = document.getElementById('previewVideo');
-    previewVideo.style.top = acquisitionTableNameRect.top - 45 + 'px';
-    previewVideo.style.left = acquisitionTableNameRect.left + 200 + 'px';
+    const previewVideoTable = document.getElementById('previewVideoTable');
+    previewVideoTable.style.top = acquisitionTableNameRect.top - 45 + 'px';
+    previewVideoTable.style.left = acquisitionTableNameRect.left + 200 + 'px';
 
     const charsText = document.getElementById('chars-text');
 
     document.addEventListener('click', (e) => {
         let visible = false;
 
-        if (e.target.parentElement == acquisitionTableName && !visible) {
+        if (e.target.parentElement == acquisitionTableName && !visible && !visibleFeatures) {
             charsText.innerHTML = ""
 
             // let chars = "Brightness: " + Math.floor(brightness) + "    Contrast: " + Math.floor(contrast) + "    Sharpness: " + Math.floor(sharpness) + "          Saturation: " + Math.floor(saturation) + "    Hue: " + Math.floor(hue);
@@ -439,34 +440,36 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
             newElem.className = "list-group";
             charsText.appendChild(newElem);
 
-            const video = document.querySelector(newVideoID);
-            video.setAttribute("id", "video" + video_id);
-            tableLoadvideo(video_id)
-            newVideoID = "#video" + video_id;
+            const video = document.querySelector("#" + newVideoID);
+
+            newVideoID = "videoPreview" + video_id;
+
+            video.setAttribute("id", newVideoID);
+
+            tableLoadvideoPreview(video_id);
             visible = true;
 
-            previewVideo.style.display = "block";
-        } else{
-            previewVideo.style.display = "none";
+            previewVideoTable.style.display = "block";
+        } else {
+            previewVideoTable.style.display = "none";
             visible = false;
         }
     });
 };
 
-const tableLoadvideo = async (id) => {
-    let v = document.querySelector("#video" + id);
+const tableLoadvideoPreview = async (id) => {
+    let v = document.querySelector("#videoPreview" + id);
+
     if (v.src == "") {
         let data = new FormData();
         data.append('_id', id);
-        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data })
-        // console.log("responded")
+        const response = await fetch('http://127.0.0.1:5001/download', { method: 'POST', body: data });
         let blob = await response.blob();
-        // video_url = URL.createObjectURL(blob);
-        v.src = URL.createObjectURL(blob)
+        v.src = URL.createObjectURL(blob);
     } else {
-        v.removeAttribute('src')
+        v.removeAttribute('src');
     }
-}
+};
 
 
 const getNewFeatureModalData = async () => {

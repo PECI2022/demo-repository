@@ -15,10 +15,10 @@
         <video id="video" width="320" height="240" autoplay controls/>
       </div> -->
 
-      <div id="previewVideo" class="card" style="width: 18rem;">
-        <video id="video" class="card-img-top" autoplay controls></video>
+      <div id="previewVideoTable" class="card" style="width: 18rem;">
+        <video id="videoPreview" class="card-img-top" autoplay controls></video>
         <div id="chars-text" class="card-body list-group">
-          
+
         </div>
       </div>
       <!-- End Preview Video-->
@@ -82,7 +82,7 @@
                       </div>
                     </div>
                   </div>
-                <div>
+                  <div>
 
                   </div>
                 </form>
@@ -102,7 +102,8 @@
 
 
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="features_list" style="color: #292929">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="features_list"
+        style="color: #292929">
         <div class="col-6">
           <div class="card h-100">
             <div class="card-body">
@@ -164,7 +165,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="featuresModalTitle">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="$('#featuresVideoModal').modal('hide')"></button>
             </div>
             <div class="modal-body">
               <div style="width:640px;height:480px;">

@@ -12,10 +12,10 @@
     <div id="previewVideoTable" class="card" style="width: 18rem;">
         <video id="videoPreview" class="card-img-top" autoplay controls></video>
         <div id="chars-text" class="card-body list-group">
-          
+
         </div>
-      </div>
-      <!-- End Preview Video-->
+    </div>
+    <!-- End Preview Video-->
 
     <div class="row row-cols-3">
         <div class="col-3">
@@ -32,34 +32,38 @@
             </ul>
         </div> -->
     </div>
-          <!-- Preview Video-->
-          <!-- End Preview Video-->
-    
+    <!-- Preview Video-->
+    <!-- End Preview Video-->
+
 
 
     <hr class="my-3">
 
     <div class="d-flex m-2">
         <h3>Records</h3>
-        <input type="text" class="ms-auto" name="" id="acquisitionSearch" placeholder="Search:" oninput="list_videos_fetch()">
-        <button id="acquisitionEdit" class="btn btn-dark ms-1" onclick="acquisitionTableEdit(this)" style="font-size: 1.3rem;"><span class="material-icons">edit</span></button>
-        <button id="acquisitionDelete" class="btn btn-dark ms-1" onclick="acquisitionTableDelete(this)" style="font-size: 1.3rem;"><span class="material-icons">delete</span></button>
+        <input type="text" class="ms-auto" name="" id="acquisitionSearch" placeholder="Search:"
+            oninput="list_videos_fetch()">
+        <button id="acquisitionEdit" class="btn btn-dark ms-1" onclick="acquisitionTableEdit(this)"
+            style="font-size: 1.3rem;"><span class="material-icons">edit</span></button>
+        <button id="acquisitionDelete" class="btn btn-dark ms-1" onclick="acquisitionTableDelete(this)"
+            style="font-size: 1.3rem;"><span class="material-icons">delete</span></button>
     </div>
     <div>
         <table id="recordsTable" class="table table-striped table-bordered table-secondary">
             <thead>
                 <tr style="cursor: pointer;">
-                    <th class="" id="_ThCheck" scope="col" class="p-0 text-center" onclick="toogleAllAcquisitionChecks(this)" style="display: none;">
-                        <span class="material-icons checkbox" style="line-height:40px";>check_box_outline_blank</span>
+                    <th class="" id="_ThCheck" scope="col" class="p-0 text-center"
+                        onclick="toogleAllAcquisitionChecks(this)" style="display: none;">
+                        <span class="material-icons checkbox" style="line-height:40px" ;>check_box_outline_blank</span>
                     </th>
-                    <th class="col-7" id="ThName" scope="col" onclick="editTableSorting(this)">Name<span class="material-icons"
-                            style="font-size: 1rem;">north_east</span></th>
-                    <th class="col-3" id="ThClass" scope="col" onclick="editTableSorting(this)">Class<span class="material-icons"
-                            style="font-size: 1rem;"></span></th>
+                    <th class="col-7" id="ThName" scope="col" onclick="editTableSorting(this)">Name<span
+                            class="material-icons" style="font-size: 1rem;">north_east</span></th>
+                    <th class="col-3" id="ThClass" scope="col" onclick="editTableSorting(this)">Class<span
+                            class="material-icons" style="font-size: 1rem;"></span></th>
                     <th class="col-1" id="ThDuration" scope="col" onclick="editTableSorting(this)">Duration<span
                             class="material-icons" style="font-size: 1rem;"></span></th>
-                    <th class="col-1" id="ThDate" scope="col" onclick="editTableSorting(this)">Date<span class="material-icons"
-                            style="font-size: 1rem;"></span></th>
+                    <th class="col-1" id="ThDate" scope="col" onclick="editTableSorting(this)">Date<span
+                            class="material-icons" style="font-size: 1rem;"></span></th>
                     <!-- <th scope="col"></th> -->
                 </tr>
             </thead>
