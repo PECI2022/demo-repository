@@ -3,7 +3,11 @@ import numpy as np
 import json
 import os
 from moviepy.editor import VideoFileClip
-from flask import send_file
+from moviepy.video.io.VideoFileClip import VideoFileClip
+import ffmpeg
+
+
+
 
 def read_file(video_path):
     cap = cv2.VideoCapture(video_path)
@@ -151,10 +155,10 @@ def average_characteristics_project(content):
     return { "contrast": int(contrast / num_content), "brightness": int(brightness / num_content), "sharpness": int(sharpness / num_content), "saturation": int(saturation / num_content), "hue": int(hue / num_content) }
 
 
-def cropVideo(video_path, start_time, end_time):
-    clip = VideoFileClip(video_path)
-    cropped_clip = clip.subclip(start_time, end_time)
-    cropped_clip.write_videofile(video_path, codec='libvpx', audio_codec='libvorbis')
+def trimVideo(video_path, duration, start_time, end_time):
+    input_video = VideoFileClip(video_path)
+    trimmed_video = input_video.subclip(start_time, end_time)
+    trimmed_video.write_videofile("trimmed_vp8_video.webm", codec="libvpx")
 
 
 

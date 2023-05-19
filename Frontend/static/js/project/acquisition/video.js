@@ -312,7 +312,7 @@ const storeCurrentBlobs = async (blobs) => {
         let data = new FormData();
         data.append('file', blob.blob);
 
-        data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID,start:blob.start,end:blob.end }))
+        data.append('description', JSON.stringify({ name: blob.name, class: blob.class, length: blob.duration, id: projectID, start: blob.start, end: blob.end }))
 
         $('#acquisitionVideoPreviewModal').modal('hide')
 
@@ -390,13 +390,13 @@ const launchDataPreview = (videoBlobs) => {
                     </select>
                 </div>
                 <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Duration</span>
+                    <div class="input-group-prepend mb-3">
+                        <span class="input-group-text">Interval to Trim</span>
                     </div>
-                        <input id="start_number" type="number" class="form-control" placeholder="Start (seconds)">
-                        <input id="end_number" type="number" class="form-control" placeholder="End (seconds)">
+                        <input type="range" class="form-range" min="0" max="${videoBlobs[i].duration}" step="0.1" id="start_number" value="0">
+                        <input type="range" class="form-range" min="0" max="${videoBlobs[i].duration}" step="0.1" id="end_number" value="${videoBlobs[i].duration}">
               </div>
-              <button id="button-crop" class="btn btn-primary">Crop it</button>
+              <button id="button-crop" class="btn btn-primary">Trim it</button>
             `;
             e.after(ee);
 
@@ -405,11 +405,51 @@ const launchDataPreview = (videoBlobs) => {
                     videoBlobs[i].class = nn.innerText;
                 }
             }
+
+            const videoControls = document.getElementById('acquisitionVideoPreviewModalVideo');
+            const startNumber = document.getElementById('start_number');
+            const endNumber = document.getElementById('end_number');
+                        
+            endNumber.addEventListener('input', () => {
+                if (parseFloat(endNumber.value) < parseFloat(startNumber.value)) {
+                  endNumber.value = startNumber.value;
+                }
+              });
+
+            startNumber.addEventListener('input', () => {
+              if (parseFloat(startNumber.value) > parseFloat(endNumber.value)) {
+                startNumber.value = endNumber.value;
+              }
+              videoControls.currentTime = startNumber.value;
+              videoControls.addEventListener('timeupdate', () => {
+                if (videoControls.currentTime < parseFloat(startNumber.value) || videoControls.currentTime > parseFloat(endNumber.value)) {
+                  videoControls.currentTime = startNumber.value;
+                }
+              });
+            });
+            
+            endNumber.addEventListener('input', () => {
+              if (parseFloat(endNumber.value) < parseFloat(startNumber.value)) {
+                endNumber.value = startNumber.value;
+              }
+            });
+            
+            // videoControls.addEventListener('timeupdate', () => {
+            //   if (videoControls.currentTime < parseFloat(startNumber.value) || videoControls.currentTime > parseFloat(endNumber.value)) {
+            //     videoControls.currentTime = startNumber.value;
+            //   }
+            // });
+            
+
+
+
+
+
             const cropButton = document.getElementById("button-crop")
             cropButton.onclick = () => {
-                videoBlobs[i].start = document.getElementById("start_number").value
+                videoBlobs[i].start = startNumber.value
                 videoBlobs[i].end = document.getElementById("end_number").value
-                console.log("HEY",videoBlobs[i])
+                console.log("HEY", videoBlobs[i])
             }
 
 

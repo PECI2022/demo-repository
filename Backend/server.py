@@ -52,17 +52,17 @@ class Operations:
         description = json.loads(request.form['description'])
         # if(self.check_existing_name(description['name'])):
         #         return {"result": "Error"}
+
         info = './' + description['name'] + '.webm'
         file.save(info)
 
         startCrop = description.get('start')
         endCrop = description.get('end')
 
+        video_length = description.get('length')
         if(startCrop != "" and endCrop!=""):
-            cropVideo(info,int(startCrop),int(endCrop))
-            video_length = endCrop - startCrop
-        else:
-            video_length = description.get('length')
+            video_length = float(endCrop) - float(startCrop)
+            file = trimVideo(info,video_length,startCrop,endCrop)
 
 
                 

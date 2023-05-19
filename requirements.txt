@@ -4,3 +4,6 @@ pymongo
 mediapipe
 opencv-python
 moviepy
+ffmpeg-python
+python-ffmpeg
+ffprobe-python
