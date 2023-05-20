@@ -46,19 +46,24 @@ function get_category(val) {
   category = val;
 }
 const delete_project = async (project_id) => {
-    let data = new FormData()
-    // send project id
-    data.append('description', JSON.stringify({pid: project_id}))   
-    let response = await fetch('http://127.0.0.1:5001/delete_project/' + project_id, {
-        method: "POST",
-        body: data
-    })
-    let a = await response.json()
-  
-    alert("Project Deleted! You will be redirected to MyProjects page!");
-    window.location.href = '/myProjects'
-  }
+  // Show the modal
+  $('#deleteConfirmationModal').modal('show');
 
+  // Add an event listener to the delete button inside the modal
+  document.getElementById('deleteConfirmationButton').addEventListener('click', async () => {
+    let data = new FormData();
+    // send project id
+    data.append('description', JSON.stringify({pid: project_id}));   
+    let response = await fetch('http://127.0.0.1:5001/delete_project/' + project_id, {
+      method: "POST",
+      body: data
+    });
+    let a = await response.json();
+
+    alert("Project Deleted! You will be redirected to MyProjects page!");
+    window.location.href = '/myProjects';
+  });
+};
 window.onload = function () {
     category = "Gestures";
     addTag();
@@ -94,6 +99,7 @@ const load_content = async () => {
       projectList.appendChild(newElem);
     }
   };
+
 
   function addTag() {
     var tagInput = document.getElementById("newTagInput");
