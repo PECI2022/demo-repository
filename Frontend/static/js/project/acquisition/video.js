@@ -162,7 +162,7 @@ const list_videos_fetch = async () => {
                     <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                     <span class="previewNameList">${i.name}</span>
                     </td> -->
-                    <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>
+                    <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}');click();">${i.name}</td>
                     <td class="acquisitionTableClass">${i.video_class}</td>
                     <td class="acquisitionTableDuration">${i.length}</td>
                     <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
@@ -172,7 +172,7 @@ const list_videos_fetch = async () => {
         newElem.id = `acquisitionTR${i._id}`
         // newElem.onclick = () => 
         // let newElem2 = document.createElement('tr');
-        // newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="360px" height="300px" autoplay controls/></td>`
+        // newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="360px" height="300px" autoplay controls/></td>`   
         // newElem2.classList.add("collapse")
         // newElem2.id = `collapse${i._id}`
         // newElem2.colSpan = "4"
