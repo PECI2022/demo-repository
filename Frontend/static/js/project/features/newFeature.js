@@ -1,3 +1,5 @@
+let featurePreview = false;
+
 const featuresList = document.querySelector("#features_list")
 let category = "Feature"
 // var project_id = localStorage.getItem("project_id");
@@ -399,8 +401,10 @@ const fetchFeature = async (id) => {
     featuresVideoModal.addEventListener('hidden.bs.modal', (event) => {
         featuresVideo.pause();
         clearInterval(interval);
+        featurePreview = false;
     })
     modal.show()
+    featurePreview = true;
 
 }
 
@@ -423,7 +427,7 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
     document.addEventListener('click', (e) => {
         let visible = false;
 
-        if (e.target.parentElement == acquisitionTableName && !visible) {
+        if (e.target.parentElement == acquisitionTableName && !visible && !featurePreview) {
             charsText.innerHTML = ""
 
             // let chars = "Brightness: " + Math.floor(brightness) + "    Contrast: " + Math.floor(contrast) + "    Sharpness: " + Math.floor(sharpness) + "          Saturation: " + Math.floor(saturation) + "    Hue: " + Math.floor(hue);
