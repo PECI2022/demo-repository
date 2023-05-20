@@ -179,7 +179,7 @@ const list_videos_fetch = async () => {
                 <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                 <span class="previewNameList">${i.name}</span>
                 </td> -->
-                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>
+                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}');click();">${i.name}</td>
                 <td class="acquisitionTableClass">${i.video_class}</td>
                 <td class="acquisitionTableDuration">${i.length}</td>
                 <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
@@ -220,7 +220,10 @@ const list_videos_fetch = async () => {
 
     for(let v of featureList) {
         document.querySelector("#featuresListBox"+v['video_id']).innerText = 'check_box'
-        document.querySelector("#acquisitionTR"+v['video_id']).onclick = () => fetchFeature(v['video_id'])
+        document.querySelector("#acquisitionTR"+v['video_id']).onclick = () => {
+            fetchFeature(v['video_id']);
+            featurePreview = true;
+        }
     }
 };
 
@@ -404,7 +407,6 @@ const fetchFeature = async (id) => {
         featurePreview = false;
     })
     modal.show()
-    featurePreview = true;
 
 }
 
