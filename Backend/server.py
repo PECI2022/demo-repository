@@ -56,13 +56,13 @@ class Operations:
         info = './' + description['name'] + '.webm'
         file.save(info)
 
-        startCrop = description.get('start')
-        endCrop = description.get('end')
+        startCrop = float(description.get('start'))
+        endCrop = float(description.get('end'))
 
         video_length = description.get('length')
         if(startCrop != "" and endCrop!=""):
-            video_length = float(endCrop) - float(startCrop)
-            #file = trimVideo(info,video_length,startCrop,endCrop)
+            video_length = endCrop - startCrop
+            file = trimVideo(info,startCrop,video_length)
 
         contrast = get_contrast(info)
         brightness = get_brightness(info)
