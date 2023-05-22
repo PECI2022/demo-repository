@@ -155,7 +155,7 @@ const storeFolder = async (blobs) => {
     let data = new FormData();
     data.append('file', blob.blob);
 
-    data.append('description', JSON.stringify({ name: blob.name, pid: projectID, vid: blob.id }))
+    data.append('description', JSON.stringify({ name: blob.name, pid: projectID, vid: blob.id, type:"none" }))
 
     $('#acquisitionVideoPreviewModal').modal('hide')
 

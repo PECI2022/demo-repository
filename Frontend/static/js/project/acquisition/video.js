@@ -450,7 +450,11 @@ const launchDataPreview = (videoBlobs) => {
             cropButton.onclick = () => {
                 videoBlobs[i].start = startNumber.value
                 videoBlobs[i].end = document.getElementById("end_number").value
-                console.log("HEY", videoBlobs[i])
+
+                startNumber.value = 0
+                endNumber.value = videoBlobs[i].duration
+
+                console.log("videoBlobs[i]", videoBlobs[i])
             }
 
 

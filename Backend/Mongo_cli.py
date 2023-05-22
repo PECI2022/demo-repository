@@ -112,6 +112,7 @@ class MongoCli(object):
     
     def insert_in_project(self, project_id, data):
         project = self.find_project(project_id)
+        print(project_id)
         if self.check_existing_name(project["content"], data["name"]):
             return {"result": "Error"}
         project["content"].append(data)
