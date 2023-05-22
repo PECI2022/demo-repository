@@ -639,3 +639,7 @@ section {
 .acquisitionTableName:hover {
   text-decoration: underline;
 }
+
+#calculateFeaturesbtn{
+  display: none;
+}

@@ -255,6 +255,8 @@ function pop_table(feature) {
     let newElem = document.createElement('div')
     newElem.innerHTML = header
     table_popper.appendChild(newElem)
+    let calculates_feat = document.getElementById("calculateFeaturesbtn");
+    calculates_feat.style.display = "block";
     // check_videos(_id)
     list_videos_fetch()
 }
