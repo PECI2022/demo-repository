@@ -1,17 +1,23 @@
 echo "Starting MDFAA"
 
+if ! systemctl is-active --quiet docker; then
+    echo "Docker is not running"
+    sudo systemctl start docker
+    echo "Starting docker..."
+fi
+
 source venv/bin/activate
 
-docker start mongo
+echo "Starting mongo container..."
+sudo docker start mongo
+if [ ! $? -eq 0 ]; then
+    echo "Restarting mongo container..."
+    sudo lsof -i :27017 | awk '{print $2}' | grep -v "PID" | xargs -I{} sudo kill {}
+    sudo docker start mongo
+fi
 
-lsof -i tcp:8080 | awk '/8080/{print $2}' | xargs kill
-cd Frontend
-python3 server.py &
-cd ..
-
-lsof -i tcp:5001 | awk '/5001/{print $2}' | xargs kill
-cd Backend
-python3 server.py &
-cd ..
-
-echo "DONE, PRESS [ENTER]!"
+tmux new-session -d -s mysession
+tmux split-window -h -t mysession
+tmux send-keys -t mysession:0.0 "python Backend/server.py" C-m
+tmux send-keys -t mysession:0.1 "python Frontend/server.py" C-m
+tmux attach-session -t mysession
