@@ -168,7 +168,7 @@ class Operations:
         #     project = mongo_cli.find_project(pid)
             mongo_cli.insert_data(data,pid,"info")
             mongo_cli.export.drop()
-        #     os.remove(location)
+            os.remove(location)
             return "DONE"
 
     def export_project(self):
@@ -186,7 +186,7 @@ class Operations:
 
         mongo_cli.exportFeatures.drop()
         mongo_cli.export.drop()
-        return send_from_directory("export")
+        return "send_from_directory"
 
     def new_feature(self):
         description = json.loads(request.form['description'])
@@ -250,7 +250,7 @@ class Operations:
         for project in projects:
             if i == 6:
                 break
-            if project['privacy'] == 0:
+            if project['privacy'] == "public":
                 ret.append(project)
             i += 1
         return ret

@@ -97,16 +97,21 @@ const create_project = async () => {
   console.log(category);
   addTag();
   console.log("tags: " + tags);
-  checkedCbs = document.querySelectorAll('#Privacy').checked;
-  console.log(checkedCbs)
+  var radioButtons = document.getElementsByName("privacy_option");
+  var p;
+  for(var i = 0; i < radioButtons.length; i++){
+    if(radioButtons[i].checked){
+      p = radioButtons[i].value
+    }
+  }
   data.append(
     "description",
     JSON.stringify({
       name: document.querySelector("#name").value,
       subject: document.querySelector("#description").value,
       category: category,
-      tags: tags
-      // privacy:
+      tags: tags,
+      privacy: p
     }),
   );
   let response = await fetch("http://127.0.0.1:5001/new_project", {
