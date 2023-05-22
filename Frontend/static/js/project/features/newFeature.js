@@ -101,6 +101,7 @@ const list_features = async () => {
                     </div>`
 
         let newElem = document.createElement('div')
+        newElem.style.cursor = "pointer";
         newElem.innerHTML = input
         newElem.id = i.class
         newElem.onclick = () => pop_table(i)
@@ -228,10 +229,13 @@ const list_videos_fetch = async () => {
 };
 
 function pop_table(feature) {
+    calculateFeaturesbtn.style.display = "block";
     table_popper.innerHTML = ""
     currentFeature = feature
     console.log(currentFeature)
-    let header = `<hr class="my-3">
+    let header = `<div>
+                    <hr class="my-3">
+                    <h4>${currentFeature.name}</h4>
                     <table id="recordsTable" class="table table-striped table-bordered table-secondary">
                         <thead>
                             <tr style="cursor: pointer;">
@@ -251,7 +255,8 @@ function pop_table(feature) {
                         </thead>
                         <tbody id="video_table">
                         </tbody>
-                    </table>`
+                    </table>
+                </div>`
     let newElem = document.createElement('div')
     newElem.innerHTML = header
     table_popper.appendChild(newElem)
@@ -329,15 +334,11 @@ extractBtn.addEventListener('click', () => {
                 extractBtn.style.display = 'block';
                 progressBar.style.display = 'none';
                 CalculatingFeatureText.style.display = 'none';
-                downloadBtn.style.display = 'block';
+                // downloadBtn.style.display = 'block';
                 // alert("Features Calculated! You can download the features now!");
             }, 500);
         }
     }, 1000);
-});
-
-downloadBtn.addEventListener('click', () => {
-    // TODO, download features from the backend
 });
 
 const fetchFeature = async (id) => {
@@ -405,7 +406,7 @@ const fetchFeature = async (id) => {
         featuresVideo.pause();
         clearInterval(interval);
         featurePreview = false;
-        location.reload();
+        modal.hide()
     })
     modal.show()
 
@@ -446,11 +447,11 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
             newElem.className = "list-group";
             charsText.appendChild(newElem);
 
-            const video = document.querySelector(newVideoID);
-            video.setAttribute("id", "video" + video_id);
-            tableLoadvideo(video_id)
-            newVideoID = "#video" + video_id;
-            visible = true;
+            // const video = document.querySelector(newVideoID);
+            // video.setAttribute("id", "video" + video_id);
+            // tableLoadvideo(video_id)
+            // newVideoID = "#video" + video_id;
+            // visible = true;
 
             previewVideo.style.display = "block";
         } else{

@@ -170,6 +170,7 @@ const list_videos_fetch = async () => {
         let newElem = document.createElement('tr');
         newElem.innerHTML = s
         newElem.id = `acquisitionTR${i._id}`
+        newElem.style.cursor = "pointer";
         // newElem.onclick = () => 
         // let newElem2 = document.createElement('tr');
         // newElem2.innerHTML = `<td colspan="4" class="text-center"><video id="video${i._id}" width="360px" height="300px" autoplay controls/></td>`   
