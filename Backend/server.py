@@ -23,12 +23,13 @@ CORS(app)
 
 class Operations:
     def __init__(self):
+        self.export_videos = []
         pass
 
     def new_project(self):
         description = json.loads(request.form['description'])
         _id = mongo_cli.generate_unique_id()
-        data = {"name": description['name'], "subject": description['subject'], "category": description['category'], "tags": description['tags'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": 0, "features": []}
+        data = {"name": description['name'], "subject": description['subject'], "category": description['category'], "tags": description['tags'], "content": [], "_id": str(_id), "update": datetime.now(), "privacy": description['privacy'], "features": []}
         mongo_cli.insert_data(data, _id, "info")
         return {"result": str(_id)}
 
@@ -63,9 +64,6 @@ class Operations:
             video_length = float(endCrop) - float(startCrop)
             #file = trimVideo(info,video_length,startCrop,endCrop)
 
-
-                
-
         contrast = get_contrast(info)
         brightness = get_brightness(info)
         sharpness = get_sharpness(info)
@@ -90,16 +88,29 @@ class Operations:
         description = json.loads(request.form['description'])
         pid = description['pid']
         project = mongo_cli.find_project(pid)
+        print(self.export_videos)
+        for video in project['content']:
+            for v in self.export_videos:
+                if v[1]==video['_id']:
+                    video['_id'] = v[0]
+                    video['old_id'] = v[1]
+        mongo_cli.insert_data(project,pid,"info")
+        self.export_videos = []
+            
         for fid in project['features']:
+            print("THIS IS FID " + fid)
             feature = mongo_cli.find_feature(fid)
             for vid in feature['data']:
-                print(vid)
+                print("HERE ")
                 video = mongo_cli.find_old_video(vid['video_id'],pid)
+                print(vid['video_id'])
+                print(video)
                 vid['video_id'] = video['_id']
-                if video[feature['class']] == 0:
-                    d = {
-                        'id': pid, 'edit': feature['class'], 'video_id': vid['video_id'], 'new_elem': fid}
-                    mongo_cli.edit(d)
+                # if video[feature['class']] == 0:
+                #     d = {
+                #         'id': pid, 'edit': feature['class'], 'video_id': vid['video_id'], 'new_elem': fid}
+                #     mongo_cli.edit(d)
+            mongo_cli.insert_feature(feature, fid, "info")
         return "done"
 
     def upload_video(self, name, old_id, _id, pid, video_class, video_length, location):
@@ -107,12 +118,14 @@ class Operations:
             _id), "update": datetime.now(), "MediaPipeHand": 0, "Characteristics": {}, "old_id": str(old_id)}
         mongo_cli.insert_media_file(ObjectId(_id), location)
         os.remove(location)
-        return mongo_cli.insert_in_project(pid, data)
-
+        self.export_videos.append([str(_id), str(old_id)])
+        return "mongo_cli.insert_in_project(pid, data)"
+    
     def upload_folder(self):
         file = request.files['file']
         description = json.loads(request.form['description'])
         old_id = description['vid']
+        print("OLD ID " + old_id)
         _id = mongo_cli.generate_unique_id()
         name = description['name']
         pid = description['pid']
@@ -120,7 +133,6 @@ class Operations:
         file.save(location)
         print(name)
         project = mongo_cli.find_project(pid)
-        print("ERRTYRES")
 
         if name.endswith("webm") or name.endswith("mp4"):
             return self.upload_video(name, old_id, _id, pid, "description['video_class']", "description['video_length']", location)
@@ -132,17 +144,30 @@ class Operations:
                 print(feature['info'])
                 feature['info']['_id'] = str(_id)
                 mongo_cli.insert_feature(feature['info'],_id,"info")
+                project['features'].append(str(_id))
+                _id = mongo_cli.generate_unique_id()
+            mongo_cli.insert_data(project,pid,"info")
             mongo_cli.exportFeatures.drop()
             # for feature in mongo_cli.features.find():
             #     if feature['info']['_id'] not in project['features']:
-            project['features'].append(str(_id))
-            mongo_cli.insert_data(project,pid,"info")
             os.remove(location)
             return "DONE"
         elif name == "context_user.json":
             print("FILES IMPORTED")
-            os.system(
-                "mongoimport --db=context_user --collection=context_user --file=context_user.json")
+            os.system("mongoimport --db=context_user --collection=export --file=context_user.json")
+            newproject = mongo_cli.export.find_one()
+            newproject = newproject['info']
+            print(project)
+        #     for project in mongo_cli.export_project.find():
+            if description['type'] == "project":
+                data = {"name": newproject['name'], "subject": newproject['subject'], "category": newproject['category'], "tags": newproject['tags'], "content": newproject['content'], "_id": str(pid), "update": datetime.now(), "privacy": 0, "features": project['features']}
+            else:
+                for video in newproject['content']:
+                    project['content'].append(video)
+                data = {"name": project['name'], "subject": project['subject'], "category": project['category'], "tags": project['tags'], "content": project['content'], "_id": str(pid), "update": datetime.now(), "privacy": 0, "features": project['features']}
+        #     project = mongo_cli.find_project(pid)
+            mongo_cli.insert_data(data,pid,"info")
+            mongo_cli.export.drop()
             os.remove(location)
             return "DONE"
 
@@ -161,8 +186,7 @@ class Operations:
 
         mongo_cli.exportFeatures.drop()
         mongo_cli.export.drop()
-
-        return "DONE"
+        return "send_from_directory"
 
     def new_feature(self):
         description = json.loads(request.form['description'])
@@ -226,7 +250,7 @@ class Operations:
         for project in projects:
             if i == 6:
                 break
-            if project['privacy'] == 0:
+            if project['privacy'] == "public":
                 ret.append(project)
             i += 1
         return ret
@@ -271,37 +295,6 @@ class Operations:
 
         return "done"
 
-
-
-    
-    # def edit_class(self):
-    #     description = json.loads(request.form['description'])
-    #     video_class = description.get('class')
-    #     project_id = description.get('id')
-    #     video_id = description.get('video')
-    #     mongo_cli.edit_class(project_id,video_id,video_class)
-    #     return "done"
-
-    # def edit_name(self):
-    #     description = json.loads(request.form['description'])
-    #     video_name = description.get('name')
-    #     project_id = description.get('id')
-    #     video_id = description.get('video')
-    #     mongo_cli.edit_name(project_id,video_id,video_name)
-    #     return "done"
-
-    # def edit_description(self):
-    #     description = json.loads(request.form['description'])
-    #     project_description = description.get('subject')
-    #     project_id = description.get('id')
-    #     mongo_cli.edit_description(project_id,project_description)
-    #     return "done"
-
-    # def change_privacy(self):
-    #     description = json.loads(request.form['description'])
-    #     project_id = description.get('id')
-    #     mongo_cli.change_privacy(project_id)
-    #     return "done"
 
     def edit_video(self):
         description = json.loads(request.form['description'])
