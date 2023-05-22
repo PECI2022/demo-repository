@@ -405,6 +405,7 @@ const fetchFeature = async (id) => {
         featuresVideo.pause();
         clearInterval(interval);
         featurePreview = false;
+        location.reload();
     })
     modal.show()
 
