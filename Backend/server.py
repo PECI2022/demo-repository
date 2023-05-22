@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, request, make_response
+from flask import Flask, send_from_directory, request, make_response, send_file
 from flask_cors import CORS
 from werkzeug.datastructures import FileStorage
 from pymongo import MongoClient
@@ -184,9 +184,14 @@ class Operations:
             mongo_cli.download_media_file(video['_id'])
             os.rename(video['_id']+".webm", 'export/'+video['_id']+".webm")
 
+        os.system("rm -r ./export.zip")
+        os.system("zip -r export.zip ./export")
+        os.system("rm -r ./export")
+        os.system("rm -r ./export.zip")
+
         mongo_cli.exportFeatures.drop()
         mongo_cli.export.drop()
-        return "send_from_directory"
+        return send_file("./export.zip")
 
     def new_feature(self):
         description = json.loads(request.form['description'])

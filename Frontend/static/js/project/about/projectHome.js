@@ -181,4 +181,15 @@ const export_project = async () => {
     method: "POST",
     body: data
   });
+  let zip = await response.blob()
+  const a = document.createElement('a');
+  const url = URL.createObjectURL(zip);
+  a.href = url;
+  a.download = projectID+'.zip'; // Set the desired file name
+
+  // Programmatically trigger a click event to simulate download
+  a.click();
+
+  // Clean up resources
+  window.URL.revokeObjectURL(url);
 }
