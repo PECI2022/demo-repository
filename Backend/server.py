@@ -187,7 +187,6 @@ class Operations:
         os.system("rm -r ./export.zip")
         os.system("zip -r export.zip ./export")
         os.system("rm -r ./export")
-        os.system("rm -r ./export.zip")
 
         mongo_cli.exportFeatures.drop()
         mongo_cli.export.drop()
