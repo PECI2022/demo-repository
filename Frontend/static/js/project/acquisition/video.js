@@ -743,3 +743,78 @@ const tableLoadvideoPreview = async (id) => {
         v.removeAttribute('src');
     }
 };
+
+
+var project_id = localStorage.getItem("project_id");
+
+let checkedVideos = []
+let currentFeature
+
+
+window.addEventListener('load', () => {
+    const queryString2 = window.location.search
+    const urlParams2 = new URLSearchParams(queryString2)
+    const projectID2 = urlParams2.get('id')
+    load_info(projectID2)
+  
+    let data = new FormData();
+    data.append(
+      "description",
+      JSON.stringify({
+        pid: project_id,
+        tags: tags,
+      }),
+    );
+  
+    console.log(tags)
+  
+    fetch('http://127.0.0.1:5001/load_info', {
+      method: 'POST',
+      body: data
+    })
+      .then(response => response.json())
+      .then(data => {
+        localStorage.setItem("tags", JSON.stringify(data.tags));
+        const tagsListed = document.getElementById("tags");
+        tagsListed.innerHTML = "";
+        if (data.tags.length > 0) {
+          var tagsTitle = document.createElement("span");
+          tagsTitle.innerHTML = "Tags: ";
+          tagsListed.appendChild(tagsTitle);
+        }
+  
+        for (let tag of data.tags) {
+          var tagElement = document.createElement("span");
+          if (tag == data.tags[data.tags.length - 1]) { // last tag
+            tagElement.innerHTML = "#" + tag + " ";
+        
+            tagElement.style.display = "inline-block";
+            tagElement.style.marginRight = "5px";
+            tagElement.style.color = "#eee";
+            tagsListed.appendChild(tagElement);
+          } else {
+            tagElement.innerHTML = "#" + tag + ", ";
+            tagElement.style.display = "inline-block";
+            tagElement.style.marginRight = "5px";
+            tagsListed.appendChild(tagElement);
+          }
+        }
+      });
+  });
+
+  const load_info = async () => {
+    console.log("EOEOEO")
+    let data = new FormData()
+    let projectTitle = document.querySelector("#project_title")
+    let tags = document.querySelector("#tags")
+    data.append('description', JSON.stringify({ pid: projectID }))
+    let response = await fetch('http://127.0.0.1:5001/load_info', {
+      method: "POST",
+      body: data
+    })
+    let info = await response.json()
+    console.log(info)
+    projectTitle.innerHTML = info["name"]
+    tags.innerHTML += "Tags: #" + info["tags"]
+  
+  }
