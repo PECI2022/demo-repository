@@ -62,7 +62,7 @@ class Operations:
         video_length = description.get('length')
         if(startCrop != "" and endCrop!=""):
             video_length = float(endCrop) - float(startCrop)
-            #file = trimVideo(info,video_length,startCrop,endCrop)
+            file = trimVideo(info,float(startCrop),video_length)
 
         contrast = get_contrast(info)
         brightness = get_brightness(info)

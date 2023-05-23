@@ -1,9 +1,86 @@
+let featurePreview = false;
+
 const featuresList = document.querySelector("#features_list")
 let category = "Feature"
-// var project_id = localStorage.getItem("project_id");
+var project_id = localStorage.getItem("project_id");
 
 let checkedVideos = []
 let currentFeature
+
+let firstTime = true
+
+if (firstTime) {
+
+window.addEventListener('load', () => {
+    const queryString2 = window.location.search
+    const urlParams2 = new URLSearchParams(queryString2)
+    const projectID2 = urlParams2.get('id')
+    load_info(projectID2)
+  
+    let data = new FormData();
+    data.append(
+      "description",
+      JSON.stringify({
+        pid: project_id,
+        tags: tags,
+      }),
+    );
+  
+    console.log(tags)
+  
+    fetch('http://127.0.0.1:5001/load_info', {
+      method: 'POST',
+      body: data
+    })
+      .then(response => response.json())
+      .then(data => {
+        localStorage.setItem("tags", JSON.stringify(data.tags));
+        const tagsListed = document.getElementById("tags");
+        tagsListed.innerHTML = "";
+        if (data.tags.length > 0) {
+          var tagsTitle = document.createElement("span");
+          tagsTitle.innerHTML = "Tags: ";
+          tagsListed.appendChild(tagsTitle);
+        }
+  
+        for (let tag of data.tags) {
+          var tagElement = document.createElement("span");
+          if (tag == data.tags[data.tags.length - 1]) { // last tag
+            tagElement.innerHTML = "#" + tag + " ";
+        
+            tagElement.style.display = "inline-block";
+            tagElement.style.marginRight = "5px";
+            tagElement.style.color = "#eee";
+            tagsListed.appendChild(tagElement);
+          } else {
+            tagElement.innerHTML = "#" + tag + ", ";
+            tagElement.style.display = "inline-block";
+            tagElement.style.marginRight = "5px";
+            tagsListed.appendChild(tagElement);
+          }
+        }
+      });
+  });
+
+  const load_info = async () => {
+    console.log("EOEOEO")
+    let data = new FormData()
+    let projectTitle = document.querySelector("#project_title")
+    let tags = document.querySelector("#tags")
+    data.append('description', JSON.stringify({ pid: projectID }))
+    let response = await fetch('http://127.0.0.1:5001/load_info', {
+      method: "POST",
+      body: data
+    })
+    let info = await response.json()
+    console.log(info)
+    projectTitle.innerHTML = info["name"]
+    tags.innerHTML += "Tags: #" + info["tags"]
+  
+  }
+    firstTime = false
+}
+
 
 
 // function newFeatureGo(pid) {
@@ -99,6 +176,7 @@ const list_features = async () => {
                     </div>`
 
         let newElem = document.createElement('div')
+        newElem.style.cursor = "pointer";
         newElem.innerHTML = input
         newElem.id = i.class
         newElem.onclick = () => pop_table(i)
@@ -177,7 +255,7 @@ const list_videos_fetch = async () => {
                 <span class="material-icons" style="cursor: pointer;font-size: 1rem;" onclick="preview_edit(this)">edit</span>
                 <span class="previewNameList">${i.name}</span>
                 </td> -->
-                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}')">${i.name}</td>
+                <td class="acquisitionTableName" onclick="togglePreviewVideo('${i._id}','${i["Characteristics"]["brightness"]}','${i["Characteristics"]["contrast"]}','${i["Characteristics"]["sharpness"]}','${i["Characteristics"]["saturation"]}','${i["Characteristics"]["hue"]}');click();">${i.name}</td>
                 <td class="acquisitionTableClass">${i.video_class}</td>
                 <td class="acquisitionTableDuration">${i.length}</td>
                 <td class="acquisitionTableDate">${new Date(i.update).toLocaleDateString("en-GB")}</td>
@@ -218,15 +296,21 @@ const list_videos_fetch = async () => {
 
     for(let v of featureList) {
         document.querySelector("#featuresListBox"+v['video_id']).innerText = 'check_box'
-        document.querySelector("#acquisitionTR"+v['video_id']).onclick = () => fetchFeature(v['video_id'])
+        document.querySelector("#acquisitionTR"+v['video_id']).onclick = () => {
+            fetchFeature(v['video_id']);
+            featurePreview = true;
+        }
     }
 };
 
 function pop_table(feature) {
+    calculateFeaturesbtn.style.display = "block";
     table_popper.innerHTML = ""
     currentFeature = feature
     console.log(currentFeature)
-    let header = `<hr class="my-3">
+    let header = `<div>
+                    <hr class="my-3">
+                    <h4>${currentFeature.name}</h4>
                     <table id="recordsTable" class="table table-striped table-bordered table-secondary">
                         <thead>
                             <tr style="cursor: pointer;">
@@ -246,10 +330,13 @@ function pop_table(feature) {
                         </thead>
                         <tbody id="video_table">
                         </tbody>
-                    </table>`
+                    </table>
+                </div>`
     let newElem = document.createElement('div')
     newElem.innerHTML = header
     table_popper.appendChild(newElem)
+    let calculates_feat = document.getElementById("calculateFeaturesbtn");
+    calculates_feat.style.display = "block";
     // check_videos(_id)
     list_videos_fetch()
 }
@@ -324,15 +411,11 @@ extractBtn.addEventListener('click', () => {
                 extractBtn.style.display = 'block';
                 progressBar.style.display = 'none';
                 CalculatingFeatureText.style.display = 'none';
-                downloadBtn.style.display = 'block';
+                // downloadBtn.style.display = 'block';
                 // alert("Features Calculated! You can download the features now!");
             }, 500);
         }
     }, 1000);
-});
-
-downloadBtn.addEventListener('click', () => {
-    // TODO, download features from the backend
 });
 
 const fetchFeature = async (id) => {
@@ -399,6 +482,8 @@ const fetchFeature = async (id) => {
     featuresVideoModal.addEventListener('hidden.bs.modal', (event) => {
         featuresVideo.pause();
         clearInterval(interval);
+        featurePreview = false;
+        modal.hide()
     })
     modal.show()
 
@@ -423,7 +508,7 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
     document.addEventListener('click', (e) => {
         let visible = false;
 
-        if (e.target.parentElement == acquisitionTableName && !visible) {
+        if (e.target.parentElement == acquisitionTableName && !visible && !featurePreview) {
             charsText.innerHTML = ""
 
             // let chars = "Brightness: " + Math.floor(brightness) + "    Contrast: " + Math.floor(contrast) + "    Sharpness: " + Math.floor(sharpness) + "          Saturation: " + Math.floor(saturation) + "    Hue: " + Math.floor(hue);

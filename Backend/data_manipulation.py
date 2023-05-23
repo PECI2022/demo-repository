@@ -1,10 +1,9 @@
 import cv2
 import numpy as np
-import json
 import os
-from moviepy.editor import VideoFileClip
-from moviepy.video.io.VideoFileClip import VideoFileClip
-import ffmpeg
+import subprocess
+import math
+from datetime import timedelta
 
 
 
@@ -155,10 +154,29 @@ def average_characteristics_project(content):
     return { "contrast": int(contrast / num_content), "brightness": int(brightness / num_content), "sharpness": int(sharpness / num_content), "saturation": int(saturation / num_content), "hue": int(hue / num_content) }
 
 
-def trimVideo(video_path, duration, start_time, end_time):
-    input_video = VideoFileClip(video_path)
-    trimmed_video = input_video.subclip(start_time, end_time)
-    trimmed_video.write_videofile("trimmed_vp8_video.webm", codec="libvpx")
+def format_time(seconds):
+    time = timedelta(seconds=seconds)
+    return str(time)
+
+
+
+def trimVideo(video_path, start_time, duration):
+    start_time = format_time(start_time)
+    duration = format_time(math.ceil(duration))
+
+    input_file = video_path
+    fixed_file = "fixed_file.webm"
+    convert_file = "converted_file.webm"
+    output_file = video_path
+
+    subprocess.run(["ffmpeg","-y", "-i", input_file, "-c:v", "libvpx", "-c:a", "libvorbis", fixed_file],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.run(["ffmpeg","-y","-i", fixed_file,"-c:v", "libvpx-vp9",convert_file], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.run(["ffmpeg","-y","-i", convert_file,"-c:v", "libvpx-vp9","-ss", start_time,"-t", duration,output_file], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    os.remove(fixed_file)
+    os.remove(convert_file)
+
+    print("TRIMMED")
 
 
 
