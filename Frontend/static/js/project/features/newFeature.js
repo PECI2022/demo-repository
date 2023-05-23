@@ -518,11 +518,11 @@ function togglePreviewVideo(video_id,brightness,contrast,sharpness,saturation,hu
             newElem.className = "list-group";
             charsText.appendChild(newElem);
 
-            // const video = document.querySelector(newVideoID);
-            // video.setAttribute("id", "video" + video_id);
-            // tableLoadvideo(video_id)
-            // newVideoID = "#video" + video_id;
-            // visible = true;
+            const video = document.querySelector(newVideoID);
+            video.setAttribute("id", "video" + video_id);
+            tableLoadvideo(video_id)
+            newVideoID = "#video" + video_id;
+            visible = true;
 
             previewVideo.style.display = "block";
         } else{
