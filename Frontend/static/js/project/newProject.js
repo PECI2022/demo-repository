@@ -59,7 +59,8 @@ const storeFolder = async (blobs) => {
       name: "test",
       subject: "test",
       category: "category",
-      tags: "tags"
+      tags: "tags",
+      privacy: "public"
     }),
   );
   let r = await fetch("http://127.0.0.1:5001/new_project", {
@@ -90,6 +91,7 @@ const storeFolder = async (blobs) => {
     method: "POST",
     body: data
   })
+  newProjectGo(projectID)
 }
 
 const create_project = async () => {
