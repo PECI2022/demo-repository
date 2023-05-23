@@ -7,6 +7,9 @@ var project_id = localStorage.getItem("project_id");
 let checkedVideos = []
 let currentFeature
 
+let firstTime = true
+
+if (firstTime) {
 
 window.addEventListener('load', () => {
     const queryString2 = window.location.search
@@ -75,6 +78,9 @@ window.addEventListener('load', () => {
     tags.innerHTML += "Tags: #" + info["tags"]
   
   }
+    firstTime = false
+}
+
 
 
 // function newFeatureGo(pid) {
